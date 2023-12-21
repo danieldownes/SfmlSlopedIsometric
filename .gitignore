@@ -1,0 +1,36 @@
+# Compiled Output
+*.o
+*.so
+*.exe
+*.dll
+
+# Build Directories
+build/
+bin/
+
+# IDE/Editor Specific Files
+# Visual Studio
+*.suo
+*.user
+*.pdb
+*.opendb
+# Code::Blocks
+*.layout
+
+# Dependency Folders
+# SFML Library
+SFML/
+lib/
+
+# Temporary Files
+# Backup files
+*~
+# Temp files for Windows
+Thumbs.db
+
+# Log Files
+*.log
+
+# Documentation Build Files
+docs/build/
+
