@@ -1,0 +1,363 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title></title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .fixed-ul {
+            position: fixed;
+            top: 100px; 
+            left: 15px; 
+            width: 250px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center gameTitle"></h1>
+        <h2 class="text-center">Game Design Document</h2>
+
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="fixed-ul border-right">
+                    <li><a href="#game-concept">Game Concept</a></li>
+
+                    <li><a href="#gameplay-mechanics">Gameplay Mechanics</a>
+                        <ul class="ml-n3">
+                            <li><a href="#maps">Maps</a></li>
+                            <ul class="ml-n3">
+                                <li><a href="#strategic-map">Strategic Map</a></li>
+                                <li><a href="#tactical-map">Tactical Map</a></li>
+                            </ul>
+                    </li>
+                    <li><a href="#generalOrders">General Orders</a></li>
+                        <ul class="ml-n3"> 
+                            <li><a href="#mobilisation">Mobilisation</a></li>
+                            <li><a href="#fortification">Fortification</a></li>
+                            <li><a href="#assault">Assault</a></li>
+                            <li><a href="#holdTheLine">Hold the Line</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                    </li>
+
+                    <li><a href="#story-and-setting">Story and Setting</a></li>
+                    <li><a href="#art-style">Art Style</a></li>
+                    <li><a href="#sound-and-music">Sound and Music</a></li>
+                    <li><a href="#level-environment-design">Level/Environment Design</a></li>
+                    <li><a href="#user-interface">User Interface</a></li>
+                    <li><a href="#technology">Technology</a></li>
+                    <li><a href="#market-analysis">Market Analysis</a></li>
+                    <li><a href="#development-timeline">Development Timeline</a></li>
+                    <li><a href="#budget-estimation">Budget Estimation</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-9">
+                <div id="game-concept" style="margin-bottom: 20px;">
+                    <h3 style="color: darkblue; margin-bottom: 10px;">Game Concept</h3>
+                    <p>
+                        <strong>Concept Overview:</strong>
+                        <span class="gameTitle"></span> is an RTS that
+                        immerses players in the strategic and tactical challenges of World War I.
+                        The game emphasizes a balance between economy, strategy and
+                        real time action.
+                    </p>
+                    <p>
+                        <strong>Inspiration:</strong>
+                        Gameplay is heavily inspired by Age of Empires II and Kingdom Kights.
+                        The artistic and thematic style is heaviliy inspried by the Death Korps of Krieg and Death Guard Legion of Warhammer 40,000.
+                    </p>
+                    <p>
+                        <strong>Core Gameplay:</strong>
+                        Players assume the roles of historical factions, orchestrating large-scale
+                        military operations on the battlegrounds of Europe.
+                        The game features large strategic decisions like research, production
+                        and moving regiments, and close up fast tactial play.
+                    </p>
+
+                    <p><strong>Unique Selling Points:</strong></p>
+                    <ul>
+                        <li>
+                            <strong>Fresh Experience:</strong>
+                            WWI is a very under represented theatre in gaming, only 1 in every 36 RTS games are about WWI (aprox). This gives players
+                            a much wider range of new units, tactics and experiences to explore than many RTS games offer. This provides a new game studio a
+                            blank canvas to work with.
+                        </li>
+                        <li>
+                            <strong>Strategic Depth:</strong>
+                            A lot of moving parts that are packaged neatly into 2 distinct map scales and
+                            4 distinct tactical stages. Both small decisions and large decisions can have meaninful impact the outcome.
+                        </li>
+                        <li>
+                            <strong>Olde World Charm, Modern Mechanical Monstrosities:</strong>
+                            WWI intersceted pre industrial equipment and tactics with
+                            the horrors of death delivered at the industrial scale. This game will capture the blend
+                            of old and new in a way not seen before. A potent cocktail of cavalry charges and mustard gas,
+                            Napoleonic era formations and analog targeting computers. Unique!
+                        </li>
+                    </ul>
+                </div>
+
+                <h3 id="gameplay-mechanics">Gameplay Mechanics</h3>
+                <p>
+                    The game loop is divided between the macro and micro management of 2 maps and 4 General Orders that run in real time.
+                    The 2 maps cover different scales of the battlefield, a large view of whole regions or a granular view of specific battlefields, 
+                    zooming with the mouse roller will switch scales. The stages of Genreal Orders are a more abstract concept but are 
+                    basically like "ages" in Age of Empires, levels of advancement that have requirments to reach and provide new opertunities 
+                    at each stage. General Orders cannot be undone once called up. There is no limitation on where anything can be built or moved but there are sensible places build and move.
+                    Like building barracks in urban areas or steel foundries close to iron deposits is a good idea. But there might be good reasons to
+                    build or move near or in enemy areas, like field hospitals or incusions behind enemy lines.
+
+                    Here is a more detailed description of the game loops sections:
+                </p>
+
+                <div class="pl-4">
+                    <h4 id="maps">Maps</h4>
+                    <br />
+                    <div class="row pl-5">
+                        <div class="col-md-6">
+                            <h5 id="strategic-map">Macro Scale: Strategic Map</h5>
+                            <p>
+                                This is high level map view covers whole regions for macro management. A player uses this map view to manage
+                                production, research and moving entire armies. At this scale the player handles economy like workers,
+                                resource management, prodcution of units and logistics (roads, rail, shipping). The strategic map view will handle nearly all the econmy game elements
+                                with very few military elements, just strategic bombing.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <video controls>
+                                <source src="path_to_your_video.mp4" type="video/mp4">
+                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
+                            </video>
+                        </div>
+                    </div>
+
+                    <div class="row pl-5">
+                        <div class="col-md-6">
+                            <h5 id="tactical-map">Micro Scale: Tactical Map</h5>
+                            <p>
+                                This detailed map view covers specific battlefields for micro management. The player has tight,
+                                responsive control over units. The player will command individual units to
+                                collect supplies, dig (gun pits, trenches, dugouts, tunnels), build (wire, lay mines, lookout posts, machine gun nests),
+                                move or attack. Using hotkeys will be crucial. Most of the military game elements are handled at this scale with
+                                very few economy elements handled here, just wood chopping for lumber. There is an additional layer to this map which
+                                is that players can engage in tunnel warfare by digging through 3 subterrainian layers under the battlefield.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <video controls>
+                                <source src="path_to_your_video.mp4" type="video/mp4">
+                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pl-4">
+                    <h4 id="generalOrders">General Orders</h4>
+                    <p>
+                        The stages in game are called "General Orders". Each order affects economic and military elements. Although the button to call up the next General Order
+                        is accessed through the capital city located on the Strategic Map, the order will affect all areas of the game. General Orders are as follows:
+                    </p>
+
+                    <div class="row pl-5">
+                        <div class="col-md-6">
+                            <h5 id="mobilisation">Mobilisation</h5>
+                            <p>
+                                Focus on rapidly gathering essential resources and swiftly advancing to the next General Order. 
+                                Efficient resource management and early strategic planning are key.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <video controls>
+                                <source src="path_to_your_video.mp4" type="video/mp4">
+                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="row pl-5">
+                        <div class="col-md-6">
+                            <h5 id="fortification">Fortification</h5>
+                            <p>
+                                Prioritize the construction of critical defense structures and expand your military forces. 
+                                Launch probing attacks to gauge enemy strength, positions and attempt to hamper their rate of expansion.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <video controls>
+                                <source src="path_to_your_video.mp4" type="video/mp4">
+                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="row pl-5">
+                        <div class="col-md-6">
+                            <h5 id="assault">Assault</h5>
+                            <p>
+                                Launch aggressive attacks to weaken and dislodge enemy forces. 
+                                Simultaneously, continue expanding your military and economy, advance in technology research and 
+                                secure strategically advantageous positions on the battlefield.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <video controls>
+                                <source src="path_to_your_video.mp4" type="video/mp4">
+                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="row pl-5">
+                        <div class="col-md-6">
+                            <h5 id="holdTheLine">Hold the Line</h5>
+                            <p>
+                                Implement a full-scale offensive to overwhelm the enemy. Finalize research on remaining technologies to ensure your units have 
+                                superior capabilities. Focus on leveraging your maximum military potential for a decisive victory.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <video controls>
+                                <source src="path_to_your_video.mp4" type="video/mp4">
+                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
+                            </video>
+                        </div>
+                    </div>
+                    <p>
+                        To call up the next General Order the player needs to pay certain resources, have certain buildings and unlock certain 
+                        technologies. The requirment for the next General Order increases but so do the rewards of each General Order, 
+                        access to new and better units and buildings, accesss to new and better upgrades on existing units and buildings. 
+                        Calling up the next General Order before your opponent will often put a player at an advantage but there may be some
+                        situations/strategies where spending resources on increasing economy or military is more advantageous 
+                        than calling up the next General Order.
+                    </p>
+                </div>
+
+
+                    <h3 id="story-and-setting">Story and Setting</h3>
+                    <p>
+                        Story mode will be a feature to implement if there is time, single player skirmish gameplay will be the primary focus.
+                        Campaign and multiplayer will be added if time allows.
+                    </p>
+                    <p>
+                        The storyline serves as a backdrop to the gameplay, enriching the player's experience without overpowering it.
+                        Emphasis is placed on robust game mechanics and strategic depth, ensuring engaging gameplay. While the story offers context and emotional depth,
+                        it is the strategic and tactical choices that drive the game, allowing players to immerse themselves in the challenges of command
+                        during The Great War.
+                    </p>
+                    <p>
+                        Many war games are either amoral or throw morality out of the window in favor of propaganda tropes. The storyline
+                        of this game will address morality directly and place the blame squarley on the shoulders of the politicians who dragged their
+                        nations into yet more pointless wars. The story will not be propegandistic but it will also not shy away from the blood guilt
+                        incurred by the leaders of that time. Nations themselves will not be painted as good guys or bad guys in the campaign.
+                        Real historic reference material will be used as inspiration for the story.
+                    </p>
+                    <p>
+                        The game should not be pinned down by historical accuracy but use history as inspiration, heavy artistic licence can be used if needed
+                        to improve the gaming experience. The player should have maximum agency to impact the course of the game, therefore there
+                        must be scope for an outcome that differs from reality.
+                    </p>
+                    <p>
+                        If you fancy an entertaining overview of the narrative style, check <a href="https://www.youtube.com/watch?v=FpVtv9cA11s">this video</a>
+                        about The Seige of Vraks in Warhammer 40,000.
+                    <p>
+                        Again, story mode will only be built if time allows, it's not the primary focus, gameplay is. This gives plenty of space for DLCs.
+                    </p>
+                    <h3 id="art-style">Art Style</h3>
+                    <p>
+                        The art style of <span class="gameTitle"></span> strikes a balance between historical accuracy and approachable aesthetics.
+                        While maintaining accurate proportions of units, buildings, and scenery, the details are rendered in a stylized,
+                        somewhat cartoonish quality. This is complemented by thematic shades, diverging from strict realism to enhance
+                        the game's atmosphere. The skies and horizons are particularly dramatic, styled with dark, ominous features
+                        that create impactful backdrops, evoking the intense emotions of war. This stylistic choice aims to make the game visually
+                        appealing and engaging while preserving the gravity of the historical context. For visual inspiration and
+                        a better understanding of this artistic direction, check out
+                        <a href="https://www.youtube.com/watch?v=cRZkRuH8A7s&list=PL_bBAU-tRdZ9eeNA9QGd6nY_lW8BY9R-_&index=4">
+                            this video
+                        </a> showcasing the Death Guard legion, which exemplifies a similar blend of realism and stylisation.
+                        There should be some exciting lighting and screen shake effects on explosions and eerie effects of gas clouds creeping over battlefields.
+                        A day/night/season cycle and weather should be a visual representation of certain game mechanics like visability, gas weapons and
+                        terrain movement effects (hard or soft mud).
+                    </p>
+
+                    <p>
+                        Since the primary focus of <span class="gameTitle"></span> is on mechanical gameplay, the development of the art style will be a subsequent phase.
+                        The initial stages of the project will concentrate on solidifying the core gameplay mechanics, ensuring they are engaging, functional,
+                        and well-tuned. Once the gameplay foundation is strong the art development will commence.
+                        This approach will ensure that the visual elements complement and enhance the established mechanics rather than overpower them.
+                        Because there will be many units onscreen at any one time the computational load of visuals will be handled economically to ensure
+                        performance doesn't tank.
+                    </p>
+
+                    <h3 id="sound-and-music">Sound and Music</h3>
+                    <p>Details for sound and music...</p>
+
+                    <h3 id="level-environment-design">Level/Environment Design</h3>
+                    <p>Details for level/environment design...</p>
+
+                    <h3 id="user-interface">User Interface</h3>
+                    <p>Details for the user interface...</p>
+
+                    <h3 id="technology">Technology</h3>
+                    <p>
+                        This game will be programmed at a low level using C++ and a few complementary libraries. No game engine will be used.
+                        The reason is it's a project designed to increase programming skills, team management and enterprise skills.
+                        Sticking to raw code provides the greatest learning environment at the cost of time. Skills gained on this project are
+                        directly applicable to future projects that need low level problem solving skills making <span class="gameTitle"></span>
+                        a practice ground.
+                    </p>
+
+                    <h3 id="market-analysis">Market Analysis</h3>
+                    <p>Details for market analysis...</p>
+
+                    <h3 id="development-timeline">Development Timeline</h3>
+                    <p>Details for the development timeline...</p>
+
+                    <h3 id="budget-estimation">Budget Estimation</h3>
+                    <p>Details for budget estimation...</p>
+                </div>
+
+        </div>
+    </div>
+
+    <script>
+        function scrollToElement(elementId) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                var offset = 100; // Adjust this value based on the height of your fixed header or other elements
+                var elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                var offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function updateTitle(newTitle) {
+            document.title = newTitle;
+        }
+
+        function updateDynamicTitles(newTitle) {
+            document.querySelectorAll('.gameTitle',).forEach(el => el.textContent = newTitle);
+            updateTitle(newTitle);
+        }
+
+        var gameTitle = "The Great War";
+        updateDynamicTitles(gameTitle);
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+</body>
+</html>
