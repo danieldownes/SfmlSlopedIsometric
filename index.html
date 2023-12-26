@@ -28,34 +28,102 @@
             <div class="col-md-3">
                 <ul class="fixed-ul border-right">
                     <li><a href="#game-concept">Game Concept</a></li>
+                    <li>
+                        <a href="#gameplay-mechanics">Gameplay Mechanics</a>
+                        <!--button
+                                class="btn btn-sm btn-circle ml-2"
+                                data-toggle="collapse"
+                                data-target="#gameplayMechanicsMenu"
+                                aria-expanded="false"
+                                aria-controls="gameplayMechanicsMenu" data-collapsed="true">
+                            +
+                        </!--button-->
+                        <button 
+                                class="btn btn-sm btn-circle ml-2" 
+                                data-toggle="collapse" 
+                                data-target="#gameplayMechanicsMenu" 
+                                aria-expanded="false" 
+                                aria-controls="gameplayMechanicsMenu" 
+                                id="gameplayMechanicsToggleButton"
+                                data-collapsed="true">
+                            +
+                        </button>
 
-                    <li><a href="#gameplay-mechanics">Gameplay Mechanics</a>
-                        <ul class="ml-n3">
-                            <li><a href="#maps">Maps</a></li>
-                            <ul class="ml-n3">
-                                <li><a href="#strategic-map">Strategic Map</a></li>
-                                <li><a href="#tactical-map">Tactical Map</a></li>
-                            </ul>
-                    </li>
-                    <li><a href="#generalOrders">General Orders</a></li>
-                        <ul class="ml-n3"> 
-                            <li><a href="#mobilisation">Mobilisation</a></li>
-                            <li><a href="#fortification">Fortification</a></li>
-                            <li><a href="#assault">Assault</a></li>
-                            <li><a href="#holdTheLine">Hold the Line</a></li>
+                        <ul class="collapse ml-n3" id="gameplayMechanicsMenu">
+                            <li>
+                                <a href="#maps">Maps</a>
+                                <button class="btn btn-sm btn-circle ml-2" data-toggle="collapse" data-target="#mapsMenu" aria-expanded="false" aria-controls="mapsMenu" id="mapsToggleButton" data-collapsed="true">+</button>
+                                <ul class="collapse ml-n3" id="mapsMenu">
+                                    <li><a href="#strategic-map">Strategic Map</a></li>
+                                    <li><a href="#tactical-map">Tactical Map</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#generalOrders">General Orders</a>
+                                <button class="btn btn-sm btn-circle ml-2" data-toggle="collapse" data-target="#generalOrdersMenu" aria-expanded="false" aria-controls="generalOrdersMenu" id="generalOrdersToggleButton" data-collapsed="true">+</button>
+                                <ul class="collapse ml-n3" id="generalOrdersMenu">
+                                    <li><a href="#mobilisation">Mobilisation</a></li>
+                                    <li><a href="#fortification">Fortification</a></li>
+                                    <li><a href="#assault">Assault</a></li>
+                                    <li><a href="#holdTheLine">Hold the Line</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                </ul>
-                    </li>
 
+
+                    <li><a href="#development-roadmap">Development Roadmap</a></li>
                     <li><a href="#story-and-setting">Story and Setting</a></li>
                     <li><a href="#art-style">Art Style</a></li>
                     <li><a href="#sound-and-music">Sound and Music</a></li>
-                    <li><a href="#level-environment-design">Level/Environment Design</a></li>
-                    <li><a href="#user-interface">User Interface</a></li>
+                    <li><a href="#level-environment-design">Environment Design</a></li>
+                    <li>
+                        <a href="#user-interface">User Interface</a>
+                        <button 
+                                class="btn btn-sm btn-circle ml-2" 
+                                data-toggle="collapse" 
+                                data-target="#userInterfaceMenu" 
+                                aria-expanded="false" 
+                                aria-controls="userInterfaceMenu" 
+                                id="userInterfaceToggleButton" 
+                                data-collapsed="true">
+                            +
+                        </button>
+
+                        <ul class="collapse ml-n3" id="userInterfaceMenu">
+                            <li><a href="#user-interface-mouse">Mouse</a></li>
+                            <li><a href="#user-interface-keyboard">Keyboard</a></li>
+                            <li><a href="#user-interface-menu">Onscreen Menu</a></li>
+                            <li><a href="#user-interface-scoped-hotkeys">Hotkey Scoping</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#technology">Technology</a></li>
-                    <li><a href="#market-analysis">Market Analysis</a></li>
-                    <li><a href="#development-timeline">Development Timeline</a></li>
+                    <li>
+                        <a href="#market-analysis">Market Analysis</a>
+                        <button class="btn btn-sm btn-circle ml-2"
+                                data-toggle="collapse"
+                                data-target="#marketAnalysisMenu"
+                                aria-expanded="false"
+                                aria-controls="marketAnalysisMenu"
+                                id="marketAnalysisToggleButton"
+                                data-collapsed="true">
+                            +
+                        </button>
+
+                        <ul class="collapse" id="marketAnalysisMenu">
+                            <li><a href="#global-gaming-market-overview">Global Gaming Market Overview</a></li>
+                            <li><a href="#rts-genre-popularity-and-trends">RTS Genre Popularity and Trends</a></li>
+                            <li><a href="#competitive-analysis">Competitive Analysis</a></li>
+                            <li><a href="#target-audience-characterization">Target Audience Characterization</a></li>
+                            <li><a href="#emerging-markets-and-opportunities">Emerging Markets and Opportunities</a></li>
+                            <li><a href="#monetization-strategies-and-models">Monetization Strategies and Models</a></li>
+                            <li><a href="#marketing-and-promotion-tactics">Marketing and Promotion Tactics</a></li>
+                            <li><a href="#technology-and-innovation-trends">Technology and Innovation Trends</a></li>
+                            <li><a href="#risk-assessment">Risk Assessment</a></li>
+                            <li><a href="#future-outlook-and-predictions">Future Outlook and Predictions</a></li>
+                        </ul>
+                    </li>
+
                     <li><a href="#budget-estimation">Budget Estimation</a></li>
                 </ul>
             </div>
@@ -109,9 +177,9 @@
                 <h3 id="gameplay-mechanics">Gameplay Mechanics</h3>
                 <p>
                     The game loop is divided between the macro and micro management of 2 maps and 4 General Orders that run in real time.
-                    The 2 maps cover different scales of the battlefield, a large view of whole regions or a granular view of specific battlefields, 
-                    zooming with the mouse roller will switch scales. The stages of Genreal Orders are a more abstract concept but are 
-                    basically like "ages" in Age of Empires, levels of advancement that have requirments to reach and provide new opertunities 
+                    The 2 maps cover different scales of the battlefield, a large view of whole regions or a granular view of specific battlefields,
+                    zooming with the mouse roller will switch scales. The stages of Genreal Orders are a more abstract concept but are
+                    basically like "ages" in Age of Empires, levels of advancement that have requirments to reach and provide new opertunities
                     at each stage. General Orders cannot be undone once called up. There is no limitation on where anything can be built or moved but there are sensible places build and move.
                     Like building barracks in urban areas or steel foundries close to iron deposits is a good idea. But there might be good reasons to
                     build or move near or in enemy areas, like field hospitals or incusions behind enemy lines.
@@ -172,7 +240,7 @@
                         <div class="col-md-6">
                             <h5 id="mobilisation">Mobilisation</h5>
                             <p>
-                                Focus on rapidly gathering essential resources and swiftly advancing to the next General Order. 
+                                Focus on rapidly gathering essential resources and swiftly advancing to the next General Order.
                                 Efficient resource management and early strategic planning are key.
                             </p>
                         </div>
@@ -187,7 +255,7 @@
                         <div class="col-md-6">
                             <h5 id="fortification">Fortification</h5>
                             <p>
-                                Prioritize the construction of critical defense structures and expand your military forces. 
+                                Prioritize the construction of critical defense structures and expand your military forces.
                                 Launch probing attacks to gauge enemy strength, positions and attempt to hamper their rate of expansion.
                             </p>
                         </div>
@@ -202,8 +270,8 @@
                         <div class="col-md-6">
                             <h5 id="assault">Assault</h5>
                             <p>
-                                Launch aggressive attacks to weaken and dislodge enemy forces. 
-                                Simultaneously, continue expanding your military and economy, advance in technology research and 
+                                Launch aggressive attacks to weaken and dislodge enemy forces.
+                                Simultaneously, continue expanding your military and economy, advance in technology research and
                                 secure strategically advantageous positions on the battlefield.
                             </p>
                         </div>
@@ -218,7 +286,7 @@
                         <div class="col-md-6">
                             <h5 id="holdTheLine">Hold the Line</h5>
                             <p>
-                                Implement a full-scale offensive to overwhelm the enemy. Finalize research on remaining technologies to ensure your units have 
+                                Implement a full-scale offensive to overwhelm the enemy. Finalize research on remaining technologies to ensure your units have
                                 superior capabilities. Focus on leveraging your maximum military potential for a decisive victory.
                             </p>
                         </div>
@@ -230,98 +298,275 @@
                         </div>
                     </div>
                     <p>
-                        To call up the next General Order the player needs to pay certain resources, have certain buildings and unlock certain 
-                        technologies. The requirment for the next General Order increases but so do the rewards of each General Order, 
-                        access to new and better units and buildings, accesss to new and better upgrades on existing units and buildings. 
+                        To call up the next General Order the player needs to pay certain resources, have certain buildings and unlock certain
+                        technologies. The requirment for the next General Order increases but so do the rewards of each General Order,
+                        access to new and better units and buildings, accesss to new and better upgrades on existing units and buildings.
                         Calling up the next General Order before your opponent will often put a player at an advantage but there may be some
-                        situations/strategies where spending resources on increasing economy or military is more advantageous 
+                        situations/strategies where spending resources on increasing economy or military is more advantageous
                         than calling up the next General Order.
                     </p>
                 </div>
 
+                <h3 id="development-roadmap">Development Roadmap</h3>
+                <p>Details for the development timeline...</p>
 
-                    <h3 id="story-and-setting">Story and Setting</h3>
-                    <p>
-                        Story mode will be a feature to implement if there is time, single player skirmish gameplay will be the primary focus.
-                        Campaign and multiplayer will be added if time allows.
-                    </p>
-                    <p>
-                        The storyline serves as a backdrop to the gameplay, enriching the player's experience without overpowering it.
-                        Emphasis is placed on robust game mechanics and strategic depth, ensuring engaging gameplay. While the story offers context and emotional depth,
-                        it is the strategic and tactical choices that drive the game, allowing players to immerse themselves in the challenges of command
-                        during The Great War.
-                    </p>
-                    <p>
-                        Many war games are either amoral or throw morality out of the window in favor of propaganda tropes. The storyline
-                        of this game will address morality directly and place the blame squarley on the shoulders of the politicians who dragged their
-                        nations into yet more pointless wars. The story will not be propegandistic but it will also not shy away from the blood guilt
-                        incurred by the leaders of that time. Nations themselves will not be painted as good guys or bad guys in the campaign.
-                        Real historic reference material will be used as inspiration for the story.
-                    </p>
-                    <p>
-                        The game should not be pinned down by historical accuracy but use history as inspiration, heavy artistic licence can be used if needed
-                        to improve the gaming experience. The player should have maximum agency to impact the course of the game, therefore there
-                        must be scope for an outcome that differs from reality.
-                    </p>
-                    <p>
-                        If you fancy an entertaining overview of the narrative style, check <a href="https://www.youtube.com/watch?v=FpVtv9cA11s">this video</a>
-                        about The Seige of Vraks in Warhammer 40,000.
-                    <p>
-                        Again, story mode will only be built if time allows, it's not the primary focus, gameplay is. This gives plenty of space for DLCs.
-                    </p>
-                    <h3 id="art-style">Art Style</h3>
-                    <p>
-                        The art style of <span class="gameTitle"></span> strikes a balance between historical accuracy and approachable aesthetics.
-                        While maintaining accurate proportions of units, buildings, and scenery, the details are rendered in a stylized,
-                        somewhat cartoonish quality. This is complemented by thematic shades, diverging from strict realism to enhance
-                        the game's atmosphere. The skies and horizons are particularly dramatic, styled with dark, ominous features
-                        that create impactful backdrops, evoking the intense emotions of war. This stylistic choice aims to make the game visually
-                        appealing and engaging while preserving the gravity of the historical context. For visual inspiration and
-                        a better understanding of this artistic direction, check out
-                        <a href="https://www.youtube.com/watch?v=cRZkRuH8A7s&list=PL_bBAU-tRdZ9eeNA9QGd6nY_lW8BY9R-_&index=4">
-                            this video
-                        </a> showcasing the Death Guard legion, which exemplifies a similar blend of realism and stylisation.
-                        There should be some exciting lighting and screen shake effects on explosions and eerie effects of gas clouds creeping over battlefields.
-                        A day/night/season cycle and weather should be a visual representation of certain game mechanics like visability, gas weapons and
-                        terrain movement effects (hard or soft mud).
-                    </p>
+                <h3 id="story-and-setting">Story and Setting</h3>
+                <p>
+                    Story mode will be a feature to implement if there is time, single player skirmish gameplay will be the primary focus.
+                    Campaign and multiplayer will be added if time allows.
+                </p>
+                <p>
+                    The storyline serves as a backdrop to the gameplay, enriching the player's experience without overpowering it.
+                    Emphasis is placed on robust game mechanics and strategic depth, ensuring engaging gameplay. While the story offers context and emotional depth,
+                    it is the strategic and tactical choices that drive the game, allowing players to immerse themselves in the challenges of command
+                    during The Great War.
+                </p>
+                <p>
+                    Many war games are either amoral or throw morality out of the window in favor of propaganda tropes. The storyline
+                    of this game will address morality directly and place the blame squarley on the shoulders of the politicians who dragged their
+                    nations into yet more pointless wars. The story will not be propegandistic but it will also not shy away from the blood guilt
+                    incurred by the leaders of that time. Nations themselves will not be painted as good guys or bad guys in the campaign.
+                    Real historic reference material will be used as inspiration for the story.
+                </p>
+                <p>
+                    The game should not be pinned down by historical accuracy but use history as inspiration, heavy artistic licence can be used if needed
+                    to improve the gaming experience. The player should have maximum agency to impact the course of the game, therefore there
+                    must be scope for an outcome that differs from reality.
+                </p>
+                <p>
+                    If you fancy an entertaining overview of the narrative style, check <a href="https://www.youtube.com/watch?v=FpVtv9cA11s">this video</a>
+                    about The Seige of Vraks in Warhammer 40,000.
+                <p>
+                    Again, story mode will only be built if time allows, it's not the primary focus, gameplay is. This gives plenty of space for DLCs.
+                </p>
+                <h3 id="art-style">Art Style</h3>
+                <p>
+                    The art style of <span class="gameTitle"></span> strikes a balance between historical accuracy and approachable aesthetics.
+                    While maintaining accurate proportions of units, buildings, and scenery, the details are rendered in a stylized,
+                    somewhat cartoonish quality. This is complemented by thematic shades, diverging from strict realism to enhance
+                    the game's atmosphere. The skies and horizons are particularly dramatic, styled with dark, ominous features
+                    that create impactful backdrops, evoking the intense emotions of war. This stylistic choice aims to make the game visually
+                    appealing and engaging while preserving the gravity of the historical context. For visual inspiration and
+                    a better understanding of this artistic direction, check out
+                    <a href="https://www.youtube.com/watch?v=cRZkRuH8A7s&list=PL_bBAU-tRdZ9eeNA9QGd6nY_lW8BY9R-_&index=4">
+                        this video
+                    </a> showcasing the Death Guard legion, which exemplifies a similar blend of realism and stylisation.
+                    There should be some exciting lighting and screen shake effects on explosions and eerie effects of gas clouds creeping over battlefields.
+                    A day/night/season cycle and weather should be a visual representation of certain game mechanics like visability, gas weapons and
+                    terrain movement effects (hard or soft mud).
+                </p>
 
-                    <p>
-                        Since the primary focus of <span class="gameTitle"></span> is on mechanical gameplay, the development of the art style will be a subsequent phase.
-                        The initial stages of the project will concentrate on solidifying the core gameplay mechanics, ensuring they are engaging, functional,
-                        and well-tuned. Once the gameplay foundation is strong the art development will commence.
-                        This approach will ensure that the visual elements complement and enhance the established mechanics rather than overpower them.
-                        Because there will be many units onscreen at any one time the computational load of visuals will be handled economically to ensure
-                        performance doesn't tank.
-                    </p>
+                <p>
+                    Since the primary focus of <span class="gameTitle"></span> is on mechanical gameplay, the development of the art style will be a subsequent phase.
+                    The initial stages of the project will concentrate on solidifying the core gameplay mechanics, ensuring they are engaging, functional,
+                    and well-tuned. Once the gameplay foundation is strong the art development will commence.
+                    This approach will ensure that the visual elements complement and enhance the established mechanics rather than overpower them.
+                    Because there will be many units onscreen at any one time the computational load of visuals will be handled economically to ensure
+                    performance doesn't tank.
+                </p>
 
-                    <h3 id="sound-and-music">Sound and Music</h3>
-                    <p>Details for sound and music...</p>
+                <h3 id="sound-and-music">Sound and Music</h3>
 
-                    <h3 id="level-environment-design">Level/Environment Design</h3>
-                    <p>Details for level/environment design...</p>
+                <h4>Sound Design</h4>
+                <ul>
+                    <li><strong>Sound Engineer:</strong> In line with the art development phase, a sound engineer will be engaged to contribute his expertise to the project after the core game mechanics are solidly in place. His role will involve crafting a compelling and immersive audio landscape that enhances gameplay and narrative. This includes creating and sourcing sound effects, ambient sounds, and potentially working on the game's musical score. The sound engineer is expected to bring his own specialized tools and resources to the project, and collaborate closely with the development team to ensure the audio aligns with the game's artistic vision and gameplay dynamics.</li>
+                    <li><strong>Prioritization of Sound Effects:</strong> During development the highest priority is given to effects that directly enhance gameplay mechanics. This approach ensures that sounds crucial for player feedback, incoming artillery fire or your units carrying out orders, are developed first to aid in strategic decision-making and improve the overall gaming experience.</li>
+                    <li><strong>Event Driven Sound Effects:</strong> Tailored audio cues that give players vital information about in-game events, enhancing gameplay awareness and immersion through responsive, contextual sounds. For example a distant siren indicating an impending attack, enhancing the players situational awareness.</li>
+                    <li><strong>Context-Sensitive Ambient Sounds:</strong>Trigger specific ambient sound effects based on the player's location and the events happening around them. For example, near a battlefield, the sounds of distant artillery fire could be heard, whereas in a base camp, the focus might shift to the chatter of soldiers and the clanking of equipment.</li>
+                    <li><strong>Multilingual Voice Acting for Factions:</strong>Each faction's voice acting is in its national language, enhancing authenticity and appealing to players' cultural identity, particularly in non-English speaking countries. This approach heightens immersion and personal connection to the game.</li>
+                </ul>
 
-                    <h3 id="user-interface">User Interface</h3>
-                    <p>Details for the user interface...</p>
+                <h4>Music</h4>
+                <ul>
+                    <li><strong>Event Driven Background Tracks:</strong> Employ more upbeat music during the final General Order of <a href="#holdTheLine">Hold The Line</a>.</li>
+                    <li><strong>Royalty-Free Music:</strong>Use royalty-free music tracks available online. Websites like Incompetech or Free Music Archive offer a variety of tracks that can be used for free or with attribution.</li>
+                    <li><strong>Minimalist Approach:</strong> Minimalist approach to music. Sometimes, less is more – a few well-chosen tracks can be effective for setting the mood.</li>
+                    <li><strong>Public Domain Historical Music:</strong> Research and incorporate music from the era that is now in the public domain. Early 20th-century compositions might be available for use without licensing issues.</li>
+                </ul>
 
-                    <h3 id="technology">Technology</h3>
-                    <p>
-                        This game will be programmed at a low level using C++ and a few complementary libraries. No game engine will be used.
-                        The reason is it's a project designed to increase programming skills, team management and enterprise skills.
-                        Sticking to raw code provides the greatest learning environment at the cost of time. Skills gained on this project are
-                        directly applicable to future projects that need low level problem solving skills making <span class="gameTitle"></span>
-                        a practice ground.
-                    </p>
+                <h3 id="level-environment-design">Environment Design</h3>
+                <p>The design of environments in <span class="gameTitle"></span> will lean on the landscapes and settings of World War I but prioritising the game's strategic and tactical gameplay over realism.</p>
 
-                    <h3 id="market-analysis">Market Analysis</h3>
-                    <p>Details for market analysis...</p>
+                <ul>
+                    <li><strong>Historically Inspired Battlefields:</strong> Levels are based on real World War I battlefields, featuring authentic terrains like trenches and war-torn villages.</li>
+                    <li><strong>Interactive Environments:</strong> Environments are interactive, providing tactical advantages and depth to gameplay. For example, being on a hill increases view and weapon range.</li>
+                    <li><strong>Dynamic Weather and Time:</strong> Changing weather conditions and time-of-day cycles affect movement and visibility, adding strategic elements.</li>
+                    <li><strong>Destructible Elements:</strong> Certain environmental features are destructible, allowing dynamic battlefield changes.</li>
+                    <li><strong>Varied Scales and Perspectives:</strong> Different map scales offer a deeper gameplay experiences, from the large <a href="#strategic-map">macro strategic map</a> view, the detailed<a href="#tactical-map"> micro tactical map </a>view to underground tunnel views.</li>
+                    <li><strong>Atmospheric Detailing:</strong> Small details like spent shell casings and makeshift encampments enhance the immersive atmosphere.</li>
+                </ul>
 
-                    <h3 id="development-timeline">Development Timeline</h3>
-                    <p>Details for the development timeline...</p>
 
-                    <h3 id="budget-estimation">Budget Estimation</h3>
-                    <p>Details for budget estimation...</p>
+                <h3 id="user-interface">User Interface</h3>
+                <p>
+                    The UI of <span class="gameTitle"></span> will closely follow the established
+                    RTS UI paradigm for familiarity and ease of adoption by new players.
+                    Drawing inspiration from the efficient and user-friendly Age of Empires II UI
+                    system, we will replicate its effectiveness without unnecessary innovation.
+                    However, the aesthetic design will be tailored to fit the setting of our game,
+                    enhancing the visual appeal and overall gaming experience.
+                </p>
+                <ul>
+                    <li id="user-interface-mouse">
+                        <strong>Mouse:</strong>
+                        <ul>
+                            <li><strong>Cursor to Window Edge:</strong> Moving the cursor to the edge of the game window scrolls the view around the map, allowing players to navigate different areas seamlessly.</li>
+                            <li>
+                                <strong>Left Button:</strong>
+                                <ul>
+                                    <li>Select Units/Buildings: A single left-click selects a unit or building, displaying its options and information.</li>
+                                    <li>Drag Selection: Clicking and dragging selects multiple units, enabling group commands and management.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Right Button:</strong>
+                                <ul>
+                                    <li>Issue Commands: A right-click directs selected units to move, attack, gather resources, or interact with the environment.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Scroll Wheel:</strong>
+                                <ul>
+                                    <li>Zoom In/Out: Scrolling up or down zooms the camera in or out, changing perspective between the <a href="#strategic-map">macro strategic map</a>, the <a href="#tactical-map">micro tactical map</a> or underground tunnels and dugouts.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="user-interface-keyboard">
+                        <strong>Keyboard:</strong>
+                        <ul>
+                            <li><strong>[1-0]</strong> keys will be reserved for <strong>Unit Assignment</strong>.</li>
+                            <li><strong>[QWERT]</strong> keys will be reserved for <strong>Actions</strong> like "construction" or "attack".</li>
+                            <li><strong>[ASDFG]</strong> keys will be reserved for <strong>Stances</strong> like "aggressive", "defensive", "stand ground", etc.</li>
+                            <li><strong>[ZXCVB]</strong> keys will be reserved for <strong>Formations</strong> like "line", "tight box", "large box", etc.</li>
+                            <li>
+                                <strong>General hotkeys</strong>
+                                Will be available for buildings and "jumping to" a view,
+                                like a particular part of a particular battlefield.
+                            </li>
+                        </ul>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <p>
+                                    The key functions will be nested, for example, selecting a
+                                    worker or soldier will open all the options since they can perform
+                                    all options, but a building cannot move therefore the <strong>Formation</strong>
+                                    options will not open when a building is selected. Or an artillery gun cannot
+                                    build anything so the construction <strong>Action</strong> options will not
+                                    open when an artillery gun is selected.
+                                </p>
+                                <p>
+                                    The [QWERTASDFZXCV] keys and the number row have been
+                                    strategically chosen for their ergonomic positioning, making them ideally
+                                    suited for rapid and efficient hotkey-based gameplay. Their physical placement
+                                    on the keyboard aligns seamlessly with the 5x3 grid layout of the game's
+                                    options menu, facilitating intuitive and swift navigation
+                                    (refer to the accompanying image for visual layout).
+                                </p>
+
+                            </div>
+                            <div class="col-md-6">
+                                <figure>
+                                    <img src="AOEIIMenuKeyboardLayout.jpg" alt="Keyboard Layout" class="img-fluid">
+                                    <figcaption>AOE II menu, keyboard layout.</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li id="user-interface-menu">
+                        <strong>On Screen Menu:</strong>
+                        <p>
+                            The on-screen control menu is designed for accessibility, with options selectable via
+                            left mouse clicks and closable through right mouse clicks. While clicking on-screen
+                            buttons is conventional in RTS games and will be included for familiarity, it's
+                            acknowledged as less efficient for controlling gameplay. Therefore, the game will
+                            emphasize the use of hotkeys, guiding players to more efficient control methods while
+                            still providing the standard point-and-click interface.
+                        </p>
+
+                    </li>
+                    <li id="user-interface-scoped-hotkeys">
+                        <strong>Hotkey Scoping:</strong>
+                        <p>
+                            Given the large number of units to manage, the standard 10 hotkeys for units may
+                            prove insufficient for fast and engaging micromanagement. To address this,
+                            while on the <a href="#strategic-map">macro strategic map</a>,
+                            direct unit control is not available, hotkeys focusing instead on broader strategic control
+                            like selecting cities, steel foundries or gun factories. Players can quickly switch to a specific <a href="#tactical-map">micro tactical map</a>
+                            using a dedicated hotkey [1-0]. In this tactical view, unit hotkeys become active but are
+                            localized to the currently viewed battlefield. This design ensures that each unit has a
+                            unique hotkey assignment within its respective tactical map, allowing for efficient
+                            management of numerous units without conflicts. Additionally, battlefield locations and
+                            hotkey assignments are stored as member properties of unit objects for seamless
+                            gameplay.
+                        </p>
+
+
+                    </li>
+                </ul>
+
+
+                <h3 id="technology">Technology</h3>
+                <p>
+                    This game will be programmed at a low level using C++ and a few complementary libraries. No game engine will be used.
+                    The reason is it's a project designed to increase programming skills, team management and enterprise skills.
+                    Sticking to raw code provides the greatest learning environment at the cost of time. Skills gained on this project are
+                    directly applicable to future projects that need low level problem solving skills making <span class="gameTitle"></span>
+                    a practice ground.
+                </p>
+
+                <h3 id="market-analysis">Market Analysis</h3>
+                <div class="ml-2">
+                    <h4 id="global-gaming-market-overview">Global Gaming Market Overview</h4>
+                    <p>Insights into the current state and projected trends of the global gaming market.</p>
+
+                    <h4 id="rts-genre-popularity-and-trends">RTS Genre Popularity and Trends</h4>
+                    <p>Analysis of the RTS genre's place in the market, including popularity trends and player demographics.</p>
+
+                    <h4 id="competitive-analysis">Competitive Analysis</h4>
+                    <p>Evaluation of key competitors in the RTS space, their market share, and successful strategies.</p>
+
+                    <h4 id="target-audience-characterization">Target Audience Characterization</h4>
+                    <p>Detailed profiling of the RTS genre's target audience, including gaming preferences and behaviors.</p>
+
+                    <h4 id="emerging-markets-and-opportunities">Emerging Markets and Opportunities</h4>
+                    <p>Identification of growing markets and untapped opportunities within the RTS genre.</p>
+
+                    <h4 id="monetization-strategies-and-models">Monetization Strategies and Models</h4>
+                    <p>Review of effective monetization models in RTS games and their applicability to the project.</p>
+
+                    <h4 id="marketing-and-promotion-tactics">Marketing and Promotion Tactics</h4>
+                    <p>Strategies for marketing and promotion specific to RTS games, leveraging digital and traditional channels.</p>
+
+                    <h4 id="technology-and-innovation-trends">Technology and Innovation Trends</h4>
+                    <p>Examination of technological advancements and innovative practices shaping the future of RTS games.</p>
+
+                    <h4 id="risk-assessment">Risk Assessment</h4>
+                    <p>Analysis of potential risks and challenges in the RTS gaming market.</p>
+
+                    <h4 id="future-outlook-and-predictions">Future Outlook and Predictions</h4>
+                    <p>Projections for the RTS genre's future development and potential shifts in the gaming landscape.</p>
                 </div>
+
+
+                <h3 id="budget-estimation">Budget Estimation</h3>
+                <p>
+                    Working with a zero budget initially, our financial strategy is straightforward.
+                    However, once the game reaches its early access stage, we plan to initiate a crowdfunding
+                    campaign. The aim of this campaign is twofold: to secure funds for a Steam launch
+                    and marketing efforts, but more importantly, to serve as a form of free advertising to build
+                    awareness and cultivate a fanbase ahead of the game's release.
+                </p>
+                <p>
+                    Additionally, we're considering hosting an in-person launch party to celebrate the game's
+                    release and connect with fans. This event is contingent on the success of the crowdfunding
+                    campaign and the level of interest generated, making it an exciting but speculative prospect
+                    at this stage.
+                </p>
+
+            </div>
 
         </div>
     </div>
@@ -353,11 +598,54 @@
         var gameTitle = "The Great War";
         updateDynamicTitles(gameTitle);
 
+
+        document.addEventListener('DOMContentLoaded', function ()
+        {
+            // Market Analysis Button
+            var marketAnalysisButton = document.getElementById('marketAnalysisToggleButton');
+            marketAnalysisButton.addEventListener('click', function () {
+                var isCollapsed = marketAnalysisButton.getAttribute('data-collapsed') === 'true';
+                marketAnalysisButton.textContent = isCollapsed ? '-' : '+';
+                marketAnalysisButton.setAttribute('data-collapsed', !isCollapsed);
+            });
+
+            // Gameplay Mechanics Button
+            var gameplayMechanicsButton = document.getElementById('gameplayMechanicsToggleButton');
+            gameplayMechanicsButton.addEventListener('click', function () {
+                var isCollapsed = gameplayMechanicsButton.getAttribute('data-collapsed') === 'true';
+                gameplayMechanicsButton.textContent = isCollapsed ? '-' : '+';
+                gameplayMechanicsButton.setAttribute('data-collapsed', !isCollapsed);
+            });
+
+            // User Interface Button
+            var userInterfaceButton = document.getElementById('userInterfaceToggleButton');
+            userInterfaceButton.addEventListener('click', function () {
+                var isCollapsed = userInterfaceButton.getAttribute('data-collapsed') === 'true';
+                userInterfaceButton.textContent = isCollapsed ? '-' : '+';
+                userInterfaceButton.setAttribute('data-collapsed', !isCollapsed);
+            });
+
+            // Maps Button
+            var mapsButton = document.getElementById('mapsToggleButton');
+            mapsButton.addEventListener('click', function () {
+                var isCollapsed = mapsButton.getAttribute('data-collapsed') === 'true';
+                mapsButton.textContent = isCollapsed ? '-' : '+';
+                mapsButton.setAttribute('data-collapsed', !isCollapsed);
+            });
+
+            // General Orders Button
+            var generalOrdersButton = document.getElementById('generalOrdersToggleButton');
+            generalOrdersButton.addEventListener('click', function () {
+                var isCollapsed = generalOrdersButton.getAttribute('data-collapsed') === 'true';
+                generalOrdersButton.textContent = isCollapsed ? '-' : '+';
+                generalOrdersButton.setAttribute('data-collapsed', !isCollapsed);
+            });
+        });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
+
 </body>
 </html>
