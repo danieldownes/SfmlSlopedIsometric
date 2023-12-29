@@ -17,6 +17,28 @@
             max-height: 100vh;
             overflow-y: auto;
         }
+        .hover-container {
+            display: none;
+            position: absolute;
+            border: 1px solid #000;
+            background-color: #fff;
+            padding: 10px;
+            z-index: 100;
+            max-width: 450px;
+            min-width: 300px;
+        }
+
+        .info-box {
+            max-width: 100%;
+            height: auto;
+            overflow: hidden; 
+        }
+
+        .hover-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -30,20 +52,11 @@
                     <li><a href="#game-concept">Game Concept</a></li>
                     <li>
                         <a href="#gameplay-mechanics">Gameplay Mechanics</a>
-                        <!--button
-                                class="btn btn-sm btn-circle ml-2"
+                        <button class="btn btn-sm btn-circle ml-2"
                                 data-toggle="collapse"
                                 data-target="#gameplayMechanicsMenu"
                                 aria-expanded="false"
-                                aria-controls="gameplayMechanicsMenu" data-collapsed="true">
-                            +
-                        </!--button-->
-                        <button 
-                                class="btn btn-sm btn-circle ml-2" 
-                                data-toggle="collapse" 
-                                data-target="#gameplayMechanicsMenu" 
-                                aria-expanded="false" 
-                                aria-controls="gameplayMechanicsMenu" 
+                                aria-controls="gameplayMechanicsMenu"
                                 id="gameplayMechanicsToggleButton"
                                 data-collapsed="true">
                             +
@@ -72,20 +85,37 @@
                     </li>
 
 
-                    <li><a href="#development-roadmap">Development Roadmap</a></li>
+                    <li>
+                        <a href="#development-roadmap">Development Roadmap</a>
+                        <button class="btn btn-sm btn-circle ml-2"
+                                data-toggle="collapse"
+                                data-target="#developmentRoadmapMenu"
+                                aria-expanded="false"
+                                aria-controls="developmentRoadmapMenu"
+                                id="developmentRoadmapToggleButton"
+                                data-collapsed="true">
+                            +
+                        </button>
+
+                        <ul class="collapse ml-n3" id="developmentRoadmapMenu">
+                            <li><a href="#prototype-development">Prototype Development</a></li>
+                            <li><a href="#demo-development">Demo Development</a></li>
+                            <li><a href="#pitching">Pitching</a></li>
+                        </ul>
+                    </li>
+
                     <li><a href="#story-and-setting">Story and Setting</a></li>
                     <li><a href="#art-style">Art Style</a></li>
                     <li><a href="#sound-and-music">Sound and Music</a></li>
                     <li><a href="#level-environment-design">Environment Design</a></li>
                     <li>
                         <a href="#user-interface">User Interface</a>
-                        <button 
-                                class="btn btn-sm btn-circle ml-2" 
-                                data-toggle="collapse" 
-                                data-target="#userInterfaceMenu" 
-                                aria-expanded="false" 
-                                aria-controls="userInterfaceMenu" 
-                                id="userInterfaceToggleButton" 
+                        <button class="btn btn-sm btn-circle ml-2"
+                                data-toggle="collapse"
+                                data-target="#userInterfaceMenu"
+                                aria-expanded="false"
+                                aria-controls="userInterfaceMenu"
+                                id="userInterfaceToggleButton"
                                 data-collapsed="true">
                             +
                         </button>
@@ -110,21 +140,46 @@
                             +
                         </button>
 
-                        <ul class="collapse" id="marketAnalysisMenu">
-                            <li><a href="#preface">Preface</a></li>
+                        <ul class="collapse ml-n3" id="marketAnalysisMenu">
                             <li><a href="#global-gaming-market">Global Gaming Market</a></li>
                             <li><a href="#rts-genre-trends">RTS Genre Trend</a></li>
                             <li><a href="#competitive-analysis">Competitive Analysis</a></li>
                             <li><a href="#target-audience-characterization">Target Audience</a></li>
                             <li><a href="#emerging-opportunities">Emerging Opportunities</a></li>
                             <li><a href="#monetization-strategies">Monetisation</a></li>
-                            <li><a href="#marketing-promotion">Marketing and Promotion</a></li>
-                            <li><a href="#company-aspirations">Company Aspirations</a></li>
-                            <li><a href="#summary">Summary</a></li>
+                            <li>
+                                <a href="#marketing-promotion">Advertising</a>
+                                <button class="btn btn-sm btn-circle ml-2"
+                                        data-toggle="collapse"
+                                        data-target="#marketingPromotionMenu"
+                                        aria-expanded="false"
+                                        aria-controls="marketingPromotionMenu"
+                                        id="marketingPromotionToggleButton"
+                                        data-collapsed="true">
+                                    +
+                                </button>
+
+                                <ul class="collapse ml-n3" id="marketingPromotionMenu">
+                                    <li><a href="#pre-funding">Pre-funding</a></li>
+                                    <li><a href="#with-funding">With Funding</a></li>
+                                </ul>
+
+                            </li>
                         </ul>
                     </li>
 
                     <li><a href="#budget-estimation">Budget Estimation</a></li>
+                    <li>
+                        <a href="#what-comes-next">What Comes Next</a>
+                        <button class="btn btn-sm btn-circle ml-2" data-toggle="collapse" data-target="#nextMenu" aria-expanded="false" aria-controls="nextMenu" id="nextToggleButton" data-collapsed="true">+</button>
+                        <ul class="collapse ml-n3" id="nextMenu">
+                            <li><a href="#for-fans">For fans...</a></li>
+                            <li><a href="#for-investors">For investors...</a></li>
+                            <li><a href="#for-team-members">For team members...</a></li>
+                            <li><a href="#for-the-company">For the company...</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
 
@@ -133,44 +188,30 @@
                     <h3 style="color: darkblue; margin-bottom: 10px;">Game Concept</h3>
                     <p>
                         <strong>Concept Overview:</strong>
-                        <span class="gameTitle"></span> is an RTS that
-                        immerses players in the strategic and tactical challenges of World War I.
-                        The game emphasizes a balance between economy, strategy and
-                        real time action.
+                        <span class="gameTitle"></span> is an RTS that immerses players in the strategic and tactical challenges of World War I. The game emphasizes a balance between economy, strategy and real time action.
                     </p>
                     <p>
                         <strong>Inspiration:</strong>
-                        Gameplay is heavily inspired by Age of Empires II and Kingdom Kights.
-                        The artistic and thematic style is heaviliy inspried by the Grimdark asthetic often
-                        found in Warhammer 40,000.
+                        Gameplay is heavily inspired by Age of Empires II and Knights of Honour. The artistic and thematic style is heavily inspired by the Grimdark aesthetic frequently found in Warhammer 40,000.
                     </p>
                     <p>
                         <strong>Core Gameplay:</strong>
-                        Players assume the roles of historical factions, orchestrating large-scale
-                        military operations on the battlegrounds of Europe.
-                        The game features large strategic decisions like research, production
-                        and moving regiments, and close up fast tactial play.
+                        Players assume the roles of historical factions, orchestrating large-scale military operations on the battlegrounds of Europe. The game features large strategic decisions like research, production and moving regiments, and close up fast tactical play.
                     </p>
 
                     <p><strong>Unique Selling Points:</strong></p>
                     <ul>
                         <li>
                             <strong>Fresh Experience:</strong>
-                            WWI is a very under represented theatre in gaming, only 1 in every 36 RTS games are about WWI (aprox). This gives players
-                            a much wider range of new units, tactics and experiences to explore than many RTS games offer. This provides a new game studio a
-                            blank canvas to work with.
+                            WWI is a very underrepresented theatre in gaming, only 1 in every 36 RTS games are about WWI (approx). This gives players a much wider range of new units, tactics and experiences to explore than many RTS games offer. This provides a young game studio a blank canvas to work with.
                         </li>
                         <li>
                             <strong>Strategic Depth:</strong>
-                            A lot of moving parts that are packaged neatly into 2 distinct map scales and
-                            4 distinct tactical stages. Both small decisions and large decisions can have meaninful impact the outcome.
+                            A lot of moving parts that are packaged neatly into <a href="#maps">2 distinct map scales</a> and <a href="#generalOrders">4 distinct tactical stages</a>. Both small decisions and large decisions can have meaningful impact on the outcome.
                         </li>
                         <li>
                             <strong>Olde World Charm, Modern Mechanical Monstrosities:</strong>
-                            WWI intersceted pre industrial equipment and tactics with
-                            the horrors of death delivered at the industrial scale. This game will capture the blend
-                            of old and new in a way not seen before. A potent cocktail of cavalry charges and mustard gas,
-                            Napoleonic era formations and analog targeting computers. Unique!
+                            The WWI period intersected pre-industrial equipment and tactics with the horrors of death delivered at a new industrial scale. This game will capture the blend of old and new in a way not seen before. A potent cocktail of cavalry charges and mustard gas, Napoleonic era formations and analogue targeting computers. Unique!
                         </li>
                     </ul>
                 </div>
@@ -179,9 +220,9 @@
                 <p>
                     The game loop is divided between the macro and micro management of 2 maps and 4 General Orders that run in real time.
                     The 2 maps cover different scales of the battlefield, a large view of whole regions or a granular view of specific battlefields,
-                    zooming with the mouse roller will switch scales. The stages of Genreal Orders are a more abstract concept but are
-                    basically like "ages" in Age of Empires, levels of advancement that have requirments to reach and provide new opertunities
-                    at each stage. General Orders cannot be undone once called up. There is no limitation on where anything can be built or moved but there are sensible places build and move.
+                    zooming with the mouse roller will switch scales. The stages of General Orders are a more abstract concept but are
+                    basically like "ages" in Age of Empires, levels of advancement that have requirements to reach and provide new opportunities
+                    at each stage. General Orders cannot be undone once called up. There is no limitation on where anything can be built or moved but there are sensible places to build and move.
                     Like building barracks in urban areas or steel foundries close to iron deposits is a good idea. But there might be good reasons to
                     build or move near or in enemy areas, like field hospitals or incursions behind enemy lines.
 
@@ -196,16 +237,17 @@
                             <h5 id="strategic-map">Macro Scale: Strategic Map</h5>
                             <p>
                                 This is high level map view covers whole regions for macro management. A player uses this map view to manage
-                                production, research and moving entire armies. At this scale the player handles economy like workers,
-                                resource management, prodcution of units and logistics (roads, rail, shipping). The strategic map view will handle nearly all the econmy game elements
+                                production, research and moving entire armies. At this scale, the player handles economy like workers,
+                                resource management, production of units and logistics (roads, rail, shipping). The strategic map view will handle nearly all the economy game elements
                                 with very few military elements, just strategic bombing.
                             </p>
                         </div>
                         <div class="col-md-6">
-                            <video controls>
-                                <source src="path_to_your_video.mp4" type="video/mp4">
-                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
-                            </video>
+                            <figure>
+                                <iframe width="300" height="168" src="https://www.youtube.com/embed/9MMqvOkEQMc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <figcaption>Large Strategic Map</figcaption>
+                            </figure>
+
                         </div>
                     </div>
 
@@ -218,14 +260,16 @@
                                 collect supplies, dig (gun pits, trenches, dugouts, tunnels), build (wire, lay mines, lookout posts, machine gun nests),
                                 move or attack. Using hotkeys will be crucial. Most of the military game elements are handled at this scale with
                                 very few economy elements handled here, just wood chopping for lumber. There is an additional layer to this map which
-                                is that players can engage in tunnel warfare by digging through 3 subterrainian layers under the battlefield.
+                                is that players can engage in tunnel warfare by digging through 3 subterranean layers under the battlefield.
                             </p>
                         </div>
                         <div class="col-md-6">
-                            <video controls>
-                                <source src="path_to_your_video.mp4" type="video/mp4">
-                                Your browser does not support the video tag. Try Chome, Brave, or Opera.
-                            </video>
+                            <figure>
+                                <iframe width="300" height="168" src="https://www.youtube.com/embed/GdYpYOLF7CM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <figcaption>Tight Tactical Map</figcaption>
+                            </figure>
+
+
                         </div>
                     </div>
                 </div>
@@ -233,13 +277,13 @@
                 <div class="pl-4">
                     <h4 id="generalOrders">General Orders</h4>
                     <p>
-                        The stages in game are called "General Orders". Each order affects economic and military elements. Although the button to call up the next General Order
+                        The stages of the game are called "General Orders". Each order affects economic and military elements. Although the button to call up the next General Order
                         is accessed through the capital city located on the Strategic Map, the order will affect all areas of the game. General Orders are as follows:
                     </p>
 
                     <div class="row pl-5">
                         <div class="col-md-6">
-                            <h5 id="mobilisation">Mobilisation</h5>
+                            <h5 id="mobilisation">1: Mobilisation</h5>
                             <p>
                                 Focus on rapidly gathering essential resources and swiftly advancing to the next General Order.
                                 Efficient resource management and early strategic planning are key.
@@ -254,9 +298,9 @@
                     </div>
                     <div class="row pl-5">
                         <div class="col-md-6">
-                            <h5 id="fortification">Fortification</h5>
+                            <h5 id="fortification">2: Fortification</h5>
                             <p>
-                                Prioritize the construction of critical defense structures and expand your military forces.
+                                Prioritize the construction of critical defence structures and expand your military forces.
                                 Launch probing attacks to gauge enemy strength, positions and attempt to hamper their rate of expansion.
                             </p>
                         </div>
@@ -269,7 +313,7 @@
                     </div>
                     <div class="row pl-5">
                         <div class="col-md-6">
-                            <h5 id="assault">Assault</h5>
+                            <h5 id="assault">3: Assault</h5>
                             <p>
                                 Launch aggressive attacks to weaken and dislodge enemy forces.
                                 Simultaneously, continue expanding your military and economy, advance in technology research and
@@ -285,10 +329,10 @@
                     </div>
                     <div class="row pl-5">
                         <div class="col-md-6">
-                            <h5 id="holdTheLine">Hold the Line</h5>
+                            <h5 id="holdTheLine">4: Hold the Line</h5>
                             <p>
-                                Implement a full-scale offensive to overwhelm the enemy. Finalize research on remaining technologies to ensure your units have
-                                superior capabilities. Focus on leveraging your maximum military potential for a decisive victory.
+                                The battle reaches its crescendo with full-scale onslaughts on multiple fronts. Finalise research on remaining technologies to ensure your units have
+                                superior capabilities. This is the last desperate, all out struggle to win the game.
                             </p>
                         </div>
                         <div class="col-md-6">
@@ -300,8 +344,8 @@
                     </div>
                     <p>
                         To call up the next General Order the player needs to pay certain resources, have certain buildings and unlock certain
-                        technologies. The requirment for the next General Order increases but so do the rewards of each General Order,
-                        access to new and better units and buildings, accesss to new and better upgrades on existing units and buildings.
+                        technologies. The requirement for the next General Order increases but so do the rewards of each General Order,
+                        access to new and better units and buildings, accesses to new and better upgrades on existing units and buildings.
                         Calling up the next General Order before your opponent will often put a player at an advantage but there may be some
                         situations/strategies where spending resources on increasing economy or military is more advantageous
                         than calling up the next General Order.
@@ -309,7 +353,23 @@
                 </div>
 
                 <h3 id="development-roadmap">Development Roadmap</h3>
-                <p>Details for the development timeline...</p>
+                <p>Of all this sections of this Game Design Document, this is most flexible.</p>
+                <div style="margin-left: 20px;">
+                    <section id="prototype-development">
+                        <h2>Prototype Development</h2>
+                        <p>Comming soon...</p>
+                    </section>
+
+                    <section id="demo-development">
+                        <h2>Demo Development</h2>
+                        <p>Comming soon...</p>
+                    </section>
+
+                    <section id="pitching">
+                        <h2>Pitching</h2>
+                        <p>Comming soon...</p>
+                    </section>
+                </div>
 
                 <h3 id="story-and-setting">Story and Setting</h3>
                 <p>
@@ -323,9 +383,9 @@
                     during The Great War.
                 </p>
                 <p>
-                    Many war games are either amoral or throw morality out of the window in favor of propaganda tropes. The storyline
-                    of this game will address morality directly and place the blame squarley on the shoulders of the politicians who dragged their
-                    nations into yet more pointless wars. The story will not be propegandistic but it will also not shy away from the blood guilt
+                    Many war games are either amoral or throw morality out of the window in favour of propaganda tropes. The storyline
+                    of this game will address morality directly and place the blame squarely on the shoulders of the politicians who dragged their
+                    nations into yet more pointless wars. The story will not be propagandistic but it will also not shy away from the blood guilt
                     incurred by the leaders of that time. Nations themselves will not be painted as good guys or bad guys in the campaign.
                     Real historic reference material will be used as inspiration for the story.
                 </p>
@@ -342,50 +402,50 @@
                 </p>
                 <h3 id="art-style">Art Style</h3>
                 <p>
-                    The art style of <span class="gameTitle"></span> can be summed up in a word quite easily: Grimdark atmosphere, 
-                    dieselpunk detail. It strikes a balance between historical accuracy and approachable aesthetics.
-                    While maintaining accurate proportions of units, buildings, and scenery, the details are rendered in a stylized,
+                    The art style of <span class="gameTitle"></span> can be summed up in a word quite easily: Grimdark atmosphere,
+                    dieselpunk detail. It strikes a balance between historical accuracy and fun aesthetics.
+                    While maintaining accurate proportions of units, buildings, and scenery, the details are rendered in a stylised,
                     somewhat cartoonish quality. This is complemented by thematic shades, diverging from strict realism to enhance
                     the game's atmosphere. The skies and horizons are particularly dramatic, styled with dark, ominous features
                     that create impactful backdrops, evoking the intense emotions of war. This stylistic choice aims to make the game visually
-                    appealing and engaging while preserving the gravity of the historical context. For visual inspiration and
+                    appealing and engaging while preserving gravitas. For visual inspiration and
                     a better understanding of this artistic direction, check out
                     <a href="https://www.youtube.com/watch?v=cRZkRuH8A7s&list=PL_bBAU-tRdZ9eeNA9QGd6nY_lW8BY9R-_&index=4">
                         this video
                     </a> showcasing the Death Guard legion, which exemplifies a similar blend of realism and stylisation.
-                    There should be some exciting lighting and screen shake effects on explosions and eerie effects of gas clouds creeping over battlefields.
-                    A day/night/season cycle and weather should be a visual representation of certain game mechanics like visability, gas weapons and
-                    terrain movement effects (hard or soft mud).
+                    When polishing the game we should add some exciting lighting and screen shake effects on explosions and eerie effects of gas clouds creeping over battlefields.
+                    A day/night/season cycle and weather should be a visual representation of certain game mechanics like visibility, gas weapons and
+                    terrain movement effects (hard or soft mud based on season and weather).
                 </p>
-
                 <p>
                     Since the primary focus of <span class="gameTitle"></span> is on mechanical gameplay, the development of the art style will be a subsequent phase.
                     The initial stages of the project will concentrate on solidifying the core gameplay mechanics, ensuring they are engaging, functional,
                     and well-tuned. Once the gameplay foundation is strong the art development will commence.
-                    This approach will ensure that the visual elements complement and enhance the established mechanics rather than overpower them.
-                    Because there will be many units onscreen at any one time the computational load of visuals will be handled economically to ensure
+                    This approach will ensure that the visual elements complement and enhance the established mechanics, rather than overpower them.
+                    Because there will be many units onscreen at any one time, the computational load of visuals will be handled economically to ensure
                     performance doesn't tank.
                 </p>
-
-                <p class="text-danger">
-                    Artists responsible for creating game art for advertising before launch, as well as in game art.
+                <p>
+                    Once the mechanical aspects of the prototype are well underway, digital artists/3D
+                    Modellers will be sought to handle game art. Their role will be to create the feel of game
+                    aesthetics, create high-poly models and convert to sprite sheets, and create animations for presenting the demo to players and investors.
                 </p>
 
                 <h3 id="sound-and-music">Sound and Music</h3>
 
                 <h4>Sound Design</h4>
                 <ul>
-                    <li><strong>Sound Engineer:</strong> In line with the art development phase, a sound engineer will be engaged to contribute his expertise to the project after the core game mechanics are solidly in place. His role will involve crafting a compelling and immersive audio landscape that enhances gameplay and narrative. This includes creating and sourcing sound effects, ambient sounds, and potentially working on the game's musical score. The sound engineer is expected to bring his own specialized tools and resources to the project, and collaborate closely with the development team to ensure the audio aligns with the game's artistic vision and gameplay dynamics.</li>
-                    <li><strong>Prioritization of Sound Effects:</strong> During development the highest priority is given to effects that directly enhance gameplay mechanics. This approach ensures that sounds crucial for player feedback, incoming artillery fire or your units carrying out orders, are developed first to aid in strategic decision-making and improve the overall gaming experience.</li>
-                    <li><strong>Event Driven Sound Effects:</strong> Tailored audio cues that give players vital information about in-game events, enhancing gameplay awareness and immersion through responsive, contextual sounds. For example a distant siren indicating an impending attack, enhancing the players situational awareness.</li>
-                    <li><strong>Context-Sensitive Ambient Sounds:</strong>Trigger specific ambient sound effects based on the player's location and the events happening around them. For example, near a battlefield, the sounds of distant artillery fire could be heard, whereas in a base camp, the focus might shift to the chatter of soldiers and the clanking of equipment.</li>
-                    <li><strong>Multilingual Voice Acting for Factions:</strong>Each faction's voice acting is in its national language, enhancing authenticity and appealing to players' cultural identity, particularly in non-English speaking countries. This approach heightens immersion and personal connection to the game.</li>
+                    <li><strong>Sound Engineer:</strong> Similar to handling art during the demo development phase, a sound engineer will be sought to contribute his expertise to the project after the core game mechanics are solidly in place. His role will involve crafting a compelling and immersive audio landscape that enhances gameplay and narrative. This includes creating and sourcing sound effects, ambient sounds, and potentially working on the game's musical score. The sound engineer is expected to bring his own specialized tools and resources to the project, and collaborate closely with the development team to ensure the audio aligns with the game's artistic vision and gameplay dynamics.</li>
+                    <li><strong>Prioritization of Sound Effects:</strong> During development, the highest priority is given to effects that directly enhance gameplay mechanics. This approach ensures that sounds crucial for player feedback, incoming artillery fire or your units carrying out orders, are developed first to aid in strategic decision-making and improve the overall gaming experience.</li>
+                    <li><strong>Event Driven Sound Effects:</strong> Tailored audio cues that give players vital information about in-game events, enhancing gameplay awareness and immersion through responsive, contextual sounds. For example, a distant siren indicating an impending attack, enhancing the player's situational awareness.</li>
+                    <li><strong>Context-Sensitive Ambient Sounds:</strong> Trigger specific ambient sound effects based on the player's location and the events happening around them. For example, near a battlefield, the sounds of distant artillery fire could be heard, whereas in a base camp, the focus might shift to the chatter of soldiers and the clanking of equipment.</li>
+                    <li><strong>Multilingual Voice Acting for Factions:</strong> Each faction's voice acting is in its national language, enhancing authenticity and appealing to players' cultural identity, particularly in non-English speaking countries. This approach heightens immersion and personal connection to the game.</li>
                 </ul>
 
                 <h4>Music</h4>
                 <ul>
                     <li><strong>Event Driven Background Tracks:</strong> Employ more upbeat music during the final General Order of <a href="#holdTheLine">Hold The Line</a>.</li>
-                    <li><strong>Royalty-Free Music:</strong>Use royalty-free music tracks available online. Websites like Incompetech or Free Music Archive offer a variety of tracks that can be used for free or with attribution.</li>
+                    <li><strong>Royalty-Free Music:</strong> Use royalty-free music tracks available online. Websites like Incompetech or Free Music Archive offer a variety of tracks that can be used for free or with attribution.</li>
                     <li><strong>Minimalist Approach:</strong> Minimalist approach to music. Sometimes, less is more – a few well-chosen tracks can be effective for setting the mood.</li>
                     <li><strong>Public Domain Historical Music:</strong> Research and incorporate music from the era that is now in the public domain. Early 20th-century compositions might be available for use without licensing issues.</li>
                 </ul>
@@ -397,8 +457,10 @@
                     <li><strong>Historically Inspired Battlefields:</strong> Levels are based on real World War I battlefields, featuring authentic terrains like trenches and war-torn villages.</li>
                     <li><strong>Interactive Environments:</strong> Environments are interactive, providing tactical advantages and depth to gameplay. For example, being on a hill increases view and weapon range.</li>
                     <li><strong>Dynamic Weather and Time:</strong> Changing weather conditions and time-of-day cycles affect movement and visibility, adding strategic elements.</li>
-                    <li><strong>Destructible Elements:</strong> Certain environmental features are destructible, allowing dynamic battlefield changes.</li>
-                    <li><strong>Varied Scales and Perspectives:</strong> Different map scales offer a deeper gameplay experiences, from the large <a href="#strategic-map">macro strategic map</a> view, the detailed<a href="#tactical-map"> micro tactical map </a>view to underground tunnel views.</li>
+                    <li><strong>Destructible Elements:</strong> Certain scenery features are destructible, allowing dynamic battlefield changes.</li>
+                    <li><strong>Varied Scales and Perspectives:</strong> Different map scales offer a deeper gameplay experiences, 
+                    from the large <a href="#strategic-map">macro strategic map</a> view, the detailed<a href="#tactical-map"> micro tactical map </a>
+                    and an addiitonal scroll level to handle underground tunnel warfare.</li>
                     <li><strong>Atmospheric Detailing:</strong> Small details like spent shell casings and makeshift encampments enhance the immersive atmosphere.</li>
                 </ul>
 
@@ -456,16 +518,16 @@
                                 <p>
                                     The key functions will be nested, for example, selecting a
                                     worker or soldier will open all the options since they can perform
-                                    all options, but a building cannot move therefore the <strong>Formation</strong>
+                                    all options, but a building cannot move, therefore the <strong>Formation</strong>
                                     options will not open when a building is selected. Or an artillery gun cannot
-                                    build anything so the construction <strong>Action</strong> options will not
+                                    build anything, so the <strong>Construction Action</strong> options will not
                                     open when an artillery gun is selected.
                                 </p>
                                 <p>
                                     The [QWERTASDFZXCV] keys and the number row have been
                                     strategically chosen for their ergonomic positioning, making them ideally
                                     suited for rapid and efficient hotkey-based gameplay. Their physical placement
-                                    on the keyboard aligns seamlessly with the 5x3 grid layout of the game's
+                                    on the keyboard will align seamlessly with the 5x3 grid layout of the game's
                                     options menu, facilitating intuitive and swift navigation
                                     (refer to the accompanying image for visual layout).
                                 </p>
@@ -519,18 +581,15 @@
                     This game will be programmed at a low level using C++ and a few complementary libraries. No game engine will be used.
                     The reason is it's a project designed to increase programming skills, team management and enterprise skills.
                     Sticking to raw code provides the greatest learning environment at the cost of time. Skills gained on this project are
-                    directly applicable to future projects that need low level problem solving skills making <span class="gameTitle"></span>
+                    directly applicable to future projects that need low level problem-solving skills making <span class="gameTitle"></span>
                     a practice ground.
                 </p>
 
                 <h3 id="market-analysis">Market Analysis</h3>
                 <div class="ml-2">
-                    <h4 id="preface">Preface</h4>
-                    <p>Comming soon...</p>
-
                     <h4 id="global-gaming-market">Global Gaming Market</h4>
                     <p>
-                        The indie game sector within the broader gaming market is witnessing a remarkable surge, underscoring its potential as a worthwhile investment. Recent data shows that indie games accounted for over 35% of all game releases on popular platforms in the past year, signaling their increasing prevalence in the market <sup><a href="https://www.superjumpmagazine.com/state-of-indie-games-survey-2023/" target="_blank">[reference]</a></sup>. Financially, indie games have shown impressive performance; for instance, in 2022, revenue generated by indie games on PC and console platforms exceeded $1 billion, highlighting their commercial viability <sup><a href="https://www.gamesindustry.biz/gamesindustrybiz-presents-the-year-in-number-2023" target="_blank">[reference]</a></sup>. Another significant statistic is the user engagement with indie titles. On average, indie games have seen a 150% increase in hours played over the last two years, indicating a growing consumer interest and loyalty to this genre <sup><a href="https://business.yougov.com/content/41600-us-charting-rise-indie-video-games" target="_blank">[reference]</a></sup>. This growth is attributed to several factors: the rise of digital distribution platforms like Steam and itch.io, which have democratized access to the gaming market for small-scale developers; the increasing quality and diversity of indie games, which often explore unique themes and gameplay mechanics not typically found in mainstream titles; and the supportive communities that rally around indie titles, often driving their success through word-of-mouth and social media. Additionally, the success of several high-profile indie games has drawn more attention to the sector, inspiring new developers and attracting more investors. These trends and figures paint a promising picture for indie game studios, suggesting that they are not only creatively valuable but also increasingly significant in the global gaming market.
+                        The indie game sector within the broader gaming market is witnessing a remarkable surge, underscoring its potential as a worthwhile investment. Recent data shows that indie games accounted for over 35% of all game releases on popular platforms in the past year, signalling their increasing prevalence in the market <sup><a href="https://www.superjumpmagazine.com/state-of-indie-games-survey-2023/" target="_blank">[reference]</a></sup>. Financially, indie games have shown impressive performance; for instance, in 2022, revenue generated by indie games on PC and console platforms exceeded $1 billion, highlighting their commercial viability <sup><a href="https://www.gamesindustry.biz/gamesindustrybiz-presents-the-year-in-number-2023" target="_blank">[reference]</a></sup>. Another significant statistic is the user engagement with indie titles. On average, indie games have seen a 150% increase in hours played over the last two years, indicating a growing consumer interest and loyalty to this genre <sup><a href="https://business.yougov.com/content/41600-us-charting-rise-indie-video-games" target="_blank">[reference]</a></sup>. This growth is attributed to several factors: the rise of digital distribution platforms like Steam and itch.io, which have widened access to the gaming market for small-scale developers; the increasing quality and variety of indie games, which often explore unique themes and gameplay mechanics not typically found in mainstream titles; and the supportive communities that rally around indie titles, often driving their success through word-of-mouth and social media. Additionally, the success of several high-profile indie games has drawn more attention to the sector, inspiring new developers and attracting more investors. These trends and figures paint a promising picture for indie game studios, suggesting that they are not only creatively valuable but also increasingly significant in the global gaming market.
                     </p>
 
                     <h4 id="rts-genre-trends">RTS Genre Trend</h4>
@@ -542,15 +601,15 @@
                     <h6>Market Trends:</h6>
 
                     <ul>
-                        <li><b>Declining, but Stabilizing:</b> According to Newzoo, the RTS market saw a steady decline from 2012 to 2018, falling from 5% of the global PC market to just 1.5%. However, since then, it has stabilized, holding steady at around 1.4% in 2022. This suggests a core, dedicated audience that remains engaged.</li>
+                        <li><b>Declined, but now Stabilising:</b> According to Newzoo, the RTS market saw a steady decline from 2012 to 2018, falling from 5% of the global PC market to just 1.5%. However, since then, it has stabilized, holding steady at around 1.4% in 2022. This suggests a core, dedicated audience that remains engaged.</li>
                         <li><b>Indie Spark:</b> While AAA RTS releases have become rarer, the indie scene has stepped up. According to GameDev.net, the number of new RTS titles released annually has remained constant around 100-150 since 2018. This steady stream of innovation, often focusing on tighter mechanics and streamlined controls, is attracting new players and revitalizing the community.</li>
                     </ul>
 
                     <h6>Competitive Scene:</h6>
 
                     <ul>
-                        <li><b>Esports Flicker:</b> While not dominating the esports landscape as in its heydays, titles like StarCraft II and Age of Empires IV maintain vibrant competitive communities. Smaller titles like Iron Harvest are also building their competitive scenes, offering opportunities for dedicated RTS players.</li>
-                        <li><b>Streaming Pulse:</b> Twitch viewership for RTS games, while not in the top tiers, shows promise. According to StreamElements, StarCraft II consistently pulls in around 30,000 viewers, with Age of Empires IV and smaller titles like They Are Billions also garnering healthy audiences. This indicates continued interest and engagement from the core community.</li>
+                        <li><b>Esports:</b> While not dominating the esports landscape as in its heydays, titles like StarCraft II and Age of Empires IV maintain vibrant competitive communities. Smaller titles like Iron Harvest are also building their competitive scenes, offering opportunities for dedicated RTS players.</li>
+                        <li><b>Streaming:</b> Twitch viewership for RTS games, while not in the top tiers, shows promise. According to StreamElements, StarCraft II consistently pulls in around 30,000 viewers, with Age of Empires IV and smaller titles like They Are Billions also garnering healthy audiences. This indicates continued interest and engagement from the core community.</li>
                     </ul>
 
                     <h6>Challenges and Potential:</h6>
@@ -565,193 +624,387 @@
                     <p>The RTS genre isn't experiencing a full-blown renaissance, but it's certainly far from dead. Dedicated developers are injecting fresh ideas, a passionate community keeps the flame alive, and data suggests a stable, engaged player base. Continued accessibility improvements, innovative control schemes, and captivating new approaches to classic mechanics hold the key to rekindling the RTS fire and attracting a wider audience. While navigating the challenges, the genre has the potential to carve out a unique and thriving space in the modern gaming landscape, proving that strategic depth and real-time empire building still hold a powerful allure for players seeking a cerebral and rewarding gaming experience.</p>
 
                     <h4 id="competitive-analysis">Competitive Analysis</h4>
-                    <h5>Closest Competition</h5>
-                    <p>
-                        <a href="https://steamcommunity.com/app/826630" target="_blank">Iron Harvest (2019)</a>
-                        offers us a valuable case study in balancing artistic vision with gameplay execution.
-                        The game's unique dieselpunk setting, inspired by the captivating artwork of
-                        <a href="https://jrozalski.com/" target="_blank">Jakub Rozalski</a>, generated significant
-                        pre-launch excitement. This nostalgic retro-futuristic aesthetic captured the imaginations
-                        of many, fueled by anticipation for an immersive world. However, while Iron Harvest
-                        achieved moderate commercial success, some technical issues and limitations in core
-                        gameplay mechanics prevented it from fully capitalizing on its initial buzz.
-                        This suggests the importance of not only fostering a compelling artistic vision but also
-                        ensuring that gameplay mechanics deliver a satisfying and polished experience.
-                    </p>
+                    <div style="margin-right: 20px;">
+                        <h5>Closest Competition</h5>
+                        <p>
+                            <a href="https://steamcommunity.com/app/826630" target="_blank">Iron Harvest (2019)</a>
+                            offers us a valuable case study given it's similarities to <span class="gameTitle"></span>.
+                            The game's rich dieselpunk setting, inspired by the captivating artwork of
+                            <a href="https://jrozalski.com/" target="_blank">Jakub Rozalski</a>, generated significant
+                            pre-launch excitement. This nostalgic retro-futuristic aesthetic captured the imaginations
+                            of many, fuelled by anticipation for an immersive world. However, while Iron Harvest
+                            achieved moderate commercial success, some technical issues and limitations in core
+                            gameplay mechanics prevented it from fully capitalizing on its initial buzz.
+                            This suggests the importance of not only fostering a compelling artistic vision but also
+                            ensuring that gameplay mechanics deliver a satisfying and live up to the pre-launch hype.
+                        </p>
+                        <h5>Getting Ahead</h5>
+                        <p>
+                            In the dynamic landscape of game development, our most significant competition emerges
+                            from the burgeoning community of newbie, solo indie developers. This segment represents a
+                            formidable challenge due to the low entry barriers and the growing accessibility of game
+                            development tools, making it an appealing starting point for many. To differentiate ourselves
+                            in this crowded space, we are adopting the approach of working as a cohesive newbie indie
+                            game dev team. Working in uniity enhances our strengths as development team, over the
+                            endeavours of solo developer.
+                        </p>
+                        <p>
+                            Our next tier of competition consists of other indie game development teams similar
+                            to ours in structure and scale. We can gain an edge from creating a compelling
+                            game experience, fostering a dedicated community of fans, and ensuring we build an
+                            impressive product demo. The key to our success in the indie game industry is to create
+                            a project that resonates with both audiences <i>and</i> investors. Our dedication to
+                            crafting a compelling game experience, nurturing a strong fan community, and developing
+                            an impressive product demo will distinguish us from our peers when appealing to investors.
+                        </p>
 
-                    <h5>
-                        Our Best
-                    </h5>
-                    <p>
-                        Competition for commercial success in the RTS space is feirce and failure is virtually
-                        garunteed. So instead let's look inward to realize our full potential. Our aim is to create an
-                        outstanding Real Time Strategy game that truly reflects our vision, capabilities and team work.
-                    </p>
-                    <h6>Building a Rock-Solid Core:</h6>
-                    <ol>
-                        <li>
-                            <b>Refine the Essence:</b> What makes <span class="gameTitle"></span> special?
-                            Is it the strategic depth, the satisfying base building, or the epic unit clashes?
-                            Focus on this core gameplay, polishing it to a pristine level so every moment resonates
-                            with our vision.
-                        </li>
-                        <li>
-                            <b>Tweak the Familiar:</b>
-                            Inject freshness into classic mechanics. Tunnel warface is very rare in the RTS
-                            genre and gaming in general, we have a unique gaming experience to offer.
-                        </li>
-                        <li>
-                            <b>Strategic Immersion:</b>
-                            2 teired map system is a popular mechanic in RTS and 4x but very few games
-                            run them cocurrently in real time. This game will create a fast but rich gaming
-                            experience by running high and low level control at the time.
-                        </li>
-                    </ol>
-                    <h6>Embracing Our Community:</h6>
-                    <ol>
-                        <li>
-                            <b>Community as Co-Pilot:</b>
-                            Foster open communication and feedback. Our players are our sounding board,
-                            our co-creators, and our biggest advocates. Listen to them, empower them,
-                            and watch our game flourish with their passion.
-                        </li>
-                        <li>
-                            <b>Early Access, Early Champions:</b>
-                            Consider inviting dedicated players into an early access program.
-                            Their feedback is invaluable, builds excitement, and fosters a sense of ownership.
-                            Treat them with respect and watch our community become our greatest asset.
-                        </li>
-                        <li>
-                            <b>Content that Keeps Going:</b>
-                            Don't let the launch be the end. Plan for engaging post-launch content,
-                            like expansions, new modes, or community events. Keep players invested, surprised,
-                            and delighted long after the initial campaign ends.
-                        </li>
-                    </ol>
-                    <h6>Polish & Perfection: The Final Lap</h6>
-                    <ol>
-                        <li><b>Playtest, Polish, Repeat:</b> Be ruthless in playtesting, dissecting every mechanic, balancing encounters, and ensuring a smooth, intuitive experience. Obsess over polish, strive for excellence, and never settle for good enough.</li>
-                        <li><b>Learn from All Corners:</b> Analyze the successes and failures of other RTS titles, AAA and indie alike. What resonated with players? What fell flat? Use this knowledge to refine your approach, avoiding pitfalls and embracing winning elements.</li>
-                        <li>
-                            <b>Passion Over Profit:</b>
-                            Let your love for the genre be your guiding light. Create an RTS that you,
-                            as a players, would love playing. Inject your passion into every line of code, every design decision and every last pixel.
-                        </li>
-                    </ol>
-                    <p>
-                        At this stage, the true competition is with ourselves. By focusing on crafting the
-                        best team and best game we're capabile of, we can establish a reputation as a
-                        gaming studio synonymous with quality and innovation. Such a reputation naturally
-                        attracts a vibrant, engaged community. This is about fostering an environment where
-                        creativity thrives and each team member contributes their unique skills to create
-                        compelling gaming experiences. A strong studio reputation not only draws talented
-                        individuals but also cultivates a passionate player base. Their enthusiasm and
-                        feedback become integral to our game development process, enabling us to continually
-                        enhance our offerings and solidify our position in the gaming world.
-                    </p>
-                    <h4 id="target-audience-characterization">Target Audience</h4>
+                        <h5>
+                            Our Best
+                        </h5>
+                        <p>
+                            Although the gaming market is expanding swiftly, the battle for commercial triumph in
+                            the RTS genre is intensely competitive, with success far from assured.
+                            However, many successful businessmen who have prevailed in a saturated market have offered
+                            similar advice, which can be summarised in these words: "<i>
+                                build a really compelling product that
+                                you're passionate about and the financing will follow.
+                            </i>"
+                            <sup id="ref1">[1]</sup>
+                            <sup id="ref2">[2]</sup>
+                            <sup id="ref3">[3]</sup>
+                            <sup id="ref4">[4]</sup>
+                            <sup id="ref5">[5]</sup>
+                            Our aim is to create an outstanding Real Time Strategy game that truly reflects our vision, capabilities but especially our team work.
+                        </p>
+                        <h6>Building a Rock-Solid Core:</h6>
+                        <ol>
+                            <li>
+                                <b>Refine the Essence:</b> What makes <span class="gameTitle"></span> special?
+                                Is it the strategic depth, the satisfying base building, or the epic unit clashes?
+                                Focus on this core gameplay, polishing it to a pristine level so every moment resonates
+                                with our vision.
+                            </li>
+                            <li>
+                                <b>Tweak the Familiar:</b>
+                                Inject freshness into classic mechanics. Tunnel warfare is very rare in the RTS
+                                genre and gaming in general, we have a unique gaming experience to offer on top of classic RTS elements.
+                            </li>
+                            <li>
+                                <b>Strategic Immersion:</b>
+                                2 tiered map system is a popular mechanic in RTS and 4x but very few games
+                                run them concurrently in real time. This game will create a fast but rich gaming
+                                experience by running high and low level control at the same time.
+                            </li>
+                        </ol>
+                        <h6>Embracing Our Community:</h6>
+                        <ol>
+                            <li>
+                                <b>Community as Co-Pilot:</b>
+                                Foster open communication and feedback. Our players are our sounding board,
+                                our co-creators, and our biggest advocates. Listen to them, empower them,
+                                and watch our game flourish with their passion.
+                            </li>
+                            <li>
+                                <b>Early Access, Early Champions:</b>
+                                Consider inviting dedicated players into an early access program.
+                                Their feedback is invaluable, builds excitement, and fosters a sense of ownership.
+                                Treat them with respect and watch our community become our greatest asset.
+                            </li>
+                            <li>
+                                <b>Content that Keeps Going:</b>
+                                Don't let the launch be the end. Plan for engaging post-launch content,
+                                like expansions, open mod functionality, or community events. Keep players invested, surprised,
+                                and delighted long after the initial marketing campaign ends.
+                            </li>
+                        </ol>
+                        <h6>Polish & Perfection: The Final Lap</h6>
+                        <ol>
+                            <li><b>Playtest, Polish, Repeat:</b> Be ruthless in playtesting, dissecting every mechanic, balancing encounters, and ensuring a smooth, intuitive experience. Obsess over polish, strive for excellence, and never settle for good enough.</li>
+                            <li><b>Learn from All Corners:</b> Analyze the successes and failures of other RTS titles, AAA and indie alike. What resonated with players? What fell flat? Use this knowledge to refine your approach, avoiding pitfalls and embracing winning elements.</li>
+                            <li>
+                                <b>Passion Over Profit:</b>
+                                Let your love for the genre be your guiding light. Create an RTS that you,
+                                as a player, would love playing. Inject your passion into every line of code, every design decision and every last pixel.
+                            </li>
+                        </ol>
+                        <p>
+                            At this stage, the true competition is with ourselves. By focusing on crafting the
+                            best team and best game we're capable of, we can establish a reputation as a
+                            gaming studio synonymous with quality and innovation. Such a reputation naturally
+                            attracts a vibrant, engaged community. This is about fostering an environment where
+                            creativity thrives and each team member is greatly valued for contributing their time and skills to 
+                            helping create a compelling gaming experiences. A strong studio reputation not only draws talented
+                            individuals, but also cultivates a passionate player base. Their enthusiasm and
+                            feedback become integral to our game development process, enabling us to continually
+                            enhance our offerings and solidify our position in the gaming world.
+                        </p>
+                        <h4 id="target-audience-characterization">Target Audience</h4>
 
-                    <p>
-                        The target audience for our RTS is specifically chosen and will not be left to chance.
-                        Our primary focus will be on fans who cherish the classic RTS mechanics found in
-                        games like Command & Conquer and Age of Empires, and who also have a passion for
-                        the Grimdark aesthetic of the Warhammer 40,000 universe. This audience is known
-                        for their appreciation of:
-                    </p>
+                        <p>
+                            The target audience for our RTS is specifically chosen and will not be left to chance.
+                            Our primary focus will be on fans who cherish the classic RTS mechanics found in
+                            games like Command & Conquer and Age of Empires, and who also have a passion for
+                            the Grimdark aesthetic of the Warhammer 40,000 universe. This audience is known
+                            for their appreciation of:
+                        </p>
 
-                    <ul>
-                        <li><strong>Strategic Complexity</strong>: They enjoy games that require thoughtful planning, resource management, and tactical decision-making. This audience appreciates the challenge of balancing long-term strategy with immediate tactical choices.</li>
-                        <li><strong>Nostalgia and Franchise Loyalty</strong>: Many players of classic RTS games have a sense of nostalgia and loyalty towards these franchises. They often seek experiences that remind them of the classic gameplay but also incorporate modern enhancements.</li>
-                        <li><strong>Grimdark Theme</strong>: Fans of the Warhammer 40,000 universe are drawn to its dark, gritty, and complex setting. Incorporating this aesthetic can attract players who are looking for an RTS experience that combines classic gameplay with a rich, immersive world of towering industrial might and old world stylisation.</li>
-                        <li><strong>Competitive and Cooperative Play</strong>: Emulating the competitive spirit of classic RTS games and the cooperative aspects of Warhammer 40,000 gameplay, we aim to attract players who enjoy both solo and multiplayer experiences.</li>
-                        <li><strong>Modding and Community Involvement</strong>: The ability to modify games and be part of a vibrant community is also a significant draw. Many players of classic RTS titles are active in forums, modding communities, and online groups dedicated to these games.</li>
-                    </ul>
+                        <ul>
+                            <li><strong>Strategic Complexity</strong>: They enjoy games that require thoughtful planning, resource management, and tactical decision-making. This audience appreciates the challenge of balancing long-term strategy with immediate tactical choices.</li>
+                            <li><strong>Nostalgia and Franchise Loyalty</strong>: Many players of classic RTS games have a sense of nostalgia and loyalty towards these franchises. They often seek experiences that remind them of the classic gameplay but also incorporate modern enhancements.</li>
+                            <li><strong>Grimdark Theme</strong>: Fans of the Warhammer 40,000 universe are drawn to its dark, gritty, and complex setting. Incorporating this aesthetic can attract players who are looking for an RTS experience that combines classic gameplay with a rich, immersive world of towering industrial might and old world stylisation.</li>
+                            <li><strong>Competitive and Cooperative Play</strong>: Emulating the competitive spirit of classic RTS games and the cooperative aspects of Warhammer 40,000 gameplay, we aim to attract players who enjoy both solo and multiplayer experiences.</li>
+                            <li><strong>Modding and Community Involvement</strong>: The ability to modify games and be part of a vibrant community is a significant draw. Many players of classic RTS titles are active in forums, modding communities, and online groups dedicated to these games.</li>
+                        </ul>
 
-                    <p>
-                        In terms of growth potential, there's an opportunity to attract younger gamers who may not have experienced these classic titles. By introducing modern graphics, streamlined interfaces, and new gameplay elements while retaining the core strategic depth, developers can appeal to both long-time fans and new players. Additionally, by capturing the essence of nostalgia inherent in retro and classic gaming, we can tap into the fond memories and deep affections held by players for these iconic titles, rekindling their passion and inviting them to revisit the evolved world of RTS gaming
-                    </p>
+                        <p>
+                            In terms of growth potential, there's an opportunity to attract younger gamers who may not have experienced these classic titles. 
+                            A new game opens the door to new ledgends in the eSports scene which is rich with younger players, their enthusiasm will help recruit a new 
+                            generation of RTS fans. Additionally, by capturing the essence of nostalgia inherent in retro and 
+                            classic gaming, we can tap into the fond memories and deep affections held by players for these iconic titles, rekindling their passion 
+                            and inviting them to revisit the evolved world of RTS gaming through our offering.
+                        </p>
 
 
-                    <h4 id="emerging-opportunities">Emerging Opportunities</h4>
-                    <p>
-                        Significant market growth is evident in regions like Asia-Pacific, Latin America,
-                        Eastern Europe and the Middle East, driven by the expanding middle class. This demographic shift
-                        contributes to an increased spending capacity on entertainment, including video games.
-                        With the rise in disposable income, these markets present a fertile ground for
-                        introducing a WWI themed RTS game. These regions crave fresh gaming experiences
-                        tailored to their cultural nuances. <span class="gameTitle"></span> has the potential to capitalize
-                        on this demand by incorporating historical elements relevant to these regions,
-                        like the Ottoman Empire's role in the war or Latin American volunteer battalions.
-                        Imagine immersing players in iconic conflicts like <a href="https://www.youtube.com/watch?v=m5TJc42rm3s" target="_blank">
-                            Gallipoli
-                        </a>,<a href="https://www.youtube.com/watch?v=Icj2lyU5K9A" target="_blank">
-                            The Siege of Tsingtao
-                        </a> or <a href="https://www.youtube.com/watch?v=5x3PGJvRXDI" target="_blank">
-                            The Arabian Revolt
-                        </a> (<a href="https://www.youtube.com/watch?v=d9boARnzvG8&pp=ygUdbGF3cmVuY2Ugb2YgYXJhYmlhIGZ1bGwgbW92aWU%3D">
-                            Long but excellent movie
-                        </a>), offering a unique history lesson wrapped in an engaging
-                        real-time strategy experience.
-                    </p>
-                    <p>
-                        The burgeoning growth of eSports in regions such as Asia-Pacific, Latin America, and
-                        parts of Eastern Europe presents a significant opportunity for a strategic and competitive
-                        RTS game. The escalating popularity of competitive gaming in these areas provides an
-                        ideal backdrop to introduce our game, capitalizing on the thriving eSports culture.
-                        By utilizing digital distribution channels and tailored online marketing strategies,
-                        the game can effectively reach the increasingly tech-savvy middle-class populations in
-                        these regions. Given the heightened interest in eSports, a game that offers an engaging
-                        storyline, historical themes, and immersive gameplay can captivate this growing audience.
-                        Focusing on these elements, the game is well-positioned to attract not just RTS
-                        enthusiasts but also competitive gamers looking to participate in the burgeoning eSports
-                        scene. This approach can help build a strong and dedicated global player base,
-                        solidifying our game's presence in the rapidly expanding world of competitive gaming.
-                    </p>
-                    <h4 id="monetization-strategies">Monetisation</h4>
-                    <p>Blah</p>
-                    <h4 id="marketing-promotion">Marketing and Promotion</h4>
-                    <p>Many, small local influencers (gaming and history channels)</p>
-                    <h4 id="company-aspirations">Company Aspirations</h4>
-                    <p>Blah</p>
-                    <h4 id="summary">Summary</h4>
-                    <p>Comming soon...</p>
+                        <h4 id="emerging-opportunities">Emerging Opportunities</h4>
+                        <p>
+                            Significant market growth is evident in regions like Asia-Pacific, Latin America,
+                            Eastern Europe and the Middle East, driven by the expanding middle class. This demographic shift
+                            contributes to an increased spending capacity on entertainment, including video games.
+                            With the rise in disposable income, these markets present a fertile ground for
+                            introducing a WWI themed RTS game. These regions are very receptive to gaming experiences
+                            tailored to their cultural nuances. <span class="gameTitle"></span> has the potential to capitalise
+                            on this demand by incorporating historical elements relevant to these regions,
+                            like the Ottoman Empire's role in the war or Latin American volunteer battalions.
+                            Imagine immersing players in iconic conflicts like <a href="https://www.youtube.com/watch?v=m5TJc42rm3s" target="_blank">
+                                Gallipoli
+                            </a>,<a href="https://www.youtube.com/watch?v=Icj2lyU5K9A" target="_blank">
+                                The Siege of Tsingtao
+                            </a> or <a href="https://www.youtube.com/watch?v=5x3PGJvRXDI" target="_blank">
+                                The Arabian Revolt
+                            </a> (<a href="https://www.youtube.com/watch?v=d9boARnzvG8&pp=ygUdbGF3cmVuY2Ugb2YgYXJhYmlhIGZ1bGwgbW92aWU%3D">
+                                Long but excellent movie
+                            </a>), offering a unique history lesson wrapped in an engaging
+                            real-time strategy experience.
+                        </p>
+                        <p>
+                            The burgeoning growth of eSports in regions such as Asia-Pacific, Latin America, and
+                            parts of Eastern Europe presents a significant opportunity for a strategic and competitive
+                            RTS game. The escalating popularity of competitive gaming in these areas provides an
+                            ideal backdrop to introduce our game, capitalising on the thriving eSports culture.
+                            By utilizing digital distribution channels and tailored online marketing strategies,
+                            the game can effectively reach the increasingly tech-savvy middle-class populations in
+                            these regions. Given the heightened interest in eSports, a game that offers an engaging
+                            storyline, historical themes, and immersive gameplay can captivate this growing audience.
+                            Focusing on these elements, the game is well-positioned to attract not just RTS
+                            enthusiasts, but also competitive gamers looking to participate in the burgeoning eSports
+                            scene. This approach can help build a strong and dedicated global player base,
+                            solidifying our game's presence in the rapidly expanding world of competitive gaming.
+                        </p>
+                        <h4 id="monetization-strategies">Monetisation</h4>
+                        <p>
+                            Until we have a working demo, our primary focus should not be on monetisation.
+                            Instead, our efforts should be dedicated to developing a compelling, high-quality product.
+                            However, as part of our broader marketing strategy, we should consider creating a
+                            crowdfunding campaign. This approach not only helps in raising funds but more specifically in building
+                            a community of early supporters and receiving valuable feedback. Post-demo completion,
+                            we can explore monetisation strategies such as direct sales on Steam, cosmetic item
+                            microtransactions, and participation in the Steam Trading Cards system. Using Steam
+                            Keys will allow us to pay 0% fees to Steam while keeping the functionality the platform
+                            provides.
+                        </p>
+                        <p>
+                            Localising sales prices, a built-in functionality when releasing games on Steam, is vital for
+                            accessing markets with high turnover but less disposable income per capita. A $20 price
+                            tag might feel like a steal to an American gamer, but it could easily put off the large
+                            gaming communities in Brazil, South Korea or Vietnam. Steam's built-in localisation functionality
+                            removes this barrier, allowing us to tailor prices to each nation. This
+                            strategic approach opens doors to global markets, makes the game significantly more
+                            accessible, and ensures players perceive our pricing as offering excellent value relative to
+                            their own economic environment.
+                        </p>
+                        <p>
+                            While mapping out a monetisation strategy is crucial for long-term sustainability, it should
+                            not take precedence over crafting a truly exceptional game, especially at this early phase.
+                            Our primary focus should be building a product that resonates deeply with our fans and
+                            potential investors. A game brimming with passion and engaging gameplay will naturally
+                            attract support and revenue in its own right. Remember, a captivating experience speaks
+                            volumes, paving the way for sustainable monetisation built on a foundation of genuine
+                            player love and enjoyment.
+                        </p>
 
+                        <h4 id="marketing-promotion">Advertising</h4>
+                        <p>
+                            Advertising plays a pivotal role in the success of both games and studios. Notably,
+                            some AAA studios allocate as much as 50% of their multi-million dollar budget to marketing efforts,
+                            highlighting the significance of effective promotion. In line with this industry insight,
+                            we will leverage every available free advertising resource, with a readiness to allocate
+                            funds as they become accessible. Our commitment to advertising remains steadfast,
+                            regardless of our current funding status. Once we have sufficient gameplay content,
+                            we will seek to welcome a new team member dedicated to advertising and
+                            promotion. Here is the outline of approach to advertising, both before and after securing
+                            funding:
+                        </p>
+                        <div style="margin-left: 20px;">
+                            <section id="pre-funding">
+                                <h5>Before Funding</h5>
+                                <p>
+                                    Social media platforms like Facebook, VK, and Twitch are ideal for posting
+                                    regular updates, sharing behind-the-scenes glimpses, and actively engaging with
+                                    our audience. Additionally, tapping into localised gaming communities can
+                                    significantly amplify our reach. Focusing on regional markets, which are often
+                                    less saturated, presents an opportunity for our game to stand out. By tailoring
+                                    content and interactions to these specific audiences, we can establish a unique
+                                    presence in areas where competition may be less intense, potentially capturing
+                                    the attention of an engaged and dedicated user base that larger markets may
+                                    overlook. This granular, localised approach can be a key strategy in differentiating our
+                                    game in a challenging global marketplace.
+                                </p>
+                                <p>
+                                    As part of our localisation strategy, partnering with smaller, local content
+                                    creators focused on indie games can be highly impactful. Offering them early
+                                    access not only garners potential reviews but also exposes our game to their
+                                    region-specific audiences. This approach fosters grassroots-level marketing, the
+                                    valuable "human touch", creating authentic engagement within local gaming
+                                    communities. Such collaborations can effectively resonate with players on a
+                                    more personal and cultural level, enhancing the visibility and appeal of our game
+                                    in an organic way.
+                                </p>
+                                <p>
+                                    Utilising Discord and Reddit, we will aim to build a strong community around our
+                                    game. A Discord server offers a space for real-time interaction and updates,
+                                    fostering a sense of belonging among players. Meanwhile, a dedicated subreddit
+                                    allows for deeper discussions and feedback, contributing to a community-driven
+                                    growth. These platforms are integral in creating an engaged and interactive
+                                    player base.
+                                </p>
+                                <p>
+                                    Last but definitely not least, we will use analytics to refine our advertising
+                                    approach. By examining community engagement and behaviour patterns, we can identify
+                                    the most effective channels and content types for our marketing. This data-driven
+                                    strategy allows us to concentrate our efforts where they yield the best results,
+                                    maximising the impact of our advertising in terms of both time and resources.
+                                    Analytics provide us with the insights necessary to tailor our message to the
+                                    right audience at the right time, ensuring our promotional activities are both
+                                    efficient and effective.
+                                </p>
+                            </section>
+
+                            <section id="with-funding">
+                                <h5>After Funding</h5>
+                                <p>
+                                    If/when funding is secured, we can expand and improve our advertising toolbox.
+                                    This increased budget will allow us to explore paid advertising options, such as
+                                    targeted social media ads, collaborations with high-profile influencers, and
+                                    potentially even display advertising on gaming websites. Enhanced funding also
+                                    opens up opportunities for more creative and widespread campaigns. Moreover,
+                                    the valuable analytics data collected during our early stages of advertising will
+                                    be instrumental in this phase. This data will guide us in efficiently allocating
+                                    our advertising funds, ensuring we invest in the most effective channels and
+                                    strategies that have shown promising engagement and conversion rates, thus
+                                    making the best use of our resources.
+                                </p>
+                                <p>
+                                    Creating a comprehensive press-kit is another crucial step. This kit will include
+                                    high-quality game screenshots, engaging trailers, a well-crafted press release,
+                                    and key information about our game. It's designed to make it easy for game
+                                    journalists and bloggers to cover our story, thereby increasing our media presence.
+                                </p>
+                                <p>
+                                    Presenting our work at gaming conventions should be high priority. These events
+                                    will be a great opportunity to showcase the game, infuse the advertising campaign
+                                    with our personal enthusiasm, gain valuable feedback, and build hype directly with
+                                    the gaming community. Such personal interactions can significantly boost the
+                                    game's visibility and appeal. When selecting which events to attend, we'll strictly
+                                    adhere to the analytic data collected from our early advertising efforts. This
+                                    granular, localised approach to advertising might lead us to some exotic locations,
+                                    but that's perfectly fine. Our aim is to follow the data, ensuring we target events
+                                    that are most likely to attract our intended audience and provide the best
+                                    opportunities for meaningful engagement, thereby maximizing the impact of our
+                                    presence at the gaming event.
+                                </p>
+                            </section>
+                        </div>
+                    </div>
                 </div>
-
-
-
                 <h3 id="budget-estimation">Budget Estimation</h3>
                 <p>
-                    Working with a zero budget initially, our financial strategy is straightforward.
-                    However, once the game reaches its early access stage, we plan to initiate a crowdfunding
-                    campaign. The aim of this campaign is twofold: to secure funds for a Steam launch
-                    and marketing efforts, but more importantly, to serve as a form of free advertising to build
-                    awareness and cultivate a fanbase ahead of the game's release.
-                </p>
-                <p>
-                    Additionally, we're considering hosting an in-person launch party to celebrate the game's
-                    release and connect with fans. This event is contingent on the success of the crowdfunding
-                    campaign and the level of interest generated, making it an exciting but speculative prospect
-                    at this stage.
+                    Working with a zero budget initially, our financial strategy is straightforward: <strong>
+                        We
+                        must brutally bootstrap everything!
+                    </strong> However, once the game reaches its early
+                    access stage, we plan to initiate a crowdfunding campaign. The aim of this campaign is twofold:
+                    to secure funds for a Steam launch and marketing efforts, but more importantly, to serve as a
+                    form of free advertising to build awareness and cultivate a fanbase ahead of the game's release.
                 </p>
 
+                <h3 id="what-comes-next">What Comes Next</h3>
+                <p>
+                    Wow! That was a lot of reading, so well done if you got all the way through!
+                    What comes next? This:
+                </p>
+                <div class="ml-3">
+                    <h4 id="for-fans">For Fans</h4>
+                    <p>
+                        Welcome aboard, thank you for joining this exciting journey with us! We're building this game for you, yes, YOU sitting there reading this
+                        right now! This game is for YOU!&#128516; As more details about
+                        <span class="gameTitle"></span> become available, this section will be updated. Stay tuned!
+                    </p>
+                    <h4 id="for-investors">For Investors</h4>
+                    <p>
+                        Thank you for taking the time to read this, I hope it's whetted your appetite for our team and game.
+                        You're probably super busy but if you're interested we'd love to hear from you, so please reach out asap!
+                    </p>
+                    <h4 id="for-team-members">For Team Members</h4>
+                    <p>
+                        Ok, lots of food for thought in this GDD, but it's no use without action, so strap your
+                        thinking cap on, flex those problem-solving synapses, and let's build the most awesome team and most awesome team
+                        we are capabile of!
+                    </p>
+                    <h4 id="for-the-company">For the Company</h4>
+                    <p>
+                        Once the creative juices start to flow it's difficult to stop so there are many directions the company
+                        take. There's scope for an exciting mobile game extension to <span class="gameTitle"></span>.
+                        Or the company could head gently in the direction of mechanical engineering with some exciting 
+                        entertainment equipment production. Regardless, much work to be done in the here and now.
+                     </p>
+                        </div>
             </div>
 
         </div>
     </div>
+    <div class="hover-container" data-ref="ref1">
+        <img src="https://manofmany.com/wp-content/uploads/2021/03/Starbase-Elon-Musk-1.jpg">
+        <p><strong>Elon Musk:</strong> <i>"Focus on solving important problems and the customers will come. Everything else is secondary."</i></p>
+    </div>
+    <div class="hover-container" data-ref="ref2">
+        <img src="https://image.cnbcfm.com/api/v1/image/105462405-1537464466367gettyimages-1036099120.jpeg?v=1571143282&w=740&h=416&ffmt=webp&vtcrop=y">
+        <p><strong>Jeff Bezos:</strong> <i>"If you do build a great experience, customers tell each other about that. Word of mouth is very powerful."</i> </p>
+    </div>
+    <div class="hover-container" data-ref="ref3">
+        <img src="https://nypost.com/wp-content/uploads/sites/2/2015/01/thiel.jpg?resize=231,347&quality=75&strip=all">
+        <p><strong>Peter Thiel (Paypal Co-Founder):</strong> <i>"The best startups get built by a small team of people who are very passionate about a common mission."</i></p>
+    </div>
 
+    <div class="hover-container" data-ref="ref4">
+        <img src="https://www.themoviedb.org/t/p/original/rucTIeVtozKer6TmCYBxFr8Wy2q.jpg">
+        <p><strong>Walt Disney (Disney Founder):</strong> <i> "Whatever you do, do it well. Do it so well that when people see you do it they will want to come back and see you do it again and they will want to bring others and show them how well you do what you do."<i /></p>
+    </div>
+    <div class="hover-container" data-ref="ref5">
+        <img src="https://www.businessinsider.in/thumb/msid-68454345,width-700,resizemode-4,imgsize-86233/A-Facebook-board-member-denied-claims-he-met-the-Cambridge-Analytica-whistleblower-2-years-before-the-scandal-exploded.jpg">
+        <p><strong>Marc Andreessen (Netscape Co-Founder):</strong> <i>"I think most people start businesses because they have some product or innovation they are passionate about, and then that passion attracts the resources they need."</i></p>
+    </div>
     <script>
         function scrollToElement(elementId) {
             var element = document.getElementById(elementId);
             if (element) {
-                var offset = 100; 
+                var offset = 100;
                 var elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
                 var offsetPosition = elementPosition - offset;
 
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
-                });
+                });f
             }
         }
 
@@ -768,8 +1021,7 @@
         updateDynamicTitles(gameTitle);
 
 
-        document.addEventListener('DOMContentLoaded', function ()
-        {
+        document.addEventListener('DOMContentLoaded', function () {
             // Market Analysis Button
             var marketAnalysisButton = document.getElementById('marketAnalysisToggleButton');
             marketAnalysisButton.addEventListener('click', function () {
@@ -810,6 +1062,29 @@
                 generalOrdersButton.setAttribute('data-collapsed', !isCollapsed);
             });
         });
+
+        // Function to position the hover-container
+        function positionHoverContainer(container, refElement) {
+            const rect = refElement.getBoundingClientRect();
+            container.style.left = rect.left + window.scrollX + "px";
+            container.style.top = (rect.top + window.scrollY - container.offsetHeight) + "px";
+        }
+
+        document.querySelectorAll('.hover-container').forEach(container => {
+            const refId = container.getAttribute('data-ref');
+            const refElement = document.getElementById(refId);
+
+            refElement.addEventListener('mouseover', function () {
+                container.style.display = 'block';
+                positionHoverContainer(container, refElement);
+            });
+
+            refElement.addEventListener('mouseout', function () {
+                container.style.display = 'none';
+            });
+        });
+
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
