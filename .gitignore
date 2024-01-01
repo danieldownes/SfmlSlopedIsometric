@@ -8,6 +8,11 @@
 build/
 bin/
 
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
 # IDE/Editor Specific Files
 # Visual Studio
 *.suo
@@ -16,6 +21,11 @@ bin/
 *.opendb
 # Code::Blocks
 *.layout
+
+# IDE/Editor Specific Files
+# Visual Studio
+.vs/
+.vscode/
 
 # Dependency Folders
 # SFML Library
