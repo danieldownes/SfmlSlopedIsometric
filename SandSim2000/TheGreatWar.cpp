@@ -148,7 +148,7 @@ void TemporaryPlayFunction(sf::RenderWindow* window)
 
 int main() {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow window(sf::VideoMode(desktopMode.width, desktopMode.height), "The Great War");
+    sf::RenderWindow window(sf::VideoMode(desktopMode.width, desktopMode.height), "The Great War", sf::Style::Fullscreen);
     setInitialCursorIcon(window);
 
     MainMenuOptions options;
