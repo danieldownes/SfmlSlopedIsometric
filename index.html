@@ -39,6 +39,17 @@
             height: auto;
         }
 
+        .content {
+            display: none;
+            padding: 5px;
+        }
+
+        .toggle {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -98,9 +109,33 @@
                         </button>
 
                         <ul class="collapse ml-n3" id="developmentRoadmapMenu">
-                            <li><a href="#prototype-development">Prototype Development</a></li>
+                            <li>
+                                <a href="#prototype-development"> Prototype Development </a>
+                                <button class="btn btn-sm btn-circle ml-2"
+                                        data-toggle="collapse"
+                                        data-target="#prototypeDevelopmentMenu"
+                                        aria-expanded="false"
+                                        aria-controls="prototypeDevelopmentMenu"
+                                        id="prototypeDevelopmentToggleButton"
+                                        data-collapsed="true">
+                                    +
+                                </button>
+                                <ul class="collapse" id="prototypeDevelopmentMenu">
+                                    <li><a href="#gameState">GameState</a></li>
+                                    <li><a href="#gameStateManager">GameStateManager</a></li>
+                                    <li><a href="#basicRenderingSystemStart">AnimationManager(start)</a></li>
+                                    <li><a href="#userInputManager">UserInputManager</a></li>
+                                    <li><a href="#simpleUIUX">Simple UI</a></li>
+                                    <li><a href="#agents">Agents</a></li>
+                                    <li><a href="#skirmishManager">SkirmishManager</a></li>
+                                    <li><a href="#crudManager">CRUDManager</a></li>
+                                    <li><a href="#gameLoop">Game Loop</a></li>
+                                </ul>
+
+                            </li>
+
                             <li><a href="#demo-development">Demo Development</a></li>
-                            <li><a href="#pitching">Pitching</a></li>
+                            <li><a href="#full-game">Full Game</a></li>
                         </ul>
                     </li>
 
@@ -171,7 +206,15 @@
                     <li><a href="#budget-estimation">Budget Estimation</a></li>
                     <li>
                         <a href="#what-comes-next">What Comes Next</a>
-                        <button class="btn btn-sm btn-circle ml-2" data-toggle="collapse" data-target="#nextMenu" aria-expanded="false" aria-controls="nextMenu" id="nextToggleButton" data-collapsed="true">+</button>
+                        <button class="btn btn-sm btn-circle ml-2"
+                                data-toggle="collapse"
+                                data-target="#nextMenu"
+                                aria-expanded="false"
+                                aria-controls="nextMenu"
+                                id="nextToggleButton"
+                                data-collapsed="true">
+                            +
+                        </button>
                         <ul class="collapse ml-n3" id="nextMenu">
                             <li><a href="#for-fans">For fans...</a></li>
                             <li><a href="#for-investors">For investors...</a></li>
@@ -188,7 +231,11 @@
                     <h3 style="color: darkblue; margin-bottom: 10px;">Game Concept</h3>
                     <p>
                         <strong>Concept Overview:</strong>
-                        <span class="gameTitle"></span> is an RTS that immerses players in the strategic and tactical challenges of World War I. The game emphasizes a balance between economy, strategy and real time action.
+                        <span class="gameTitle"></span> is an RTS that immerses players in the strategic and 
+                        tactical challenges of World War I. The first iteration, the race to develop a polished
+                        working demo, will be single player. But a responsive, eSports level multiplayer will be 
+                        the goal if the game recieves funding. The gameplay will emphasie a 
+                        balance between economy, strategy and real time action.
                     </p>
                     <p>
                         <strong>Inspiration:</strong>
@@ -353,20 +400,316 @@
                 </div>
 
                 <h3 id="development-roadmap">Development Roadmap</h3>
-                <p>Of all this sections of this Game Design Document, this is most flexible.</p>
+                <p>
+                    The project's objective is to construct a polished and playable demo within an eight-month 
+                    timeframe. Among the various sections of this Game Design Document, the development 
+                    roadmap stands out for its flexibility. This roadmap will serve as a useful guide rather than 
+                    a rigid plan, as it breaks down the game's complex challenges into smaller, modular problems. 
+                    These can be solved independently and then integrated into the main solution. The initial step
+                    in tackling these challenges involves dividing the work into two primary phases: the prototype 
+                    phase and the demo phase. Notably, certain elements of the working demo, such as cutscenes 
+                    or 3D models, can be developed in parallel with the prototype, even before its completion. 
+                    These components, while not essential for a robust prototype, can be progressed concurrently,
+                    resources permitting. As such, while the roadmap's steps are presented in a linear fashion, 
+                    the actual development process will be much more parallel in nature. The success of this 
+                    approach hinges on the project manager's expertise in effectively dividing tasks and overseeing 
+                    their progression. The following are the initial divisions outlined in the roadmap:
+                </p>
                 <div style="margin-left: 20px;">
                     <section id="prototype-development">
                         <h2>Prototype Development</h2>
-                        <p>Comming soon...</p>
+                        <p>
+                            In developing <span class="gameTitle"></span> RTS, the cornerstone of our initial
+                            efforts will be the
+                            creation of a very lean, very performant prototype. This prototype will serve as the project's
+                            foundation, enabling us to test core gameplay mechanics, explore the game's unique
+                            features, and refine the overall player experience. Central to this phase is the focus
+                            on key RTS elements such as unit control, resource management, and typical NPC
+                            agent behavior, ensuring they are not only functional but engaging too. We will
+                            prioritise a player-centric design approach, where feedback is actively solicited and
+                            incorporated from early playtests, even if in the early stages we are the only play
+                            testers. This iterative process will allow us to quickly identify and address any gameplay
+                            or technical issues. In the prototype phase of <span class="gameTitle"></span>, our
+                            primary focus
+                            will be on crafting sound game mechanics, the backbone of an engaging player
+                            experience. This involves meticulously designing and iterating on core gameplay
+                            elements. The prototype phase will not be complete until we create a mechanically
+                            robust and intuitive game system that emphasizes strategic depth and player skill.
+                        </p>
+                        <p>
+                            To make best use of time, programmers will only concern themselves with the bare
+                            minimum aesthetics to ensure we can develop the prototype, all the polishing will be
+                            segregated to the demo phase. Creating an AI opponent should also be postponed to
+                            the demo phase as it's not needed for core gameplay mechanics, the focus of the
+                            prototype phase. Here are the components essential for the prototype:
+                        </p>
+                        <ul>
+                            <li id="gameState">
+                                <strong>GameState:</strong> The keystone upon which the whole game is built.
+                                <button class="toggle" onclick="toggleCollapse('gameState')">+</button>
+                                <div class="content">
+                                    <p>
+                                        The game state is potentially
+                                        the single most important element in the whole game. The game state, in essence, is the actual game itself. 
+                                        It is the place where all the moving parts come together in one place. The maps, weather conditions, resources
+                                        collected,
+                                        buildings, units and even artillery shells in mid-flight will all be stored in the game
+                                        state. All the rest of the programming revolves
+                                        around interacting with the game state, whether it's moving units, drawing maps,
+                                        pausing/saving, delivering event-based audio, etc. The game state is the single source
+                                        of data upon which the rest of the game's engineering feeds. We need to store the data
+                                        in 3 data structures which are:
+                                    </p>
+                                    <ol>
+                                        <li class="mt-3 mb-3">
+                                            <h6>2D Array: Static, Evenly Distributed Objects</h6>
+                                            <p>
+                                                Many objects in the game are static, rarely, if ever, moving. This includes 
+                                                elements like terrain tiles and forests, which are uniformly distributed across
+                                                the map. These objects do not lend themselves to rapid iteration; instead, 
+                                                they require sequential processing. A 2D array is an ideal solution for 
+                                                managing these static elements. It inherently aligns each object's position 
+                                                with its corresponding location on the game map — for instance, an object at 
+                                                array(0,0) corresponds to the game map coordinates of (0,0). This natural 
+                                                alignment of data structure and spatial distribution simplifies the management
+                                                of static, evenly distributed objects such as:
+                                            </p>
+                                            <ul>
+                                                <li>Maps (Strategic, Tactical, Subterranean)</li>
+                                                <li>Terrain</li>
+                                                <li>Some Scenery (Large sections like forrests)</li>
+                                                <li>Fog of War</li>
+                                            </ul>
+                                        </li>
+                                        <li class="mt-3 mb-3">
+                                            <h6>Quad Tree: Dynamic Unevenly Distributed Objects</h6>
+                                            <p>
+                                                In contrast to static objects, dynamic, unevenly distributed objects in the game,
+                                                such as moving units or variable resources, are optimally managed with a
+                                                <a href="https://www.youtube.com/watch?v=XvISDt21lhA">Quad Tree</a> data
+                                                structure. This approach is particularly effective in real-time strategy (RTS) 
+                                                games, where handling hundreds of units simultaneously is common. The Quad 
+                                                Tree dynamically adjusts, expanding and contracting based on the current 
+                                                positions and statuses of these objects. This flexibility is essential for 
+                                                efficiently managing a constantly changing game state.
+                                            </p>
+                                            <p>
+                                                The <strong>GameStateManager</strong> class plays a pivotal role in this process, ensuring 
+                                                that the game state remains as efficient as possible. For instance, when a 
+                                                non-player character (NPC) moves, the Agent class requests an update from
+                                                the GameStateManager. The manager then evaluates whether there's an 
+                                                existing quadrant in the Quad Tree for the NPC. If not, it generates one 
+                                                immediately. Conversely, it collapses empty quadrants back into their parent 
+                                                nodes to maintain optimal efficiency. This dynamic handling, delegated to the 
+                                                specialised the GameStateManager class, ensures the game state serves its 
+                                                primary function: 
+                                                storing an efficient and current snapshot of the game. The main properties 
+                                                stored by the game state in a Quad Tree are:
+                                            </p>
+                                            <ul>
+                                                <li>Units (Military, Economic)</li>
+                                                <li>Most Scenery (Buildings, Trenches, Wire etc)</li>
+                                                <li>Projectiles (Artillery shells, flames etc)</li>
+                                                <li>Available Resources</li>
+                                            </ul>
+                                        </li>
+                                        <li class="mt-3 mb-3">
+                                            <h6>Streamlined Storage for Simple Game Elements</h6>
+                                            <p>
+                                                Some elements of the game only require a very simple data structure to store efficiently.
+                                                Probably just an array or key:value map will be enough. Game elements that can be stored
+                                                like this are:
+                                            </p>
+                                            <ul>
+                                                <li>Collected Resources</li>
+                                                <li>Technology Tree Status</li>
+                                                <li>Score Counter</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li id="gameStateManager">
+                                <strong>GameStateManager:</strong> Dynamically manages the game state.
+                                <button class="toggle" onclick="toggleCollapse('gameStateManager')">+</button>
+                                <div class="content">
+                                    This will be built as the GameState class also gets built. Because the game state will only 
+                                    store data a manager will be needed to keep it up to date, that is the purpose of this manager.
+                                    Everything that writes to the game state will pass through the GameStateManager to ensure 
+                                    the game state's structure is optimised at all times. 
+                                </div>
+                            </li>
+                            <li id="basicRenderingSystemStart">
+                                <strong>AnimationManager(start):</strong> Absolute minimum graphics rendering for prototype visualisation.
+                                <button class="toggle" onclick="toggleCollapse('basicRenderingSystemStart')">+</button>
+                                <div class="content">
+                                    <p>
+                                        Work on this class will be divided between the prototype and demo phase.
+                                        For the prototype, we just need the most basic, essential visualisations so we
+                                        can ensure the other components of the game are working correctly, like
+                                        controlling units, placing buildings, UI, etc.
+                                        The <strong>AnimationManager</strong> class will store the map 2D array data from
+                                        the <strong>GameState</strong> class. That data will provide the spatial coordinates of
+                                        map tiles the <strong>AnimationManager</strong> needs to render terrain tiles in the
+                                        correct position. Here are the essential functions of the <strong>AnimationManager</strong>
+                                        class:
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <strong>Render Terrain:</strong>
+                                            This aspect focuses on accurately rendering the terrain
+                                            to create a visually coherent and realistic game environment. For the
+                                            prototype, the emphasis is on ensuring correct representation of
+                                            terrain heights and designating impassable areas. 3 levels of terrain will
+                                            exist, 1 strategic map which will have a medium amount of detail, 2
+                                            tactical map which will have the maximum amout of detail and 3
+                                            the subterranean view which is the most basic of all. Exact details will be handled
+                                            during development.
+                                        </li>
+                                        <li>
+                                            <strong>Render Scenery:</strong>
+                                            The most basic scenery elements need to be rendered to ensure the correct
+                                            funtionality of the prototype. Scerny is buildings, roads, trenches and trees,
+                                            objects that are not units but can still interact. The initial version of
+                                            scenery will just be an obsticle for pathfinding. Spatial coordinates of scenery
+                                            peices will be stored in the <strong>GameState</strong> class.
+                                        </li>
+                                        <li>
+                                            <strong>Render Units:</strong>
+                                            Like terrain and scenery, units will be stored in the <strong>GameState</strong> and that info used
+                                            to position them correctly on the screen. As the game state changes, so too will
+                                            the position of units. In the very begining we won't bother with an animated
+                                            spritesheet, still sprites will suffice. But animating the sprites will still be built
+                                            in the prototype, just later in the phase, maybe once 3d artists have
+                                            drawn a full spritesheet.
+
+                                        </li>
+                                        <li>
+                                            <strong>Map Scale Switching:</strong>
+                                            Ensures that the correct map scale is displayed based on user input. This
+                                            feature allows for a seamless transition between different zoom levels,
+                                            allowing the player to switch between the <a href="#strategic-map">stategic map</a>,
+                                            <a href="#tactical-map">tactical map</a> or
+                                            subterranean views.
+                                        </li>
+                                        <li>
+                                            <strong>Culling:</strong>
+                                            Refers to the process where objects outside the player's current perspective are not rendered. This technique is crucial for maintaining high performance and ensuring smooth gameplay by reducing the load on graphics processing.
+                                        </li>
+                                        <li>
+                                            <strong>Minimap:</strong>
+                                            Once a basic UI is working, a mini map will be displayed in it. This
+                                            mini map will display a representation of the map view available to the
+                                            player, whether strategic, tactical or tunnels. The mini map will dispay
+                                            abreviated info about the main map view, like unit positions, resources,
+                                            trenches etc. This will follow the very standard mini map design found
+                                            across nearly all RTS games.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </li>
+                            <li id="userInputManager">
+                                <strong>UserInputManager:</strong> Manages the input from the user.
+                                <button class="toggle" onclick="toggleCollapse('userInputManager')">+</button>
+                                <div class="content">
+                                    This will include the hotkeys, mouse actions like clicks, scroller and movement.
+                                    We will not bother to create a way to change hotkeys during prototyping, leave
+                                    that to the full game development.
+                                </div>
+                            </li>
+                            <li id="simpleUIUX">
+                                <strong>Simple UI:</strong>
+                                <button class="toggle" onclick="toggleCollapse('simpleUIUX')">+</button>
+                                <div class="content">
+                                    Most basic user interface components needed for player interaction.
+                                    This will be 2 sets of widgets 1 running along the top of the window displaying resource 
+                                    stats. The 2nd, more important interface section will run along the botton of the window 
+                                    which will show unit abilities, selected unit info, mini map and leave room for in game chat.
+                                    We should not get too creative about the UI, AOEII has a very good UI and we should 
+                                    use it as a close reference. 
+                                </div>
+                            </li>
+                            <li id="agents">
+                                <strong>Agents:</strong> Basic NPC scripts.
+                                <button class="toggle" onclick="toggleCollapse('agents')">+</button>
+                                <div class="content">
+                                    <p>
+                                        This is just the most basic level of AI required for units to display "normal"
+                                        behavior. Like setting stances, if a player's unit is set to "<strong>aggressive</strong>" stance, if an
+                                        enemy unit comes within range the player's unit will attack the enemy unit and
+                                        actively follow the enemy even if that goes outside the original range.
+                                    </p>
+
+                                    <p>
+                                        Or "normal" RTS NPC behavior of workers, who go back and forth between the
+                                        resource they've been assigned to and the drop off point for their resource, like wood
+                                        cutters dropping off at a lumber mill or tractors dropping off at farmhouse.
+                                    </p>
+
+                                    <p>
+                                        This section is where the pathfinding will be managed. It's a very important
+                                        section. It needs to be built with a modular interface that will be used with
+                                        either the player through input or used by the AI. This modular approach will
+                                        allow us to easily update the agent's, the AI or the user interface.
+                                    </p>
+                                </div>
+                            </li>
+                            <li id="skirmishManager">
+                                <strong>SkirmishManager:</strong>
+                                <button class="toggle" onclick="toggleCollapse('skirmishManager')">+</button>
+                                <div class="content">Manages small-scale conflicts or battles in the game.</div>
+                            </li>
+                            <li id="crudManager">
+                                <strong>CRUDManager:</strong>
+                                <button class="toggle" onclick="toggleCollapse('crudManager')">+</button>
+                                <div class="content">If relevant, for handling unit/resource management operations.</div>
+                            </li>
+                            <li id="gameLoop">
+                                <strong>Game Loop:</strong>
+                                <button class="toggle" onclick="toggleCollapse('gameLoop')">+</button>
+                                <div class="content">Core structure for managing gameplay flow and updates.</div>
+                            </li>
+                        </ul>
+
+
                     </section>
 
                     <section id="demo-development">
                         <h2>Demo Development</h2>
                         <p>Comming soon...</p>
+                        <ul>
+                            <li id="basicRenderingSystemFinish">
+                                <strong>AnimationManager(finish):</strong>
+                                <button class="toggle" onclick="toggleCollapse('basicRenderingSystemFinish')">+</button>
+                                <div class="content">Handle sprites, lighting effects, screen shake effects.</div>
+                            </li>
+                            <li id="creatingAIOpponent">
+                                <strong>AI Opponent System:</strong>
+                                <button class="toggle" onclick="toggleCollapse('creatingAIOpponent')">+</button>
+                                <div class="content">Development of a full-fledged AI opponent is postponed to the demo phase.</div>
+                            </li>
+                            <li id="localisation">
+                                <strong>Localisation:</strong>
+                                <button class="toggle" onclick="toggleCollapse('localisation')">+</button>
+                                <div class="content">To be included in later development phases, not a priority for the initial prototype.</div>
+                            </li>
+                            <li id="mapEditor">
+                                <strong>Map Editor:</strong>
+                                <button class="toggle" onclick="toggleCollapse('mapEditor')">+</button>
+                                <div class="content">While important for an RTS, its development is more complex and not prioritized for the initial lean prototype.</div>
+                            </li>
+                            <li id="audioManager">
+                                <strong>AudioManager:</strong>
+                                <button class="toggle" onclick="toggleCollapse('audioManager')">+</button>
+                                <div class="content">Detailed audio work will be part of later polishing, with only basic audio features in the prototype.</div>
+                            </li>
+                        </ul>
+
                     </section>
 
-                    <section id="pitching">
-                        <h2>Pitching</h2>
+                    <section id="full-game">
+                        <h2>Full Game</h2>
                         <p>Comming soon...</p>
                     </section>
                 </div>
@@ -1038,6 +1381,14 @@
                 gameplayMechanicsButton.setAttribute('data-collapsed', !isCollapsed);
             });
 
+            // Development Roadmap Button
+            var developmentRoadmapButton = document.getElementById('developmentRoadmapToggleButton');
+            developmentRoadmapButton.addEventListener('click', function () {
+                var isCollapsed = developmentRoadmapButton.getAttribute('data-collapsed') !== 'true';
+                developmentRoadmapButton.setAttribute('data-collapsed', isCollapsed);
+                developmentRoadmapButton.textContent = isCollapsed ? '+' : '-';
+            });
+
             // User Interface Button
             var userInterfaceButton = document.getElementById('userInterfaceToggleButton');
             userInterfaceButton.addEventListener('click', function () {
@@ -1061,6 +1412,23 @@
                 generalOrdersButton.textContent = isCollapsed ? '-' : '+';
                 generalOrdersButton.setAttribute('data-collapsed', !isCollapsed);
             });
+
+            // Next Button
+            var nextButton = document.getElementById('nextToggleButton');
+            nextButton.addEventListener('click', function () {
+                var isCollapsed = nextButton.getAttribute('data-collapsed') === 'true';
+                nextButton.textContent = isCollapsed ? '-' : '+';
+                nextButton.setAttribute('data-collapsed', !isCollapsed);
+            });
+            // Prototype Development Toggle Button
+            var prototypeDevelopmentButton = document.getElementById('prototypeDevelopmentToggleButton');
+            prototypeDevelopmentButton.addEventListener('click', function () {
+                var isCollapsed = prototypeDevelopmentButton.getAttribute('data-collapsed') !== 'true';
+                prototypeDevelopmentButton.setAttribute('data-collapsed', isCollapsed);
+                prototypeDevelopmentButton.textContent = isCollapsed ? '+' : '-';
+            });
+
+
         });
 
         // Function to position the hover-container
@@ -1084,7 +1452,20 @@
             });
         });
 
+        //Prototype phase component collapsing menu
+        function toggleCollapse(id) {
+            var element = document.getElementById(id);
+            var content = element.querySelector('.content');
+            var button = element.querySelector('.toggle');
 
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                button.textContent = '+';
+            } else {
+                content.style.display = 'block';
+                button.textContent = '-';
+            }
+        }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
