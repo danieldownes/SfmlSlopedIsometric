@@ -5,5 +5,4 @@ struct MapInfo {
     int height;           // Integer from 0-9
     int facing;           // Integer from 0-7
     std::string terrain;    
-    std::string scenery;
 };
