@@ -124,7 +124,6 @@ void TemporaryPlayFunction(sf::RenderWindow* window)
     AnimationManager animationManager = AnimationManager();
     
     gameState.clearAndInitializeMap();
-    animationManager.initializeTerrainSpriteMap(&gameState);
 
     std::cout << "initialized game" << std::endl;
 
@@ -141,7 +140,7 @@ void TemporaryPlayFunction(sf::RenderWindow* window)
 
         window->clear(sf::Color::Black);
 
-        animationManager.renderSpriteMap(window);
+        animationManager.renderTerrainMap(window, &gameState);
 
         window->display();
     }

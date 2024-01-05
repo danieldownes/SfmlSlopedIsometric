@@ -13,9 +13,9 @@ class AnimationManager
 public:
 	AnimationManager();
 	~AnimationManager();
-	void initializeTerrainSpriteMap(GameState* gameState);
 
 	void renderSpriteMap(sf::RenderWindow* window);
+	void renderTerrainMap(sf::RenderWindow* window, GameState* gameState);
 private:
 	void initializeDefaultTerrainTexure();
 

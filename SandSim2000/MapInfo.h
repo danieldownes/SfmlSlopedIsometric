@@ -2,7 +2,8 @@
 #include <string>
 struct MapInfo {
     int z;
-    float facing;
-    std::string terrain;
+    int height;           // Integer from 0-9
+    int facing;           // Integer from 0-7
+    std::string terrain;    
     std::string scenery;
 };
