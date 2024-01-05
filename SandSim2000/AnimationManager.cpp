@@ -11,7 +11,7 @@ AnimationManager::~AnimationManager()
 
 void AnimationManager::initializeDefaultTerrainTexure()
 {
-    const std::string filePath = "A:\\C++\\TheGreatWar\\resources\\images\\Terrain\\default.png";
+    const std::string filePath = "../resources/images/Terrain/default.png";
 
     if (!defaultTerrainTexture.loadFromFile(filePath))
     {
