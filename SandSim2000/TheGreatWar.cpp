@@ -4,6 +4,9 @@
 #include "MapEditor.h"
 #include <string>
 
+#include "GameState.h"
+#include "AnimationManager.h"
+
 constexpr double PI = 3.14159265358979323846;
 const float windowWidth = 800.0f;
 const float windowHeight = 600.0f;
@@ -28,7 +31,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
     window.clear(sf::Color::Black);
 
     sf::Font font;
-    if (!font.loadFromFile("C:\\Users\\User\\Desktop\\The_Great_War\\Resouces\\Fonts\\WorldAtWar.ttf")) std::cerr << "Failed to load font!" << std::endl; 
+    if (!font.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Fonts\\WorldAtWar.ttf")) std::cerr << "Failed to load font!" << std::endl; 
     sf::Text title("The Great War", font);
     title.setCharacterSize(100);
     title.setFillColor(sf::Color::White);
@@ -36,7 +39,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
     window.draw(title);
 
     sf::Texture backgroundImgTexture;
-    if (!backgroundImgTexture.loadFromFile("C:\\Users\\User\\Desktop\\The_Great_War\\Resouces\\Images\\Utilities\\OpeningImage.jpg")) {
+    if (!backgroundImgTexture.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Images\\Utilities\\OpeningImage.jpg")) {
         std::cerr << "Failed to load Opening Image texture!" << std::endl;
     }
 
@@ -49,7 +52,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
     sf::RectangleShape mapEditor(sf::Vector2f(350, 150));
 
     sf::Texture buttonTexture;
-    if (!buttonTexture.loadFromFile("C:\\Users\\User\\Desktop\\The_Great_War\\Resouces\\Images\\Utilities\\MenuButtonBorder.png")) {
+    if (!buttonTexture.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Images\\Utilities\\MenuButtonBorder.png")) {
         std::cerr << "Failed to load button texture!" << std::endl;
         return;
     }
@@ -105,7 +108,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
 void setInitialCursorIcon(sf::RenderWindow& window)
 {
     sf::Image cursorImage;
-    if (!cursorImage.loadFromFile("C:\\Users\\User\\Desktop\\The_Great_War\\Resouces\\Images\\Utilities\\cursorIcon.png"))
+    if (!cursorImage.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Images\\Utilities\\cursorIcon.png"))
     {
         throw std::runtime_error("Failed to load cursor image");
     }
@@ -115,9 +118,38 @@ void setInitialCursorIcon(sf::RenderWindow& window)
 }
 
 
+void TemporaryPlayFunction(sf::RenderWindow* window)
+{
+    GameState gameState = GameState();
+    AnimationManager animationManager = AnimationManager();
+    
+    gameState.clearAndInitializeMap();
+    animationManager.initializeTerrainSpriteMap(&gameState);
+
+    std::cout << "initialized game" << std::endl;
+
+    while(window->isOpen())
+    {
+        sf::Event e;
+
+        while (window->pollEvent(e))
+        {
+            if (e.type == sf::Event::Closed) window->close();
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape) window->close();
+
+        }
+
+        window->clear(sf::Color::Black);
+
+        animationManager.renderSpriteMap(window);
+
+        window->display();
+    }
+}
+
 int main() {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow window(sf::VideoMode(desktopMode.width, desktopMode.height), "The Great War", sf::Style::Fullscreen);
+    sf::RenderWindow window(sf::VideoMode(desktopMode.width, desktopMode.height), "The Great War");
     setInitialCursorIcon(window);
 
     MainMenuOptions options;
@@ -130,7 +162,7 @@ int main() {
         }
         else if (options.play)
         {
-            std::cout << "Play" << std::endl;
+            TemporaryPlayFunction(&window);
         }
         else if (options.editMap)
         {
