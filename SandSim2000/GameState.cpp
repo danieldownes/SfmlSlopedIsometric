@@ -25,7 +25,7 @@ void GameState::clearAndInitializeMap()
 
         for (int j = 0; j < mapSize; ++j) {
             Map[i][j].z = 1;
-            Map[i][j].height = 1;
+            Map[i][j].height = rand() & 3 - 1;
             Map[i][j].facing = 0.0f;
             Map[i][j].terrain = "default";
         }

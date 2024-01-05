@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <string>
 
 #include "SFML/Graphics.hpp"
 
@@ -18,8 +19,13 @@ public:
 	void renderTerrainMap(sf::RenderWindow* window, GameState* gameState);
 private:
 	void initializeDefaultTerrainTexure();
+	void initializeGrassTerrainTextures();
+
+	
 
 	std::vector<sf::Sprite> spriteMap;
 	sf::Texture defaultTerrainTexture;
+
+	sf::Texture GrassTexture[3];
 };
 
