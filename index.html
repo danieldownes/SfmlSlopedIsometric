@@ -92,10 +92,24 @@
                                     <li><a href="#holdTheLine">Hold the Line</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="#economy-and-research">Economy and Research</a>
+                                <button class="btn btn-sm btn-circle ml-2" data-toggle="collapse" data-target="#economy-and-researchMenu" aria-expanded="false" aria-controls="economy-and-researchMenu" id="economy-and-researchToggleButton" data-collapsed="true">+</button>
+                                <ul class="collapse ml-n3" id="economy-and-researchMenu">
+                                    <li><a href="#economy">Economy</a></li>
+                                    <li><a href="#research">Research</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#units-and-buildings">Units and Buildings</a>
+                                <button class="btn btn-sm btn-circle ml-2" data-toggle="collapse" data-target="#units-and-buildingsMenu" aria-expanded="false" aria-controls="units-and-buildingsMenu" id="units-and-buildingsToggleButton" data-collapsed="true">+</button>
+                                <ul class="collapse ml-n3" id="units-and-buildingsMenu">
+                                    <li><a href="#units">Units</a></li>
+                                    <li><a href="#buildings">Buildings</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-
-
                     <li>
                         <a href="#development-roadmap">Development Roadmap</a>
                         <button class="btn btn-sm btn-circle ml-2"
@@ -126,7 +140,7 @@
                                     <li><a href="#basicRenderingSystemStart">AnimationManager(start)</a></li>
                                     <li><a href="#userInputManager">UserInputManager</a></li>
                                     <li><a href="#simpleUIUX">Simple UI</a></li>
-                                    <li><a href="#agents">Agents</a></li>
+                                    <li><a href="#agentsStart">Agents(start)</a></li>
                                     <li><a href="#skirmishManager">SkirmishManager</a></li>
                                     <li><a href="#crudManager">CRUDManager</a></li>
                                     <li><a href="#gameLoop">Game Loop</a></li>
@@ -231,10 +245,10 @@
                     <h3 style="color: darkblue; margin-bottom: 10px;">Game Concept</h3>
                     <p>
                         <strong>Concept Overview:</strong>
-                        <span class="gameTitle"></span> is an RTS that immerses players in the strategic and 
+                        <span class="gameTitle"></span> is an RTS that immerses players in the strategic and
                         tactical challenges of World War I. The first iteration, the race to develop a polished
-                        working demo, will be single player. But a responsive, eSports level multiplayer will be 
-                        the goal if the game recieves funding. The gameplay will emphasie a 
+                        working demo, will be single player. But a responsive, eSports level multiplayer will be
+                        the goal if the game recieves funding. The gameplay will emphasie a
                         balance between economy, strategy and real time action.
                     </p>
                     <p>
@@ -398,21 +412,286 @@
                         than calling up the next General Order.
                     </p>
                 </div>
+                <h3 id="economy-and-research">Economy and Research</h3>
 
+                <div class="pl-4">
+                    <h4 id="economy">Economy</h4>
+                    <p>
+                        As typical in every single RTS under the sun, <span class="gameTitle"></span> will have an ingame economic
+                        system. There will be dedicated economic units like civilians but soldiers will also act as econmic units
+                        for wood and supplies. The resources are:
+                    </p>
+                    <ul class="list-unstyled pl-2">
+                        <li>
+                            <strong>Wood</strong>
+                            <p class="mb-2">
+                                This can be collected at home or at the front. Economic units like civilians can collect it but so
+                                can soldiers where forests are available at the front. Lumber mill is the required building.
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Steel</strong>
+                            <p class="mb-2">
+                                Collected by economic units like civilians from patches of iron ore. A foundry is the required
+                                building to drop off iron and increase steel.
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Supplies</strong>
+                            <p class="mb-2">
+                                Supplies are very similar to food in standard RTS games but will deviate a little and will make
+                                our game unique. It includes food, but will also include ammo, fuel and medical supplies. Just like
+                                food in AOEII there will be multiple sources of supplies like oil fields, farms, pharmacies,
+                                ammo factories etc. They might have specific bonuses and/or effects, we can decide when trying to
+                                balance the game.
+                            </p>
+                            <p>
+                                As an additional difference to most RTS games "food" resource, the full game should treat
+                                supply depots as a resource field, including enemy supply depots. Soldiers will have to ferry supplies
+                                between a supply depot and their station, like artillery guns or trenches. Enemy supplies can be
+                                collected as long as your units can get to it. This is a cool, unique and historically accurate
+                                feature.
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Propaganda</strong>
+                            <p class="mb-2">
+                                Propaganda will be the core resource to recruit more infantry, civilians and call up the next
+                                <a href="#generalOrders">General Order</a>. It will be generated by media organizations.
+                            </p>
+                            <p>
+                                2 additional features of propaganda:
+                                <ol>
+                                    <li>It will increase morale which buffs military and economic units.</li>
+                                    <li>
+                                        A propaganda-generating unit (journalist, upgraded to war correspondent) will create
+                                        more propaganda by being near civilians when they are being killed.
+                                    </li>
+                                </ol>
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Debt</strong>
+                            <p class="mb-2">
+                                This represents national debt. A player will start with a bank and bankers (factionless) and can create debt right from
+                                the beginning. Debt can purchase any other resource or can be used to advance to the next
+                                <a href="#generalOrders">General Order</a>, Using debt to purchase resources will cause inflation
+                                which is a higher price for resources.
+                            </p>
+                            <p>
+                                Although it seems like debt is free, in fact it decreases the players score, so a player can actually
+                                loose the match by falling too deep into debt, even if they are winning on the battlefield. Debt will
+                                debuff a the economic units and buildings, your economy will be crippled by debt and your factories
+                                will grind to a halt under too much dept. It's a resource that if managed carefully can boost a
+                                player at strategic moments, but loose him sthe game is mismanaged.
+                            </p>
+                            <p>
+                                It may take a lot of effort to get this game mechanic to balance properly, it's unique and we
+                                won't have other games to reference for this feature of <span class="gameTitle"</span>.
+                            </p>
+                            <p>
+                                Debt cannot be repaid.
+                            </p>
+                        </li>
+                    </ul>
+                    <h4 id="research">Research</h4>
+                    <p>
+                        As typical in every single RTS under the sun, <span class="gameTitle"></span> will have a reaseach tree.
+                        Tech trees can be very complex but we will spare ourselves by sticking closely to AOEII for inspiration
+                        and balance. For now I can't think of any notable exceptions but there are ideas later they will be updated
+                        here:
+                    </p>
+                    <ul>
+                        <li>Maybe coming soon...</li>
+                        <li>Maybe coming soon...</li>
+                        <li>Maybe coming soon...</li>
+                    </ul>
+                </div>
+                <h3 id="units-and-buildings">Units and Buildings</h3>
+                <p>
+                    The units and buildings will be symetrical across factions but there will be some unique units to add flavour.
+                    This game will again stick closley to the AOEII architecture but with a few exceptsion.
+                </p>
+                <div class="pl-4">
+                    <h4 id="units">Units</h4>
+                    <p>
+                        Stick close to AOEII for inspiration and balance of units. Notable exception is the Flying Korps.
+                    </p>
+                    <ul class="list-unstyled pl-2">
+                        <li>
+                            <strong>Economic</strong>
+                            <p class="mb-2">
+                                Civilians. They are assigned to do jobs like in AOEII, they can be assulted directly impacting their 
+                                ability to work, this is a viable strategy to win. 
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Infantry</strong>
+                            <p class="mb-2">
+                                The standard unit of the game, Comes in differnet unit types like rifleman, stormtrooper, mortar team
+                                and machinegunners.
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Mounted</strong>
+                            <p class="mb-2">
+                                Coming soon...
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Guns</strong>
+                            <p class="mb-2">
+                                There are 3 scales of guns Small, Medium and Large. The size dictates range, speed and blast,
+                                small guns can be moved quickly but have the least range and blast, large guns have the longest
+                                range, largest blast but can be moved the slowest. All guns should require some time to set up and
+                                tear down between movement. Larger guns will have such range that they can be kept at a safe 
+                                distance from the front line trenches.
+                            </p>
+                            <p>
+                                The player will control guns from the tactical view and guns, instead of <strong>Formations</strong>
+                                will have <strong>Fire Patterns</strong>, like:
+                            </p>
+                            <ul class="ml-2">
+                                <li>Standing Barrage</li>
+                                <li>Hurricane Barrage</li>
+                                <li>Counter Battery</li>
+                                <li>Creeping Barrage</li>
+                            </ul>
+                            <p>Counter battery and Creeping Barrage will not be available until the <strong><a href="#assault">
+                            Assault</a></strong>General Order</p> and will be improved by research upgrades.
+                        </li>
+                        <li>
+                            <strong>Flying Korps</strong>
+                            <p class="mb-2">
+                                Starting out only with airships, then fighters, then bombers, Airships available from the beginning
+                                expand the fog of war. Bombers are controlled at the strategic map, fighters at the tactical map.
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Unique units</strong>
+                            <p class="mb-2">
+                                Factions have units that are unique to them which are:
+                            </p>
+                            <ul>
+                                <li><strong>British Empire:</strong> Mk 1 Tank, Scots Guard (Psych)</li>
+                                <li><strong>Russian Empire:</strong> Imperial Guard</li>
+                                <li><strong>Ottoman Empire:</strong>Abus Gun Carriage, Screaming Zealots</li>
+                                <li><strong>Austro-Hungarian Empire:</strong> Schwazlose Machine Guns</li>
+                                <li><strong>Germany:</strong> Flamethrowers, Zeppelin (Bombers)</li>
+                                <li><strong>France:</strong> Renault FT Tank</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4 id="buildings">Buildings</h4>
+                    <p>
+                        Buildings will fall under 3 catagories: economic, production and military:
+                    </p>
+                    <ul class="list-unstyled pl-2">
+                        <li>
+                            <strong>Economic</strong>
+                            <p class="mb-2">
+                                These buildings will be closely related to resource collection, such as:
+                            </p>
+                            <ul>
+                                <li><strong>Town Center:</strong> Produces Labour Corps Workers, the standard economic unit, aka civilians</li>
+                                <li><strong>Lumber Mill:</strong> The drop off point for wood collection.</li>
+                                <li><strong>Foundry:</strong> The drop off point for iron collection.</li>
+                                <li>
+                                <strong>Refinery, Mill, Munitions Plant:</strong> The drop off point for oil, food and chemical 
+                                which are all types of supplies for collection.</li>
+                                <li>
+                                    <strong>Media Office:</strong>
+                                    The drop off point of opinion collected by civilians assigned to work there.
+                                    Opinion is collected from locations where friendly civilians are at, in effect
+                                    the civilians are the resource field.
+                                </li>
+                                <li>
+                                    <strong>Banks:</strong>
+                                    These dont't collect any resource but if they're destroyed the
+                                    player cannot leverage debt unless rebuilt.
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Production</strong>
+                            <p class="mb-2">
+                                These buildings will be closely related to unit production, such as:
+                            </p>
+                            <ul>
+                                <li><strong>Drill Hall:</strong> Produces infantry.</li>
+                                <li><strong>Stable:</strong> Produces mounted units.</li>
+                                <li><strong>War Factory:</strong> Produces guns.</li>
+                                <li><strong>Aerodrome:</strong> Produces flying corps units.</li>
+                            </ul> 
+                        </li>
+                        <li>
+                            <strong>Military</strong>
+                            <p class="mb-2">
+                                These buildings can be thougth of as immobile units, with firepower and strength
+                                but stationary. They are the single most powerful units in the game. They are:
+                            </p>
+                            <ul>
+                                <li>
+                                    <strong>Trenches:</strong>
+                                    The most basic military building, used extensivley, built by soldiers and upgraded with
+                                    wire and machinegun nests. Can only be used as defensive structures. They are constructed at
+                                    the tactical map scale by soldiers.
+                                </li>
+                                <li>
+                                    <strong>Dugout:</strong>
+                                    A fairly common secure addition to trench networks allows your troops to survive incoming
+                                    fire. Tougher and greater capacity than trenches but weaker and less firepower than a bunker.
+                                    Also defensive structures. They are constructed at
+                                    the tactical map scale by soldiers.
+                                </li>
+                                <li>
+                                    <strong>Bunker:</strong>
+                                    A fortified structure offering superior protection and firepower. More robust and
+                                    durable than dugouts, bunkers can withstand intense artillery bombardment. Fully armed they
+                                    provide a formidable installation within or near trench networks, significantly enhancing your
+                                    troops' survivability and combat effectiveness in the nearby area. Can be used defensivley but also
+                                    built in an aggressive forward position, consolidating gains made in rapid advances. They are constructed at
+                                    the tactical map scale by soldiers.
+                                </li>
+                                <li>
+                                    <strong>Fortress:</strong> The single largest, most expensive and powerful unit in <span class="gameTitle"></span>.
+                                    Placing down a fortress is a powerful move and can win the game. They can be placed defensivly a little from
+                                    enemy lines to ensure breakthroughs are impossible or can be built aggressivly toward or even inside enemy lines
+                                    (if can actually manage) to create very tough positions for the enemy to assult, giving your side a significant
+                                    advantage in that region. However aggressively building fortresses might cost you the game if you fail to capitalise
+                                    on the gain, given how expenisive a fortress is to build and how many lives it might cost to construct it in a forward
+                                    offensive position. They are constructed at the strategic map scale by soldiers and labour corps
+                                    (civilians).
+                                </li>
+                                <li>
+                                    <strong>Tunnels:</strong>
+                                    Not strictly a building but a critical aspect of <span class="gameTitle"></span>, tunnels are 
+                                    constructed at the tactical map scale by specialized engineer units. They serve multiple 
+                                    purposes: surprise attacks behind enemy lines and destroying enemy fortifications 
+                                    through sapping and counter sapping actions. Tunnels can dramatically alter the battlefield 
+                                    by allowing for surprise assaults, either blowing up a trench strong point to support ground level
+                                    assaults or being an offensive action in their own right by destroying key military buildings like 
+                                    forts. Their construction is slow but can yield significant tactical advantages, 
+                                    especially in breaking stalemates or destroying strategic points.
+                                </li>
+                             </ul>
+                        </li>
+                    </ul>
+                </div>
                 <h3 id="development-roadmap">Development Roadmap</h3>
                 <p>
-                    The project's objective is to construct a polished and playable demo within an eight-month 
-                    timeframe. Among the various sections of this Game Design Document, the development 
-                    roadmap stands out for its flexibility. This roadmap will serve as a useful guide rather than 
-                    a rigid plan, as it breaks down the game's complex challenges into smaller, modular problems. 
+                    The project's objective is to construct a polished and playable demo within an eight-month
+                    timeframe. Among the various sections of this Game Design Document, the development
+                    roadmap stands out for its flexibility. This roadmap will serve as a useful guide rather than
+                    a rigid plan, as it breaks down the game's complex challenges into smaller, modular problems.
                     These can be solved independently and then integrated into the main solution. The initial step
-                    in tackling these challenges involves dividing the work into two primary phases: the prototype 
-                    phase and the demo phase. Notably, certain elements of the working demo, such as cutscenes 
-                    or 3D models, can be developed in parallel with the prototype, even before its completion. 
+                    in tackling these challenges involves dividing the work into two primary phases: the prototype
+                    phase and the demo phase. Notably, certain elements of the working demo, such as cutscenes
+                    or 3D models, can be developed in parallel with the prototype, even before its completion.
                     These components, while not essential for a robust prototype, can be progressed concurrently,
-                    resources permitting. As such, while the roadmap's steps are presented in a linear fashion, 
-                    the actual development process will be much more parallel in nature. The success of this 
-                    approach hinges on the project manager's expertise in effectively dividing tasks and overseeing 
+                    resources permitting. As such, while the roadmap's steps are presented in a linear fashion,
+                    the actual development process will be much more parallel in nature. The success of this
+                    approach hinges on the project manager's expertise in effectively dividing tasks and overseeing
                     their progression. The following are the initial divisions outlined in the roadmap:
                 </p>
                 <div style="margin-left: 20px;">
@@ -450,7 +729,7 @@
                                 <div class="content">
                                     <p>
                                         The game state is potentially
-                                        the single most important element in the whole game. The game state, in essence, is the actual game itself. 
+                                        the single most important element in the whole game. The game state, in essence, is the actual game itself.
                                         It is the place where all the moving parts come together in one place. The maps, weather conditions, resources
                                         collected,
                                         buildings, units and even artillery shells in mid-flight will all be stored in the game
@@ -464,13 +743,13 @@
                                         <li class="mt-3 mb-3">
                                             <h6>2D Array: Static, Evenly Distributed Objects</h6>
                                             <p>
-                                                Many objects in the game are static, rarely, if ever, moving. This includes 
+                                                Many objects in the game are static, rarely, if ever, moving. This includes
                                                 elements like terrain tiles and forests, which are uniformly distributed across
-                                                the map. These objects do not lend themselves to rapid iteration; instead, 
-                                                they require sequential processing. A 2D array is an ideal solution for 
-                                                managing these static elements. It inherently aligns each object's position 
-                                                with its corresponding location on the game map — for instance, an object at 
-                                                array(0,0) corresponds to the game map coordinates of (0,0). This natural 
+                                                the map. These objects do not lend themselves to rapid iteration; instead,
+                                                they require sequential processing. A 2D array is an ideal solution for
+                                                managing these static elements. It inherently aligns each object's position
+                                                with its corresponding location on the game map — for instance, an object at
+                                                array(0,0) corresponds to the game map coordinates of (0,0). This natural
                                                 alignment of data structure and spatial distribution simplifies the management
                                                 of static, evenly distributed objects such as:
                                             </p>
@@ -487,23 +766,23 @@
                                                 In contrast to static objects, dynamic, unevenly distributed objects in the game,
                                                 such as moving units or variable resources, are optimally managed with a
                                                 <a href="https://www.youtube.com/watch?v=XvISDt21lhA">Quad Tree</a> data
-                                                structure. This approach is particularly effective in real-time strategy (RTS) 
-                                                games, where handling hundreds of units simultaneously is common. The Quad 
-                                                Tree dynamically adjusts, expanding and contracting based on the current 
-                                                positions and statuses of these objects. This flexibility is essential for 
+                                                structure. This approach is particularly effective in real-time strategy (RTS)
+                                                games, where handling hundreds of units simultaneously is common. The Quad
+                                                Tree dynamically adjusts, expanding and contracting based on the current
+                                                positions and statuses of these objects. This flexibility is essential for
                                                 efficiently managing a constantly changing game state.
                                             </p>
                                             <p>
-                                                The <strong>GameStateManager</strong> class plays a pivotal role in this process, ensuring 
-                                                that the game state remains as efficient as possible. For instance, when a 
+                                                The <strong>GameStateManager</strong> class plays a pivotal role in this process, ensuring
+                                                that the game state remains as efficient as possible. For instance, when a
                                                 non-player character (NPC) moves, the Agent class requests an update from
-                                                the GameStateManager. The manager then evaluates whether there's an 
-                                                existing quadrant in the Quad Tree for the NPC. If not, it generates one 
-                                                immediately. Conversely, it collapses empty quadrants back into their parent 
-                                                nodes to maintain optimal efficiency. This dynamic handling, delegated to the 
-                                                specialised the GameStateManager class, ensures the game state serves its 
-                                                primary function: 
-                                                storing an efficient and current snapshot of the game. The main properties 
+                                                the GameStateManager. The manager then evaluates whether there's an
+                                                existing quadrant in the Quad Tree for the NPC. If not, it generates one
+                                                immediately. Conversely, it collapses empty quadrants back into their parent
+                                                nodes to maintain optimal efficiency. This dynamic handling, delegated to the
+                                                specialised the GameStateManager class, ensures the game state serves its
+                                                primary function:
+                                                storing an efficient and current snapshot of the game. The main properties
                                                 stored by the game state in a Quad Tree are:
                                             </p>
                                             <ul>
@@ -533,10 +812,10 @@
                                 <strong>GameStateManager:</strong> Dynamically manages the game state.
                                 <button class="toggle" onclick="toggleCollapse('gameStateManager')">+</button>
                                 <div class="content">
-                                    This will be built as the GameState class also gets built. Because the game state will only 
+                                    This will be built as the GameState class also gets built. Because the game state will only
                                     store data a manager will be needed to keep it up to date, that is the purpose of this manager.
-                                    Everything that writes to the game state will pass through the GameStateManager to ensure 
-                                    the game state's structure is optimised at all times. 
+                                    Everything that writes to the game state will pass through the GameStateManager to ensure
+                                    the game state's structure is optimised at all times.
                                 </div>
                             </li>
                             <li id="basicRenderingSystemStart">
@@ -619,20 +898,20 @@
                                 </div>
                             </li>
                             <li id="simpleUIUX">
-                                <strong>Simple UI:</strong>
+                                <strong>Simple UI:</strong> Bare minimun to interact with prototype.
                                 <button class="toggle" onclick="toggleCollapse('simpleUIUX')">+</button>
                                 <div class="content">
                                     Most basic user interface components needed for player interaction.
-                                    This will be 2 sets of widgets 1 running along the top of the window displaying resource 
-                                    stats. The 2nd, more important interface section will run along the botton of the window 
+                                    This will be 2 sets of widgets 1 running along the top of the window displaying resource
+                                    stats. The 2nd, more important interface section will run along the botton of the window
                                     which will show unit abilities, selected unit info, mini map and leave room for in game chat.
-                                    We should not get too creative about the UI, AOEII has a very good UI and we should 
-                                    use it as a close reference. 
+                                    We should not get too creative about the UI, AOEII has a very good UI and we should
+                                    use it as a close reference.
                                 </div>
                             </li>
-                            <li id="agents">
+                            <li id="agentsStart">
                                 <strong>Agents:</strong> Basic NPC scripts.
-                                <button class="toggle" onclick="toggleCollapse('agents')">+</button>
+                                <button class="toggle" onclick="toggleCollapse('agentsStart')">+</button>
                                 <div class="content">
                                     <p>
                                         This is just the most basic level of AI required for units to display "normal"
@@ -656,37 +935,89 @@
                                 </div>
                             </li>
                             <li id="skirmishManager">
-                                <strong>SkirmishManager:</strong>
+                                <strong>SkirmishManager:</strong> Handle Hitboxes
                                 <button class="toggle" onclick="toggleCollapse('skirmishManager')">+</button>
                                 <div class="content">Manages small-scale conflicts or battles in the game.</div>
                             </li>
-                            <li id="crudManager">
-                                <strong>CRUDManager:</strong>
-                                <button class="toggle" onclick="toggleCollapse('crudManager')">+</button>
-                                <div class="content">If relevant, for handling unit/resource management operations.</div>
-                            </li>
                             <li id="gameLoop">
-                                <strong>Game Loop:</strong>
+                                <strong>Game Loop:</strong> Runs the game.
                                 <button class="toggle" onclick="toggleCollapse('gameLoop')">+</button>
-                                <div class="content">Core structure for managing gameplay flow and updates.</div>
+                                <div class="content">Needs to run on time delta to ensure game time is accurate.</div>
                             </li>
                         </ul>
-
-
                     </section>
 
                     <section id="demo-development">
                         <h2>Demo Development</h2>
-                        <p>Comming soon...</p>
+                        <p>
+                            Once the prototype is well under way and showing good progress we can start building the demo.
+                            It will be an accurate snapshot of what the whole game could potentially be. But skip on many of the
+                            features expected in a full game, just focusing on whetting the appetite of fans and investors. The demo
+                            phase will require new team members like 3D artists, sound engineers and digital marketeers. A call
+                            will be put out to attract these new team members.
+                        </p>
                         <ul>
                             <li id="basicRenderingSystemFinish">
                                 <strong>AnimationManager(finish):</strong>
                                 <button class="toggle" onclick="toggleCollapse('basicRenderingSystemFinish')">+</button>
                                 <div class="content">Handle sprites, lighting effects, screen shake effects.</div>
                             </li>
-                            <li id="creatingAIOpponent">
-                                <strong>AI Opponent System:</strong>
-                                <button class="toggle" onclick="toggleCollapse('creatingAIOpponent')">+</button>
+                            <li id="creatingAIOpponentStart">
+                                <strong>AI Opponent System (Start):</strong>
+                                <button class="toggle" onclick="toggleCollapse('creatingAIOpponentStart')">+</button>
+                                <div class="content">Development of a full-fledged AI opponent is postponed to the demo phase.</div>
+                            </li>
+                            <li id="audioManager">
+                                <strong>AudioManager:</strong>
+                                <button class="toggle" onclick="toggleCollapse('audioManager')">+</button>
+                                <div class="content">Detailed audio work will be part of later polishing, with only basic audio features in the prototype.</div>
+                            </li>
+                            <li id="3DModels">
+                                <strong>3D Models:</strong> For Sprite Sheets
+                                <button class="toggle" onclick="toggleCollapse('3dmodels')">+</button>
+                                <div class="content">
+                                    3D artists design models of the games most basic objects (units, buildings, scenery etc) then
+                                    creates a sprite sheet out of those models.
+                                </div>
+                            </li>
+                            <li id="AudioEngineering">
+                                <strong>Audio Engineering:</strong> Audio Sprites and music
+                                <button class="toggle" onclick="toggleCollapse('audioEngineering')">+</button>
+                                <div class="content">
+                                    Audio engineer(s) builds up sound of the game, creates sound sprites and some back ground
+                                    music.
+                                </div>
+                            </li>
+                            <li id="cinematography">
+                                <strong>Cinematography:</strong> Create Cutscenes
+                                <button class="toggle" onclick="toggleCollapse('cinematography')">+</button>
+                                <div class="content">
+                                    Use 3D models, music and audio sprites to create some entising cutscenes for the demo.
+                                    Would be good to have game loading cutscene for when the player first turns on the game
+                                    and a background cutscene for the main menu view.
+                                </div>
+                            </li>
+                        </ul>
+
+                    </section>
+
+                    <section id="full-game">
+                        <h2>Full Game</h2>
+                        <p>Coming soon...</p>
+                        <ul>
+                            <li id="market">
+                                <strong>Build and Implement Marketing Campaign:</strong> Create and execute marketing strategy.
+                                <button class="toggle" onclick="toggleCollapse('crudManager')">+</button>
+                                <div class="content">Game conns, festivals, social media, journalist outreach etc.</div>
+                            </li>
+                            <li id="crudManager">
+                                <strong>CRUDManager:</strong> Handles C.R.U.D. verbs.
+                                <button class="toggle" onclick="toggleCollapse('crudManager')">+</button>
+                                <div class="content">For pausing, saving, loading and starting a new game.</div>
+                            </li>
+                            <li id="creatingAIOpponentFinish">
+                                <strong>AI Opponent System (Finish):</strong>
+                                <button class="toggle" onclick="toggleCollapse('creatingAIOpponentFinish')">+</button>
                                 <div class="content">Development of a full-fledged AI opponent is postponed to the demo phase.</div>
                             </li>
                             <li id="localisation">
@@ -699,18 +1030,17 @@
                                 <button class="toggle" onclick="toggleCollapse('mapEditor')">+</button>
                                 <div class="content">While important for an RTS, its development is more complex and not prioritized for the initial lean prototype.</div>
                             </li>
-                            <li id="audioManager">
-                                <strong>AudioManager:</strong>
-                                <button class="toggle" onclick="toggleCollapse('audioManager')">+</button>
-                                <div class="content">Detailed audio work will be part of later polishing, with only basic audio features in the prototype.</div>
+                            <li id="multiplayer">
+                                <strong>Build Multiplayer:</strong>
+                                <button class="toggle" onclick="toggleCollapse('multiplayer')">+</button>
+                                <div class="content">Comming soon...</div>
+                            </li>
+                            <li id="campaign">
+                                <strong>Build Campaign:</strong> Story, cutscenes and level progression.
+                                <button class="toggle" onclick="toggleCollapse('campaign')">+</button>
+                                <div class="content">Comming soon...</div>
                             </li>
                         </ul>
-
-                    </section>
-
-                    <section id="full-game">
-                        <h2>Full Game</h2>
-                        <p>Comming soon...</p>
                     </section>
                 </div>
 
@@ -801,9 +1131,11 @@
                     <li><strong>Interactive Environments:</strong> Environments are interactive, providing tactical advantages and depth to gameplay. For example, being on a hill increases view and weapon range.</li>
                     <li><strong>Dynamic Weather and Time:</strong> Changing weather conditions and time-of-day cycles affect movement and visibility, adding strategic elements.</li>
                     <li><strong>Destructible Elements:</strong> Certain scenery features are destructible, allowing dynamic battlefield changes.</li>
-                    <li><strong>Varied Scales and Perspectives:</strong> Different map scales offer a deeper gameplay experiences, 
-                    from the large <a href="#strategic-map">macro strategic map</a> view, the detailed<a href="#tactical-map"> micro tactical map </a>
-                    and an addiitonal scroll level to handle underground tunnel warfare.</li>
+                    <li>
+                        <strong>Varied Scales and Perspectives:</strong> Different map scales offer a deeper gameplay experiences,
+                        from the large <a href="#strategic-map">macro strategic map</a> view, the detailed<a href="#tactical-map"> micro tactical map </a>
+                        and an addiitonal scroll level to handle underground tunnel warfare.
+                    </li>
                     <li><strong>Atmospheric Detailing:</strong> Small details like spent shell casings and makeshift encampments enhance the immersive atmosphere.</li>
                 </ul>
 
@@ -1075,7 +1407,7 @@
                             best team and best game we're capable of, we can establish a reputation as a
                             gaming studio synonymous with quality and innovation. Such a reputation naturally
                             attracts a vibrant, engaged community. This is about fostering an environment where
-                            creativity thrives and each team member is greatly valued for contributing their time and skills to 
+                            creativity thrives and each team member is greatly valued for contributing their time and skills to
                             helping create a compelling gaming experiences. A strong studio reputation not only draws talented
                             individuals, but also cultivates a passionate player base. Their enthusiasm and
                             feedback become integral to our game development process, enabling us to continually
@@ -1100,10 +1432,10 @@
                         </ul>
 
                         <p>
-                            In terms of growth potential, there's an opportunity to attract younger gamers who may not have experienced these classic titles. 
-                            A new game opens the door to new ledgends in the eSports scene which is rich with younger players, their enthusiasm will help recruit a new 
-                            generation of RTS fans. Additionally, by capturing the essence of nostalgia inherent in retro and 
-                            classic gaming, we can tap into the fond memories and deep affections held by players for these iconic titles, rekindling their passion 
+                            In terms of growth potential, there's an opportunity to attract younger gamers who may not have experienced these classic titles.
+                            A new game opens the door to new ledgends in the eSports scene which is rich with younger players, their enthusiasm will help recruit a new
+                            generation of RTS fans. Additionally, by capturing the essence of nostalgia inherent in retro and
+                            classic gaming, we can tap into the fond memories and deep affections held by players for these iconic titles, rekindling their passion
                             and inviting them to revisit the evolved world of RTS gaming through our offering.
                         </p>
 
@@ -1307,13 +1639,13 @@
                     <p>
                         Once the creative juices start to flow it's difficult to stop so there are many directions the company
                         take. There's scope for an exciting mobile game extension to <span class="gameTitle"></span>.
-                        Or the company could head gently in the direction of mechanical engineering with some exciting 
+                        Or the company could head gently in the direction of mechanical engineering with some exciting
                         entertainment equipment production. Regardless, much work to be done in the here and now.
-                     </p>
-                        </div>
+                    </p>
+                </div>
             </div>
 
-        </div>
+            </div>
     </div>
     <div class="hover-container" data-ref="ref1">
         <img src="https://manofmany.com/wp-content/uploads/2021/03/Starbase-Elon-Musk-1.jpg">
@@ -1428,7 +1760,21 @@
                 prototypeDevelopmentButton.textContent = isCollapsed ? '+' : '-';
             });
 
+            // Economy and Research Button
+            var economyAndResearchButton = document.getElementById('economy-and-researchToggleButton');
+            economyAndResearchButton.addEventListener('click', function () {
+                var isCollapsed = economyAndResearchButton.getAttribute('data-collapsed') === 'true';
+                economyAndResearchButton.textContent = isCollapsed ? '-' : '+';
+                economyAndResearchButton.setAttribute('data-collapsed', !isCollapsed);
+            });
 
+            // Units and Buildings Button
+            var unitsAndBuildingsButton = document.getElementById('units-and-buildingsToggleButton');
+            unitsAndBuildingsButton.addEventListener('click', function () {
+                var isCollapsed = unitsAndBuildingsButton.getAttribute('data-collapsed') === 'true';
+                unitsAndBuildingsButton.textContent = isCollapsed ? '-' : '+';
+                unitsAndBuildingsButton.setAttribute('data-collapsed', !isCollapsed);
+            });
         });
 
         // Function to position the hover-container
