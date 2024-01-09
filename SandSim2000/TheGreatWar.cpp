@@ -31,7 +31,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
     window.clear(sf::Color::Black);
 
     sf::Font font;
-    if (!font.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Fonts\\WorldAtWar.ttf")) std::cerr << "Failed to load font!" << std::endl; 
+    if (!font.loadFromFile("../resources/Fonts/WorldAtWar.ttf")) std::cerr << "Failed to load font!" << std::endl; 
     sf::Text title("The Great War", font);
     title.setCharacterSize(100);
     title.setFillColor(sf::Color::White);
@@ -39,7 +39,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
     window.draw(title);
 
     sf::Texture backgroundImgTexture;
-    if (!backgroundImgTexture.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Images\\Utilities\\OpeningImage.jpg")) {
+    if (!backgroundImgTexture.loadFromFile("../resources/images/Utilities/OpeningImage.jpg")) {
         std::cerr << "Failed to load Opening Image texture!" << std::endl;
     }
 
@@ -52,7 +52,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
     sf::RectangleShape mapEditor(sf::Vector2f(350, 150));
 
     sf::Texture buttonTexture;
-    if (!buttonTexture.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Images\\Utilities\\MenuButtonBorder.png")) {
+    if (!buttonTexture.loadFromFile("../resources/images/Utilities/MenuButtonBorder.png")) {
         std::cerr << "Failed to load button texture!" << std::endl;
         return;
     }
@@ -108,7 +108,7 @@ void mainMenu(sf::RenderWindow& window, MainMenuOptions& options) {
 void setInitialCursorIcon(sf::RenderWindow& window)
 {
     sf::Image cursorImage;
-    if (!cursorImage.loadFromFile("A:\\C++\\TheGreatWar\\resources\\Images\\Utilities\\cursorIcon.png"))
+    if (!cursorImage.loadFromFile("../resources/images/Utilities/cursorIcon.png"))
     {
         throw std::runtime_error("Failed to load cursor image");
     }
