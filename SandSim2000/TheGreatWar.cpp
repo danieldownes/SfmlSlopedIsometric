@@ -107,7 +107,7 @@ void setInitialCursorIcon(sf::RenderWindow& window)
     sf::Image cursorImage;
     if (!cursorImage.loadFromFile("C:\\Users\\User\\Desktop\\The_Great_War\\Resouces\\Images\\Utilities\\cursorIcon.png"))
     {
-        throw std::runtime_error("Failed to load cursor image");
+        throw std::runtime_error("Failed to load cursor image!");
     }
     sf::Cursor cursor;
     cursor.loadFromPixels(cursorImage.getPixelsPtr(), cursorImage.getSize(), sf::Vector2u(0, 0));
