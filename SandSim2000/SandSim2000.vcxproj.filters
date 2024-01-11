@@ -36,10 +36,13 @@
     <ClCompile Include="Agent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VehicleAgent.cpp">
+    <ClCompile Include="MovementManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InfantryAndCavalryAgent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleAgent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,10 +68,13 @@
     <ClInclude Include="Agent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VehicleAgent.h">
+    <ClInclude Include="MovementManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InfantryAndCavalryAgent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleAgent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
