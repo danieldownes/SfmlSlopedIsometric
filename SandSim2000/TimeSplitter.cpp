@@ -1,6 +1,4 @@
 #include "TimeSplitter.h"
-#include <chrono>
-#include <thread>
 
 TimeSplitter::TimeSplitter() {}
 

@@ -225,6 +225,7 @@ class Camera {
 public:
     Camera();
 
+    void Run();
 private:
     sf::RenderWindow window;
     sf::View view;
@@ -238,7 +239,6 @@ private:
     bool mouseButtonPanning = false;
     bool edgePanning = false;
 
-
     float startPanX = 0.0f;
     float startPanY = 0.0f;
 
@@ -248,14 +248,16 @@ private:
     int screenX = 0.0f;
     int screenY = 0.0f;
 
+    sf::Texture GrassTexture[3];
+
     void Pan(sf::Event& event);
     void Zoom(sf::Event& event);
     void WorldToScreen(float worldX, float worldY, int& screenX, int& screenY);
     void ScreenToWorld(int screenX, int screenY, float& worldX, float& worldY);
     void Draw(GameState* gameState);
-
-public:
-    void Run();
+    void drawRectFromQuadTreeNode(QuadTree* node, sf::FloatRect& viewBounds,
+        GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+    void initialiseGrassTextures();
 };
 
 Camera::Camera()
@@ -394,13 +396,59 @@ void Camera::Draw(GameState* gameState) {
 
     sf::FloatRect viewBounds(0, 0, window.getSize().x, window.getSize().y);
 
-    sf::Sprite sprite = sf::Sprite();
     GridGenerator gridGenerator;
     int centerOffsetX = screenX / 2;
     int OffsetY = 150;
 
-    //Import the Grass Textures
-    sf::Texture GrassTexture[3];
+    drawRectFromQuadTreeNode(gameState->getMapData(), viewBounds, gridGenerator, centerOffsetX, OffsetY);
+ 
+    window.display();
+}
+
+void Camera::drawRectFromQuadTreeNode(
+    QuadTree* node, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY
+) {
+    if (typeid(*node) == typeid(QuadTreeLeaf)) {
+        sf::Sprite sprite = sf::Sprite();
+        TerrainTile terrain = ((QuadTreeLeaf*)node)->getTerrainInfo();
+
+        int posX = node->getQuadRect().getPosition().x / 100;
+        int posY = node->getQuadRect().getPosition().y / 100;
+
+        //Sets the texture of the sprite to the corresponding Grass tile
+        sprite.setTexture(GrassTexture[terrain.height]);
+        sprite.setTextureRect(sf::IntRect(0, 0,
+            node->getQuadRect().getSize().x, node->getQuadRect().getSize().y + (terrain.height * 50)
+        ));
+
+        // Set the sprite position
+        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(posX, posY));
+
+        // Y Transformations
+        isometricPosition.y *= terrain.z;
+        isometricPosition.y += OffsetY;
+        isometricPosition.y -= 50 * terrain.height;
+
+        // X Transformations
+        isometricPosition.x += centerOffsetX;
+
+        int screenX, screenY;
+        WorldToScreen(isometricPosition.x, isometricPosition.y, screenX, screenY);
+
+        sprite.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
+        sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+
+        // Culling
+        if (viewBounds.intersects(sprite.getGlobalBounds()))
+            window.draw(sprite);
+    } else {
+        std::array<QuadTree*, 4> children = ((QuadTreeInternal*)node)->getChildren();
+        for (QuadTree* child : children)
+            drawRectFromQuadTreeNode(child, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+    }
+}
+
+void Camera::initialiseGrassTextures() {
     const std::string presetFilePath = "../resources/images/Terrain/Grass/grass";
     for (int i = 1; i < 4; i++)
     {
@@ -411,42 +459,11 @@ void Camera::Draw(GameState* gameState) {
             return;
         }
     }
-
-    for (int i = 0; i < gameState->mapSize; i++)
-    {
-        for (int j = 0; j < gameState->mapSize; j++)
-        {
-            //Sets the texture of the sprite to the corresponding Grass tile
-            sprite.setTexture(GrassTexture[gameState->getMapData()[i][j].height]);
-            sprite.setTextureRect(sf::IntRect(0, 0, 100, gameState->getMapData()[i][j].height * 50 + 100));
-
-            // Set the sprite position
-            sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(i, j));
-
-            // Y Transformations
-            isometricPosition.y *= gameState->getMapData()[i][j].z;
-            isometricPosition.y += OffsetY;
-            isometricPosition.y -= 50 * gameState->getMapData()[i][j].height;
-
-            // X Transformations
-            isometricPosition.x += centerOffsetX;
-            int screenX, screenY;
-            WorldToScreen(isometricPosition.x, isometricPosition.y, screenX, screenY);
-
-            sprite.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
-            sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
-
-            // Culling
-            if (viewBounds.intersects(sprite.getGlobalBounds()))
-                window.draw(sprite);
-        }
-    }
-    window.display();
 }
-
 
 void Camera::Run() {
     GameState gameState = GameState();
+    initialiseGrassTextures();
 
     while (window.isOpen()) {
         sf::Event event;

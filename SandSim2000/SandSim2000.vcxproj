@@ -142,25 +142,40 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="AssetCRUDManager.cpp" />
+    <ClCompile Include="FieldAgents.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GridGenerator.cpp" />
     <ClCompile Include="InfantryAndCavalryAgent.cpp" />
+    <ClCompile Include="InputStateManager.cpp" />
     <ClCompile Include="MapEditor.cpp" />
     <ClCompile Include="MovementManager.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
+    <ClCompile Include="TimeSplitter.cpp" />
     <ClCompile Include="VehicleAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="Application.h" />
     <ClInclude Include="AssetCRUDManager.h" />
+    <ClInclude Include="FieldAgents.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GridGenerator.h" />
     <ClInclude Include="InfantryAndCavalryAgent.h" />
+    <ClInclude Include="InputState.h" />
+    <ClInclude Include="InputStateManager.h" />
     <ClInclude Include="MapEditor.h" />
     <ClInclude Include="MapInfo.h" />
     <ClInclude Include="MovementManager.h" />
+    <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="TerrainTile.h" />
+    <ClInclude Include="TimeSplitter.h" />
     <ClInclude Include="VehicleAgent.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 #include "MapInfo.h"
+#include "QuadTree.h"
 
 class GameState
 {
@@ -7,11 +8,11 @@ public:
 	GameState();
 	~GameState();
 
-	MapInfo** getMapData() { return Map; }
+	QuadTree* getMapData() { return map; }
 	void clearAndInitializeMap();
 
-	static const int mapSize = 12;
+	static const int mapSize = 4;
 private:
-	MapInfo** Map = nullptr;
+	QuadTree* map = nullptr;
 };
 
