@@ -304,32 +304,31 @@ void Camera::Pan(sf::Event& event) {
 
         startPanX = mousePos.x;
         startPanY = mousePos.y;
-    }
+    } else {
+        float panSpeedX = 0.0f;
+        float panSpeedY = 0.0f;
 
+        if (mousePos.x <= edgeThreshold)
+            panSpeedX = (edgeThreshold - mousePos.x) / (static_cast<float>(edgeThreshold) * scaleX);
+        else if (mousePos.x >= static_cast<int>(windowSize.x) - edgeThreshold)
+            panSpeedX = -(mousePos.x - (static_cast<int>(windowSize.x) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleX);
 
-    float panSpeedX = 0.0f;
-    float panSpeedY = 0.0f;
+        if (mousePos.y <= edgeThreshold)
+            panSpeedY = (edgeThreshold - mousePos.y) / (static_cast<float>(edgeThreshold) * scaleY);
+        else if (mousePos.y >= static_cast<int>(windowSize.y) - edgeThreshold)
+            panSpeedY = -(mousePos.y - (static_cast<int>(windowSize.y) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleY);
 
-    if (mousePos.x <= edgeThreshold)
-        panSpeedX = (edgeThreshold - mousePos.x) / (static_cast<float>(edgeThreshold) * scaleX);
-    else if (mousePos.x >= static_cast<int>(windowSize.x) - edgeThreshold)
-        panSpeedX = -(mousePos.x - (static_cast<int>(windowSize.x) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleX);
-
-    if (mousePos.y <= edgeThreshold)
-        panSpeedY = (edgeThreshold - mousePos.y) / (static_cast<float>(edgeThreshold) * scaleY);
-    else if (mousePos.y >= static_cast<int>(windowSize.y) - edgeThreshold)
-        panSpeedY = -(mousePos.y - (static_cast<int>(windowSize.y) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleY);
-
-    if (panSpeedX != 0.0f || panSpeedY != 0.0f) {
-        offsetX -= panSpeedX * 10;
-        offsetY -= panSpeedY * 10;
+        if (panSpeedX != 0.0f || panSpeedY != 0.0f) {
+            offsetX -= panSpeedX * 10;
+            offsetY -= panSpeedY * 10;
+        }
     }
 
     //Clamp the offset so we can't pan off to infinity and beyond
     if (offsetX > 0) offsetX = 0;
-    if (offsetX < -1000) offsetX = -1000;
+    if (offsetX < -2000) offsetX = -2000;
     if (offsetY > 500) offsetY = 500;
-    if (offsetY < -500) offsetY = -500;
+    if (offsetY < -1500) offsetY = -1500;
 }
 
 
@@ -352,11 +351,14 @@ void Camera::Zoom(sf::Event& event) {
 
         bool scaleChanged = false;
 
-        //Clamp the zoom
-        if (scaleX > 3.0f) scaleX = 3.0f; else scaleChanged = true;
-        if (scaleX < 0.5f) scaleX = 0.5f; else scaleChanged = true;
-        if (scaleY > 3.0f) scaleY = 3.0f; else scaleChanged = true;
-        if (scaleY < 0.5f) scaleY = 0.5f; else scaleChanged = true;
+        //Clamp the zoom and prevent weird panning behaviour when zooming at these bounds
+        if (scaleX > 3.0f) scaleX = 3.0f;
+        else if (scaleX < 0.5f) scaleX = 0.5f; 
+        else scaleChanged = true;
+
+        if (scaleY > 3.0f) scaleY = 3.0f;
+        else if (scaleY < 0.5f) scaleY = 0.5f; 
+        else scaleChanged = true;
 
         if (scaleChanged) {
             float worldXAfterZoom, worldYAfterZoom;
@@ -364,6 +366,12 @@ void Camera::Zoom(sf::Event& event) {
 
             offsetX += worldXBeforeZoom - worldXAfterZoom;
             offsetY += worldYBeforeZoom - worldYAfterZoom;
+
+            //Clamp the offset so we can't pan off to infinity and beyond
+            if (offsetX > 0) offsetX = 0;
+            if (offsetX < -2000) offsetX = -2000;
+            if (offsetY > 500) offsetY = 500;
+            if (offsetY < -1500) offsetY = -1500;
         }
     }
 }
@@ -381,7 +389,7 @@ void Camera::Draw(GameState* gameState) {
     square.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
 
     window.draw(square);
-    window.display();*/
+    */
 
     //sf::FloatRect viewBounds(0, 0, screenX, screenY);
 
@@ -425,14 +433,16 @@ void Camera::Draw(GameState* gameState) {
             int screenX, screenY;
             WorldToScreen(isometricPosition.x, isometricPosition.y, screenX, screenY);
 
-            sprite.setPosition(screenX, screenY);
-            sprite.setScale(scaleX, scaleY);
+            sprite.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
+            sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
 
             //// Culling
             //if (viewBounds.intersects(sprite.getGlobalBounds()))
             window.draw(sprite);
         }
     }
+
+
     window.display();
 }
 
