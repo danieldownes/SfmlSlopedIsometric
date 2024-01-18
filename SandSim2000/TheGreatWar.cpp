@@ -217,6 +217,9 @@ int main() {
 
 #include <SFML/Graphics.hpp>
 
+#include "GameState.h"
+#include "GridGenerator.h"
+#include <iostream>
 
 class Camera {
 public:
@@ -249,14 +252,14 @@ private:
     void Zoom(sf::Event& event);
     void WorldToScreen(float worldX, float worldY, int& screenX, int& screenY);
     void ScreenToWorld(int screenX, int screenY, float& worldX, float& worldY);
-    void Draw();
+    void Draw(GameState* gameState);
 
 public:
     void Run();
 };
 
 Camera::Camera()
-    : window(sf::VideoMode::getDesktopMode(), "Pan and Zoom", sf::Style::Fullscreen) {
+    : window(sf::VideoMode::getDesktopMode(), "Pan and Zoom", sf::Style::Default) {
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
 
@@ -350,9 +353,9 @@ void Camera::Zoom(sf::Event& event) {
 }
 
 
-void Camera::Draw() {
+void Camera::Draw(GameState* gameState) {
     window.clear(sf::Color::Black);
-
+    /*
     sf::RectangleShape square;
     square.setSize(sf::Vector2f(100 * scaleX, 100 * scaleY));
     square.setFillColor(sf::Color::Green);
@@ -362,14 +365,64 @@ void Camera::Draw() {
     square.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
 
     window.draw(square);
+    window.display();*/
+
+    //sf::FloatRect viewBounds(0, 0, screenX, screenY);
+
+    sf::Sprite sprite = sf::Sprite();
+    GridGenerator gridGenerator;
+    int centerOffsetX = screenX / 2;
+    int OffsetY = 150;
+
+    sf::Texture GrassTexture[3];
+    const std::string presetFilePath = "../resources/images/Terrain/Grass/grass";
+    for (int i = 1; i < 4; i++)
+    {
+        const std::string filePath = presetFilePath + std::to_string(i) + ".png";
+        if (!GrassTexture[i - 1].loadFromFile(filePath))
+        {
+            std::cerr << "[TEXTURE][GRASS][FAILURE] File Path: " << filePath << std::endl;
+            return;
+        }
+    }
+
+    for (int i = 0; i < gameState->mapSize; i++)
+    {
+        for (int j = 0; j < gameState->mapSize; j++)
+        {
+            //Sets the texture of the sprite to the corresponding Grass tile
+            sprite.setTexture(GrassTexture[gameState->getMapData()[i][j].height]);
+            sprite.setTextureRect(sf::IntRect(0, 0, 100, gameState->getMapData()[i][j].height * 50 + 100));
+
+            // Set the sprite position
+            sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(i, j));
+
+            // Y Transformations
+            isometricPosition.y *= gameState->getMapData()[i][j].z;
+            isometricPosition.y += OffsetY;
+            isometricPosition.y -= 50 * gameState->getMapData()[i][j].height;
+
+            // X Transformations
+            isometricPosition.x += centerOffsetX;
+            //sprite.setPosition(isometricPosition);
+            int screenX, screenY;
+            WorldToScreen(isometricPosition.x, isometricPosition.y, screenX, screenY);
+
+            sprite.setPosition(screenX, screenY);
+            sprite.setScale(scaleX, scaleY);
+
+            // Culling
+            //if (viewBounds.intersects(sprite.getGlobalBounds()))
+            window.draw(sprite);
+        }
+    }
     window.display();
 }
 
 
-
-
-
 void Camera::Run() {
+    GameState gameState = GameState();
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -382,13 +435,12 @@ void Camera::Run() {
             Zoom(event);
         }
         Pan(event);
-        Draw();
+        Draw(&gameState);
     }
 }
 
 
 int main() {
-
     Camera camera;
     camera.Run();
     return 0;
