@@ -1,5 +1,4 @@
 #include "GameState.h"
-#include <time.h>
 
 GameState::GameState()
 {
@@ -16,20 +15,30 @@ void GameState::clearAndInitializeMap()
 
     srand(time(NULL));
 
-    std::array<TerrainTile, 4> terrain;
-
     map = new QuadTreeInternal(sf::FloatRect(0, 0, mapSize * 100, mapSize * 100), 0);
+    generateRandomHeightQuadTreeMap((QuadTreeInternal*) map);
+}
 
-    ((QuadTreeInternal*)map)->createChildren();
-    std::array<QuadTree*, 4> children = ((QuadTreeInternal*)map)->getChildren();
+void GameState::generateRandomHeightQuadTreeMap(QuadTreeInternal* node) {
+    int depth = node->getDepth();
 
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 4; j++) {
-            terrain[j].z = 1;
-            terrain[j].height = rand() % 3;
-            terrain[j].facing = 0.0f;
-            terrain[j].terrain = "default";
+    if (depth + 2 < (unsigned int) log2(mapSize)) {
+        std::array<QuadTree*, 4> children = node->createChildren();
+
+        for (int i = 0; i < 4; i++)
+            generateRandomHeightQuadTreeMap((QuadTreeInternal*) children[i]);
+    } else {
+        std::array<QuadTree*, 4> children = node->createChildren();
+        for (int i = 0; i < 4; i++) {
+            std::array<TerrainTile*, 4> terrains;
+            for (int j = 0; j < 4; j++) {
+                terrains[j] = new TerrainTile();
+                terrains[j]->z = 1;
+                terrains[j]->height = rand() % 3;
+                terrains[j]->facing = 0.0f;
+                terrains[j]->terrain = "default";
+            }
+            ((QuadTreeInternal*) children[i])->createChildren(terrains);
         }
-        ((QuadTreeInternal*)children[i])->createChildren(terrain);
     }
 }

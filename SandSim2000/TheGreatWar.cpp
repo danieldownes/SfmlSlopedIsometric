@@ -257,7 +257,8 @@ private:
     void Draw(GameState* gameState);
     void drawRectFromQuadTreeNode(QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds,
         GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
-    void fillRectWithDuplicateSprites(sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth,
+    void fillRectWithDuplicateSprites(
+        sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth,
         sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
     void initialiseGrassTextures();
 };
@@ -330,9 +331,9 @@ void Camera::Pan(sf::Event& event) {
     }
 
     //Clamp the offset so we can't pan off to infinity and beyond
-    if (offsetX > 0) offsetX = 0;
+    if (offsetX > 500) offsetX = 500;
     if (offsetX < -2000) offsetX = -2000;
-    if (offsetY > 500) offsetY = 500;
+    if (offsetY > 0) offsetY = 0;
     if (offsetY < -1500) offsetY = -1500;
 }
 
@@ -373,9 +374,9 @@ void Camera::Zoom(sf::Event& event) {
             offsetY += worldYBeforeZoom - worldYAfterZoom;
 
             //Clamp the offset so we can't pan off to infinity and beyond
-            if (offsetX > 0) offsetX = 0;
+            if (offsetX > 500) offsetX = 500;
             if (offsetX < -2000) offsetX = -2000;
-            if (offsetY > 500) offsetY = 500;
+            if (offsetY > 0) offsetY = 0;
             if (offsetY < -1500) offsetY = -1500;
         }
     }
@@ -384,25 +385,15 @@ void Camera::Zoom(sf::Event& event) {
 
 void Camera::Draw(GameState* gameState) {
     window.clear(sf::Color::Black);
-    /*
-    sf::RectangleShape square;
-    square.setSize(sf::Vector2f(100 * scaleX, 100 * scaleY));
-    square.setFillColor(sf::Color::Green);
-
-    WorldToScreen(worldX, worldY, screenX, screenY);
-
-    square.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
-
-    window.draw(square);
-    */
 
     sf::FloatRect viewBounds(0, 0, window.getSize().x, window.getSize().y);
 
     GridGenerator gridGenerator;
-    int centerOffsetX = screenX / 2;
+    int centerOffsetX = window.getSize().x / 2;
     int OffsetY = 150;
+    unsigned int maxDepth = (unsigned int)std::log2(gameState->mapSize);
 
-    drawRectFromQuadTreeNode(gameState->getMapData(), (unsigned int)std::log2(gameState->mapSize), viewBounds, gridGenerator, centerOffsetX, OffsetY);
+    drawRectFromQuadTreeNode(gameState->getMapData(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
  
     window.display();
 }
@@ -427,9 +418,6 @@ void Camera::fillRectWithDuplicateSprites(
     if (depth == maxDepth) {
         sf::Sprite sprite = sf::Sprite();
 
-        int posX = rect.getPosition().x / 100;
-        int posY = rect.getPosition().y / 100;
-
         //Sets the texture of the sprite to the corresponding Grass tile
         sprite.setTexture(GrassTexture[terrain.height]);
         sprite.setTextureRect(sf::IntRect(0, 0,
@@ -437,7 +425,7 @@ void Camera::fillRectWithDuplicateSprites(
         ));
 
         // Set the sprite position
-        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(posX, posY));
+        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(rect.getPosition().x / 100, rect.getPosition().y / 100));
 
         // Y Transformations
         isometricPosition.y *= terrain.z;
