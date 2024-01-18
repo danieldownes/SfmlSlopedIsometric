@@ -259,9 +259,10 @@ public:
 };
 
 Camera::Camera()
-    : window(sf::VideoMode::getDesktopMode(), "Pan and Zoom", sf::Style::Default) {
+    : window(sf::VideoMode::getDesktopMode(), "Pan and Zoom", sf::Style::Fullscreen) {
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
+    window.setMouseCursorGrabbed(true);
 
     sf::Vector2u screenSize = window.getSize();
     offsetX = -(screenSize.x / 2.0f);
@@ -391,7 +392,7 @@ void Camera::Draw(GameState* gameState) {
     window.draw(square);
     */
 
-    //sf::FloatRect viewBounds(0, 0, screenX, screenY);
+    sf::FloatRect viewBounds(0, 0, window.getSize().x, window.getSize().y);
 
     sf::Sprite sprite = sf::Sprite();
     GridGenerator gridGenerator;
@@ -429,20 +430,17 @@ void Camera::Draw(GameState* gameState) {
 
             // X Transformations
             isometricPosition.x += centerOffsetX;
-            //sprite.setPosition(isometricPosition);
             int screenX, screenY;
             WorldToScreen(isometricPosition.x, isometricPosition.y, screenX, screenY);
 
             sprite.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
             sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
 
-            //// Culling
-            //if (viewBounds.intersects(sprite.getGlobalBounds()))
-            window.draw(sprite);
+            // Culling
+            if (viewBounds.intersects(sprite.getGlobalBounds()))
+                window.draw(sprite);
         }
     }
-
-
     window.display();
 }
 
