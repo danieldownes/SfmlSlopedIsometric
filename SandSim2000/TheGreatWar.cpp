@@ -255,8 +255,10 @@ private:
     void WorldToScreen(float worldX, float worldY, int& screenX, int& screenY);
     void ScreenToWorld(int screenX, int screenY, float& worldX, float& worldY);
     void Draw(GameState* gameState);
-    void drawRectFromQuadTreeNode(QuadTree* node, sf::FloatRect& viewBounds,
+    void drawRectFromQuadTreeNode(QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds,
         GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+    void fillRectWithDuplicateSprites(sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth,
+        sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
     void initialiseGrassTextures();
 };
 
@@ -400,25 +402,38 @@ void Camera::Draw(GameState* gameState) {
     int centerOffsetX = screenX / 2;
     int OffsetY = 150;
 
-    drawRectFromQuadTreeNode(gameState->getMapData(), viewBounds, gridGenerator, centerOffsetX, OffsetY);
+    drawRectFromQuadTreeNode(gameState->getMapData(), (unsigned int)std::log2(gameState->mapSize), viewBounds, gridGenerator, centerOffsetX, OffsetY);
  
     window.display();
 }
 
 void Camera::drawRectFromQuadTreeNode(
-    QuadTree* node, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY
+    QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, 
+    int& centerOffsetX, int& OffsetY
 ) {
     if (typeid(*node) == typeid(QuadTreeLeaf)) {
-        sf::Sprite sprite = sf::Sprite();
-        TerrainTile terrain = ((QuadTreeLeaf*)node)->getTerrainInfo();
+        fillRectWithDuplicateSprites(((QuadTreeLeaf*)node)->getQuadRect(), ((QuadTreeLeaf*)node)->getTerrainInfo(), ((QuadTreeLeaf*)node)->getDepth(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+    } else {
+        std::array<QuadTree*, 4> children = ((QuadTreeInternal*)node)->getChildren();
+        for (QuadTree* child : children)
+            drawRectFromQuadTreeNode(child, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+    }
+}
 
-        int posX = node->getQuadRect().getPosition().x / 100;
-        int posY = node->getQuadRect().getPosition().y / 100;
+void Camera::fillRectWithDuplicateSprites(
+    sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth, 
+    sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY
+) {
+    if (depth == maxDepth) {
+        sf::Sprite sprite = sf::Sprite();
+
+        int posX = rect.getPosition().x / 100;
+        int posY = rect.getPosition().y / 100;
 
         //Sets the texture of the sprite to the corresponding Grass tile
         sprite.setTexture(GrassTexture[terrain.height]);
         sprite.setTextureRect(sf::IntRect(0, 0,
-            node->getQuadRect().getSize().x, node->getQuadRect().getSize().y + (terrain.height * 50)
+            rect.getSize().x, rect.getSize().y + (terrain.height * 50)
         ));
 
         // Set the sprite position
@@ -442,9 +457,16 @@ void Camera::drawRectFromQuadTreeNode(
         if (viewBounds.intersects(sprite.getGlobalBounds()))
             window.draw(sprite);
     } else {
-        std::array<QuadTree*, 4> children = ((QuadTreeInternal*)node)->getChildren();
-        for (QuadTree* child : children)
-            drawRectFromQuadTreeNode(child, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        float posX = rect.getPosition().x;
+        float posY = rect.getPosition().y;
+
+        float newSizeX = rect.getSize().x / 2;
+        float newSizeY = rect.getSize().y / 2;
+#
+        fillRectWithDuplicateSprites(sf::FloatRect(posX,            posY,            newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        fillRectWithDuplicateSprites(sf::FloatRect(posX + newSizeX, posY,            newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        fillRectWithDuplicateSprites(sf::FloatRect(posX,            posY + newSizeY, newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        fillRectWithDuplicateSprites(sf::FloatRect(posX + newSizeX, posY + newSizeY, newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
     }
 }
 
