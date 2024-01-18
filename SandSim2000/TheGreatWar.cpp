@@ -324,6 +324,12 @@ void Camera::Pan(sf::Event& event) {
         offsetX -= panSpeedX * 10;
         offsetY -= panSpeedY * 10;
     }
+
+    //Clamp the offset so we can't pan off to infinity and beyond
+    if (offsetX > 0) offsetX = 0;
+    if (offsetX < -1000) offsetX = -1000;
+    if (offsetY > 500) offsetY = 500;
+    if (offsetY < -500) offsetY = -500;
 }
 
 
@@ -344,11 +350,21 @@ void Camera::Zoom(sf::Event& event) {
             scaleY *= 0.95f;
         }
 
-        float worldXAfterZoom, worldYAfterZoom;
-        ScreenToWorld(mousePos.x, mousePos.y, worldXAfterZoom, worldYAfterZoom);
+        bool scaleChanged = false;
 
-        offsetX += worldXBeforeZoom - worldXAfterZoom;
-        offsetY += worldYBeforeZoom - worldYAfterZoom;
+        //Clamp the zoom
+        if (scaleX > 3.0f) scaleX = 3.0f; else scaleChanged = true;
+        if (scaleX < 0.5f) scaleX = 0.5f; else scaleChanged = true;
+        if (scaleY > 3.0f) scaleY = 3.0f; else scaleChanged = true;
+        if (scaleY < 0.5f) scaleY = 0.5f; else scaleChanged = true;
+
+        if (scaleChanged) {
+            float worldXAfterZoom, worldYAfterZoom;
+            ScreenToWorld(mousePos.x, mousePos.y, worldXAfterZoom, worldYAfterZoom);
+
+            offsetX += worldXBeforeZoom - worldXAfterZoom;
+            offsetY += worldYBeforeZoom - worldYAfterZoom;
+        }
     }
 }
 
@@ -374,6 +390,7 @@ void Camera::Draw(GameState* gameState) {
     int centerOffsetX = screenX / 2;
     int OffsetY = 150;
 
+    //Import the Grass Textures
     sf::Texture GrassTexture[3];
     const std::string presetFilePath = "../resources/images/Terrain/Grass/grass";
     for (int i = 1; i < 4; i++)
@@ -411,7 +428,7 @@ void Camera::Draw(GameState* gameState) {
             sprite.setPosition(screenX, screenY);
             sprite.setScale(scaleX, scaleY);
 
-            // Culling
+            //// Culling
             //if (viewBounds.intersects(sprite.getGlobalBounds()))
             window.draw(sprite);
         }
