@@ -22,23 +22,12 @@ void GameState::clearAndInitializeMap()
 void GameState::generateRandomHeightQuadTreeMap(QuadTreeInternal* node) {
     int depth = node->getDepth();
 
-    if (depth + 2 < (unsigned int) log2(mapSize)) {
+    if (depth + 1 < (unsigned int) log2(mapSize)) {
         std::array<QuadTree*, 4> children = node->createChildren();
 
         for (int i = 0; i < 4; i++)
             generateRandomHeightQuadTreeMap((QuadTreeInternal*) children[i]);
     } else {
-        std::array<QuadTree*, 4> children = node->createChildren();
-        for (int i = 0; i < 4; i++) {
-            std::array<TerrainTile*, 4> terrains;
-            for (int j = 0; j < 4; j++) {
-                terrains[j] = new TerrainTile();
-                terrains[j]->z = 1;
-                terrains[j]->height = rand() % 2;
-                terrains[j]->facing = 0.0f;
-                terrains[j]->terrain = "default";
-            }
-            ((QuadTreeInternal*) children[i])->createChildren(terrains);
-        }
+        std::array<QuadTree*, 4> children = node->createChildren({true, true, true, true});
     }
 }
