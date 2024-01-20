@@ -249,18 +249,26 @@ private:
     int screenY = 0.0f;
 
     sf::Texture GrassTexture[3];
+    sf::Texture AgentTexture;
 
     void Pan(sf::Event& event);
     void Zoom(sf::Event& event);
+
     void WorldToScreen(float worldX, float worldY, int& screenX, int& screenY);
     void ScreenToWorld(int screenX, int screenY, float& worldX, float& worldY);
+
     void Draw(GameState* gameState);
     void drawRectFromQuadTreeNode(QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds,
         GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
     void fillRectWithDuplicateSprites(
         sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth,
         sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+    void fillRectWithDuplicateSprites(
+        QuadTreeLeaf* node, unsigned int maxDepth, sf::FloatRect& viewBounds,
+        GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+
     void initialiseGrassTextures();
+    void initialiseAgentTexture();
 };
 
 Camera::Camera()
@@ -415,7 +423,7 @@ void Camera::drawRectFromQuadTreeNode(
         return;
 
     if (typeid(*node) == typeid(QuadTreeLeaf)) {
-        fillRectWithDuplicateSprites(((QuadTreeLeaf*)node)->getQuadRect(), ((QuadTreeLeaf*)node)->getTerrainInfo(), ((QuadTreeLeaf*)node)->getDepth(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        fillRectWithDuplicateSprites((QuadTreeLeaf*)node, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
     } else {
         std::array<QuadTree*, 4> children = ((QuadTreeInternal*)node)->getChildren();
         for (QuadTree* child : children)
@@ -459,6 +467,58 @@ void Camera::fillRectWithDuplicateSprites(
     }
 }
 
+void Camera::fillRectWithDuplicateSprites(
+    QuadTreeLeaf* node, unsigned int maxDepth, sf::FloatRect& viewBounds,
+    GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY)
+{
+    sf::FloatRect rect = node->getQuadRect();
+    TerrainTile terrain = node->getTerrainInfo();
+    unsigned int depth = node->getDepth();
+
+    if (depth == maxDepth) {
+        sf::Sprite sprite = sf::Sprite();
+
+        // Sets the texture of the sprite to the corresponding Grass tile
+        sprite.setTexture(GrassTexture[terrain.height]);
+        sprite.setTextureRect(sf::IntRect(0, 0,
+            rect.getSize().x, rect.getSize().y + (terrain.height * 50)
+        ));
+
+        // Get the sprite position
+        int screenX, screenY;
+        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(rect.getPosition().x / 100.f, rect.getPosition().y / 100.f));
+        WorldToScreen(isometricPosition.x + centerOffsetX, (isometricPosition.y * terrain.z) + OffsetY - 50 * terrain.height, screenX, screenY);
+
+        sprite.setPosition(static_cast<float>(screenX - (rect.getSize().x / 2) * scaleX), static_cast<float>(screenY));
+        sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+
+        window.draw(sprite);
+
+        if (!node->getAgents().empty()) {
+            sf::Sprite agentSprite = sf::Sprite();
+            agentSprite.setTexture(AgentTexture);
+            agentSprite.setTextureRect(sf::IntRect(0, 0,
+                rect.getSize().x, rect.getSize().y + (terrain.height * 50)
+            ));
+            agentSprite.setPosition(static_cast<float>(screenX - (rect.getSize().x / 2) * scaleX), static_cast<float>(screenY));
+            agentSprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+            window.draw(agentSprite);
+        }
+    }
+    else {
+        float posX = rect.getPosition().x;
+        float posY = rect.getPosition().y;
+
+        float newSizeX = rect.getSize().x / 2;
+        float newSizeY = rect.getSize().y / 2;
+
+        fillRectWithDuplicateSprites(sf::FloatRect(posX, posY, newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        fillRectWithDuplicateSprites(sf::FloatRect(posX + newSizeX, posY, newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        fillRectWithDuplicateSprites(sf::FloatRect(posX, posY + newSizeY, newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+        fillRectWithDuplicateSprites(sf::FloatRect(posX + newSizeX, posY + newSizeY, newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+    }
+}
+
 void Camera::initialiseGrassTextures() {
     const std::string presetFilePath = "../resources/images/Terrain/Grass/grass";
     for (int i = 1; i < 4; i++)
@@ -472,9 +532,20 @@ void Camera::initialiseGrassTextures() {
     }
 }
 
+void Camera::initialiseAgentTexture() {
+    //TEMP: Use red selection square to show agent positions
+    const std::string filePath = "../resources/images/Terrain/selected.png";
+    if (!AgentTexture.loadFromFile(filePath))
+    {
+        std::cerr << "[TEXTURE][AGENT][FAILURE] File Path: " << filePath << std::endl;
+        return;
+    }
+}
+
 void Camera::Run() {
     GameState gameState = GameState();
     initialiseGrassTextures();
+    initialiseAgentTexture();
 
     while (window.isOpen()) {
         sf::Event event;
