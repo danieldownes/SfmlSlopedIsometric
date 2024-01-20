@@ -34,7 +34,7 @@ void GameState::generateRandomHeightQuadTreeMap(QuadTreeInternal* node) {
             for (int j = 0; j < 4; j++) {
                 terrains[j] = new TerrainTile();
                 terrains[j]->z = 1;
-                terrains[j]->height = rand() % 3;
+                terrains[j]->height = rand() % 2;
                 terrains[j]->facing = 0.0f;
                 terrains[j]->terrain = "default";
             }

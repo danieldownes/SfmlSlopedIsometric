@@ -227,6 +227,8 @@ public:
 
     void Run();
 private:
+    int count = 0;
+
     sf::RenderWindow window;
     sf::View view;
 
@@ -331,10 +333,10 @@ void Camera::Pan(sf::Event& event) {
     }
 
     //Clamp the offset so we can't pan off to infinity and beyond
-    if (offsetX > 500) offsetX = 500;
-    if (offsetX < -2000) offsetX = -2000;
-    if (offsetY > 0) offsetY = 0;
-    if (offsetY < -1500) offsetY = -1500;
+    /*if (offsetX > 1500) offsetX = 1500;
+    if (offsetX < -3000) offsetX = -3000;
+    if (offsetY > 1000) offsetY = 1000;
+    if (offsetY < -2500) offsetY = -2500;*/
 }
 
 
@@ -358,12 +360,12 @@ void Camera::Zoom(sf::Event& event) {
         bool scaleChanged = false;
 
         //Clamp the zoom and prevent weird panning behaviour when zooming at these bounds
-        if (scaleX > 3.0f) scaleX = 3.0f;
-        else if (scaleX < 0.5f) scaleX = 0.5f; 
+        if (scaleX > 4.0f) scaleX = 4.0f;
+        else if (scaleX < 0.25f) scaleX = 0.25f; 
         else scaleChanged = true;
 
-        if (scaleY > 3.0f) scaleY = 3.0f;
-        else if (scaleY < 0.5f) scaleY = 0.5f; 
+        if (scaleY > 4.0f) scaleY = 4.0f;
+        else if (scaleY < 0.25f) scaleY = 0.25f; 
         else scaleChanged = true;
 
         if (scaleChanged) {
@@ -374,16 +376,17 @@ void Camera::Zoom(sf::Event& event) {
             offsetY += worldYBeforeZoom - worldYAfterZoom;
 
             //Clamp the offset so we can't pan off to infinity and beyond
-            if (offsetX > 500) offsetX = 500;
-            if (offsetX < -2000) offsetX = -2000;
-            if (offsetY > 0) offsetY = 0;
-            if (offsetY < -1500) offsetY = -1500;
+            /*if (offsetX > 1500) offsetX = 1500;
+            if (offsetX < -3000) offsetX = -3000;
+            if (offsetY > 1000) offsetY = 1000;
+            if (offsetY < -2500) offsetY = -2500;*/
         }
     }
 }
 
 
 void Camera::Draw(GameState* gameState) {
+    count = 0;
     window.clear(sf::Color::Black);
 
     sf::FloatRect viewBounds(0, 0, window.getSize().x, window.getSize().y);
@@ -396,12 +399,23 @@ void Camera::Draw(GameState* gameState) {
     drawRectFromQuadTreeNode(gameState->getMapData(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
  
     window.display();
+
+    std::cout << count << std::endl;
 }
 
 void Camera::drawRectFromQuadTreeNode(
     QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, 
     int& centerOffsetX, int& OffsetY
 ) {
+    sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(node->getQuadRect().getPosition().x / 100.f, node->getQuadRect().getPosition().y / 100.f));
+    int screenX, screenY;
+    WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y, screenX, screenY);
+
+    sf::FloatRect isometricNodeRect(screenX - node->getQuadRect().getSize().x / 2, screenY, node->getQuadRect().getSize().x, node->getQuadRect().getSize().y);
+
+    if (!viewBounds.intersects(isometricNodeRect))
+        return;
+
     if (typeid(*node) == typeid(QuadTreeLeaf)) {
         fillRectWithDuplicateSprites(((QuadTreeLeaf*)node)->getQuadRect(), ((QuadTreeLeaf*)node)->getTerrainInfo(), ((QuadTreeLeaf*)node)->getDepth(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
     } else {
@@ -425,32 +439,26 @@ void Camera::fillRectWithDuplicateSprites(
         ));
 
         // Set the sprite position
-        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(rect.getPosition().x / 100, rect.getPosition().y / 100));
-
-        // Y Transformations
-        isometricPosition.y *= terrain.z;
-        isometricPosition.y += OffsetY;
-        isometricPosition.y -= 50 * terrain.height;
-
-        // X Transformations
-        isometricPosition.x += centerOffsetX;
+        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(rect.getPosition().x / 100.f, rect.getPosition().y / 100.f));
 
         int screenX, screenY;
-        WorldToScreen(isometricPosition.x, isometricPosition.y, screenX, screenY);
+        WorldToScreen(isometricPosition.x + centerOffsetX, (isometricPosition.y * terrain.z) + OffsetY - 50 * terrain.height, screenX, screenY);
 
-        sprite.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
+        sprite.setPosition(static_cast<float>(screenX - rect.getSize().x / 2), static_cast<float>(screenY));
         sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
 
         // Culling
-        if (viewBounds.intersects(sprite.getGlobalBounds()))
+        //if (viewBounds.intersects(sprite.getGlobalBounds())) {
+            count++;
             window.draw(sprite);
+        //}
     } else {
         float posX = rect.getPosition().x;
         float posY = rect.getPosition().y;
 
         float newSizeX = rect.getSize().x / 2;
         float newSizeY = rect.getSize().y / 2;
-#
+
         fillRectWithDuplicateSprites(sf::FloatRect(posX,            posY,            newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
         fillRectWithDuplicateSprites(sf::FloatRect(posX + newSizeX, posY,            newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
         fillRectWithDuplicateSprites(sf::FloatRect(posX,            posY + newSizeY, newSizeX, newSizeY), terrain, depth + 1, maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);

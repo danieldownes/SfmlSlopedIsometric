@@ -13,7 +13,7 @@ public:
 	QuadTree* getMapData() { return map; }
 	void clearAndInitializeMap();
 
-	static const int mapSize = 8;
+	static const int mapSize = 256;
 private:
 	void generateRandomHeightQuadTreeMap(QuadTreeInternal* node);
 
