@@ -227,8 +227,6 @@ public:
 
     void Run();
 private:
-    int count = 0;
-
     sf::RenderWindow window;
     sf::View view;
 
@@ -386,7 +384,6 @@ void Camera::Zoom(sf::Event& event) {
 
 
 void Camera::Draw(GameState* gameState) {
-    count = 0;
     window.clear(sf::Color::Black);
 
     sf::FloatRect viewBounds(0, 0, window.getSize().x, window.getSize().y);
@@ -399,19 +396,20 @@ void Camera::Draw(GameState* gameState) {
     drawRectFromQuadTreeNode(gameState->getMapData(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
  
     window.display();
-
-    std::cout << count << std::endl;
 }
 
 void Camera::drawRectFromQuadTreeNode(
     QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, 
     int& centerOffsetX, int& OffsetY
 ) {
-    sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(node->getQuadRect().getPosition().x / 100.f, node->getQuadRect().getPosition().y / 100.f));
     int screenX, screenY;
-    WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y, screenX, screenY);
+    sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(node->getQuadRect().getPosition().x / 100.f, node->getQuadRect().getPosition().y / 100.f));
+    WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y + OffsetY - 250, screenX, screenY);
 
-    sf::FloatRect isometricNodeRect(screenX - node->getQuadRect().getSize().x / 2, screenY, node->getQuadRect().getSize().x, node->getQuadRect().getSize().y);
+    float sizeX = node->getQuadRect().getSize().x * scaleX;
+    float sizeY = (node->getQuadRect().getSize().y + 250) * scaleY;
+
+    sf::FloatRect isometricNodeRect(screenX - sizeX / 2, screenY, sizeX, sizeY);
 
     if (!viewBounds.intersects(isometricNodeRect))
         return;
@@ -438,20 +436,15 @@ void Camera::fillRectWithDuplicateSprites(
             rect.getSize().x, rect.getSize().y + (terrain.height * 50)
         ));
 
-        // Set the sprite position
-        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(rect.getPosition().x / 100.f, rect.getPosition().y / 100.f));
-
+        // Get the sprite position
         int screenX, screenY;
+        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(rect.getPosition().x / 100.f, rect.getPosition().y / 100.f));
         WorldToScreen(isometricPosition.x + centerOffsetX, (isometricPosition.y * terrain.z) + OffsetY - 50 * terrain.height, screenX, screenY);
 
-        sprite.setPosition(static_cast<float>(screenX - rect.getSize().x / 2), static_cast<float>(screenY));
+        sprite.setPosition(static_cast<float>(screenX - (rect.getSize().x / 2) * scaleX), static_cast<float>(screenY));
         sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
 
-        // Culling
-        //if (viewBounds.intersects(sprite.getGlobalBounds())) {
-            count++;
-            window.draw(sprite);
-        //}
+        window.draw(sprite);
     } else {
         float posX = rect.getPosition().x;
         float posY = rect.getPosition().y;
