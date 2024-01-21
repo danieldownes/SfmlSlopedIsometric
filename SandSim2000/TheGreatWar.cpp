@@ -339,10 +339,10 @@ void Camera::Pan(sf::Event& event) {
     }
 
     //Clamp the offset so we can't pan off to infinity and beyond
-    /*if (offsetX > 1500) offsetX = 1500;
-    if (offsetX < -3000) offsetX = -3000;
-    if (offsetY > 1000) offsetY = 1000;
-    if (offsetY < -2500) offsetY = -2500;*/
+    if (offsetX > 12000) offsetX = 12000;
+    if (offsetX < -12000) offsetX = -12000;
+    if (offsetY > 10500) offsetY = 10500;
+    if (offsetY < -500) offsetY = -500;
 }
 
 
@@ -366,12 +366,12 @@ void Camera::Zoom(sf::Event& event) {
         bool scaleChanged = false;
 
         //Clamp the zoom and prevent weird panning behaviour when zooming at these bounds
-        if (scaleX > 4.0f) scaleX = 4.0f;
-        else if (scaleX < 0.25f) scaleX = 0.25f; 
+        if (scaleX > 3.0f) scaleX = 3.0f;
+        else if (scaleX < 0.5f) scaleX = 0.5f; 
         else scaleChanged = true;
 
-        if (scaleY > 4.0f) scaleY = 4.0f;
-        else if (scaleY < 0.25f) scaleY = 0.25f; 
+        if (scaleY > 3.0f) scaleY = 3.0f;
+        else if (scaleY < 0.5f) scaleY = 0.5f; 
         else scaleChanged = true;
 
         if (scaleChanged) {
@@ -382,10 +382,10 @@ void Camera::Zoom(sf::Event& event) {
             offsetY += worldYBeforeZoom - worldYAfterZoom;
 
             //Clamp the offset so we can't pan off to infinity and beyond
-            /*if (offsetX > 1500) offsetX = 1500;
-            if (offsetX < -3000) offsetX = -3000;
-            if (offsetY > 1000) offsetY = 1000;
-            if (offsetY < -2500) offsetY = -2500;*/
+            if (offsetX > 12000) offsetX = 12000;
+            if (offsetX < -12000) offsetX = -12000;
+            if (offsetY > 10500) offsetY = 10500;
+            if (offsetY < -500) offsetY = -500;
         }
     }
 }
@@ -476,32 +476,35 @@ void Camera::fillRectWithDuplicateSprites(
     unsigned int depth = node->getDepth();
 
     if (depth == maxDepth) {
-        sf::Sprite sprite = sf::Sprite();
-
-        // Sets the texture of the sprite to the corresponding Grass tile
-        sprite.setTexture(GrassTexture[terrain.height]);
-        sprite.setTextureRect(sf::IntRect(0, 0,
-            rect.getSize().x, rect.getSize().y + (terrain.height * 50)
-        ));
-
-        // Get the sprite position
         int screenX, screenY;
         sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(rect.getPosition().x / 100.f, rect.getPosition().y / 100.f));
         WorldToScreen(isometricPosition.x + centerOffsetX, (isometricPosition.y * terrain.z) + OffsetY - 50 * terrain.height, screenX, screenY);
 
-        sprite.setPosition(static_cast<float>(screenX - (rect.getSize().x / 2) * scaleX), static_cast<float>(screenY));
-        sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+        if (terrain.terrain == "default") {
+            sf::Sprite sprite = sf::Sprite();
 
-        window.draw(sprite);
+            sprite.setTexture(GrassTexture[terrain.height]);
+            sprite.setTextureRect(sf::IntRect(0, 0,
+                rect.getSize().x, rect.getSize().y + (terrain.height * 50)
+            ));
+
+            sprite.setPosition(static_cast<float>(screenX - (rect.getSize().x / 2) * scaleX), static_cast<float>(screenY));
+            sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+
+            window.draw(sprite);
+        }
 
         if (!node->getAgents().empty()) {
             sf::Sprite agentSprite = sf::Sprite();
+
             agentSprite.setTexture(AgentTexture);
             agentSprite.setTextureRect(sf::IntRect(0, 0,
                 rect.getSize().x, rect.getSize().y + (terrain.height * 50)
             ));
+
             agentSprite.setPosition(static_cast<float>(screenX - (rect.getSize().x / 2) * scaleX), static_cast<float>(screenY));
             agentSprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+
             window.draw(agentSprite);
         }
     }
