@@ -257,15 +257,15 @@ private:
     void WorldToScreen(float worldX, float worldY, int& screenX, int& screenY);
     void ScreenToWorld(int screenX, int screenY, float& worldX, float& worldY);
 
-    void Draw(GameState* gameState);
-    void drawRectFromQuadTreeNode(QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds,
-        GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+    void Draw(GameState& gameState);
+
+    void drawRectFromQuadTreeNode(
+        QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+
     void fillRectWithDuplicateSprites(
-        sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth,
-        sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+        sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
     void fillRectWithDuplicateSprites(
-        QuadTreeLeaf* node, unsigned int maxDepth, sf::FloatRect& viewBounds,
-        GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
+        QuadTreeLeaf* node, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
 
     void initialiseGrassTextures();
     void initialiseAgentTexture();
@@ -391,7 +391,7 @@ void Camera::Zoom(sf::Event& event) {
 }
 
 
-void Camera::Draw(GameState* gameState) {
+void Camera::Draw(GameState& gameState) {
     window.clear(sf::Color::Black);
 
     sf::FloatRect viewBounds(0, 0, window.getSize().x, window.getSize().y);
@@ -399,9 +399,9 @@ void Camera::Draw(GameState* gameState) {
     GridGenerator gridGenerator;
     int centerOffsetX = window.getSize().x / 2;
     int OffsetY = 150;
-    unsigned int maxDepth = (unsigned int)std::log2(gameState->mapSize);
+    unsigned int maxDepth = (unsigned int)std::log2(gameState.mapSize);
 
-    drawRectFromQuadTreeNode(gameState->getMapData(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
+    drawRectFromQuadTreeNode(gameState.getMapData(), maxDepth, viewBounds, gridGenerator, centerOffsetX, OffsetY);
  
     window.display();
 }
@@ -562,7 +562,7 @@ void Camera::Run() {
             Zoom(event);
         }
         Pan(event);
-        Draw(&gameState);
+        Draw(gameState);
     }
 }
 
