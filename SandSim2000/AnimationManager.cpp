@@ -44,36 +44,36 @@ void AnimationManager::renderSpriteMap(sf::RenderWindow* window)
 
 void AnimationManager::renderTerrainMap(sf::RenderWindow* window, GameState* gameState)
 {
-    sf::FloatRect viewBounds(0, 0, window->getSize().x, window->getSize().y);
+    //sf::FloatRect viewBounds(0, 0, window->getSize().x, window->getSize().y);
 
-    sf::Sprite sprite = sf::Sprite();
-    GridGenerator gridGenerator;
-    int centerOffsetX = window->getSize().x / 2;
-    int OffsetY = 150;
+    //sf::Sprite sprite = sf::Sprite();
+    //GridGenerator gridGenerator;
+    //int centerOffsetX = window->getSize().x / 2;
+    //int OffsetY = 150;
 
-    for (int i = 0; i < gameState->mapSize; i++)
-    {
-        for (int j = 0; j < gameState->mapSize; j++)
-        {
-            //Sets the texture of the sprite to the corresponding Grass tile
-            sprite.setTexture(GrassTexture[gameState->getMapData()[i][j].height]);
-            sprite.setTextureRect(sf::IntRect(0, 0, 100, gameState->getMapData()[i][j].height * 50 + 100));
+    //for (int i = 0; i < gameState->mapSize; i++)
+    //{
+    //    for (int j = 0; j < gameState->mapSize; j++)
+    //    {
+    //        //Sets the texture of the sprite to the corresponding Grass tile
+    //        sprite.setTexture(GrassTexture[gameState->getMapData()[i][j].height]);
+    //        sprite.setTextureRect(sf::IntRect(0, 0, 100, gameState->getMapData()[i][j].height * 50 + 100));
 
-            // Set the sprite position
-            sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(i, j));
-            
-            // Y Transformations
-            isometricPosition.y *= gameState->getMapData()[i][j].z;
-            isometricPosition.y += OffsetY;
-            isometricPosition.y -= 50 * gameState->getMapData()[i][j].height;
+    //        // Set the sprite position
+    //        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(i, j));
+    //        
+    //        // Y Transformations
+    //        isometricPosition.y *= gameState->getMapData()[i][j].z;
+    //        isometricPosition.y += OffsetY;
+    //        isometricPosition.y -= 50 * gameState->getMapData()[i][j].height;
 
-            // X Transformations
-            isometricPosition.x += centerOffsetX;
-            sprite.setPosition(isometricPosition);
+    //        // X Transformations
+    //        isometricPosition.x += centerOffsetX;
+    //        sprite.setPosition(isometricPosition);
 
-            // Culling
-            if (viewBounds.intersects(sprite.getGlobalBounds()))
-                window->draw(sprite);
-        }
-    }
+    //        // Culling
+    //        if (viewBounds.intersects(sprite.getGlobalBounds()))
+    //            window->draw(sprite);
+    //    }
+    //}
 }

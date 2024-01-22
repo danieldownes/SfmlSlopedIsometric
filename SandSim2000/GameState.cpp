@@ -9,25 +9,25 @@ GameState::~GameState()
 {
 }
 
-
 void GameState::clearAndInitializeMap()
 {
-    if (Map != nullptr) {
-        for (int i = 0; i < mapSize; ++i) {
-            delete[] Map[i];
+    delete map;
 
-        }
-        delete[] Map;
-    }
-    Map = new MapInfo * [mapSize];
-    for (int i = 0; i < mapSize; ++i) {
-        Map[i] = new MapInfo[mapSize];
+    srand(time(NULL));
 
-        for (int j = 0; j < mapSize; ++j) {
-            Map[i][j].z = 1;
-            Map[i][j].height = rand() & 3 - 1;
-            Map[i][j].facing = 0.0f;
-            Map[i][j].terrain = "default";
-        }
+    map = new QuadTreeInternal(sf::FloatRect(0, 0, mapSize * 100, mapSize * 100), 0);
+    generateRandomHeightQuadTreeMap((QuadTreeInternal*) map);
+}
+
+void GameState::generateRandomHeightQuadTreeMap(QuadTreeInternal* node) {
+    int depth = node->getDepth();
+
+    if (depth + 1 < (unsigned int) log2(mapSize)) {
+        std::array<QuadTree*, 4> children = node->createChildren();
+
+        for (int i = 0; i < 4; i++)
+            generateRandomHeightQuadTreeMap((QuadTreeInternal*) children[i]);
+    } else {
+        std::array<QuadTree*, 4> children = node->createChildren({true, true, true, true});
     }
 }

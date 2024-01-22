@@ -1,5 +1,8 @@
 #pragma once
 #include "MapInfo.h"
+#include "QuadTree.h"
+#include <time.h>
+#include <cmath>
 
 class GameState
 {
@@ -7,11 +10,13 @@ public:
 	GameState();
 	~GameState();
 
-	MapInfo** getMapData() { return Map; }
+	QuadTree* getMapData() { return map; }
 	void clearAndInitializeMap();
 
-	static const int mapSize = 12;
+	static const int mapSize = 256;
 private:
-	MapInfo** Map = nullptr;
+	void generateRandomHeightQuadTreeMap(QuadTreeInternal* node);
+
+	QuadTree* map = nullptr;
 };
 
