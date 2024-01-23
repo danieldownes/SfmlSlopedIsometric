@@ -162,6 +162,7 @@
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AssetCRUDManager.h" />
+    <ClInclude Include="BattlefieldCell.h" />
     <ClInclude Include="FieldAgents.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
@@ -170,7 +171,6 @@
     <ClInclude Include="InputState.h" />
     <ClInclude Include="InputStateManager.h" />
     <ClInclude Include="MapEditor.h" />
-    <ClInclude Include="MapInfo.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="resource.h" />
