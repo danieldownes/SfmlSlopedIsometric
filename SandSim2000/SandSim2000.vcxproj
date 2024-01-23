@@ -144,8 +144,8 @@
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AssetCRUDManager.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FieldAgents.cpp" />
-    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GridGenerator.cpp" />
     <ClCompile Include="InfantryAndCavalryAgent.cpp" />
@@ -153,6 +153,7 @@
     <ClCompile Include="MapEditor.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
     <ClCompile Include="TimeSplitter.cpp" />
     <ClCompile Include="VehicleAgent.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="AssetCRUDManager.h" />
     <ClInclude Include="BattlefieldCell.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="FieldAgents.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
@@ -174,6 +176,7 @@
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="TerrainTile.h" />
     <ClInclude Include="TimeSplitter.h" />
     <ClInclude Include="VehicleAgent.h" />

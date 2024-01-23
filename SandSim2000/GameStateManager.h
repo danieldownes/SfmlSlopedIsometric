@@ -5,11 +5,14 @@
 
 class GameStateManager {
 public:
-    GameStateManager();
+    GameStateManager(unsigned int mapSize);
 
-    //void initialiseQuadTree() etc
+    void initialiseQuadTree(unsigned int battlefieldSize);
+    void initializeBattlefieldVector(unsigned int numCells);
 
-    void initializeBattlefieldVector(int numCells);
+    GameState& getState() { return state; }
 private:
+    void generateQuadTree(QuadTreeInternal* root);
+
     GameState state;
 };

@@ -7,7 +7,6 @@
 
 #include "GridGenerator.h"
 #include "GameState.h"
-#include "MapInfo.h"
 
 class AnimationManager
 {
