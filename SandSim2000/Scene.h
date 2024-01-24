@@ -12,7 +12,7 @@ public:
 	std::vector<std::vector<BattlefieldCell>::iterator>& getGameScene() { return gameScene; }
 	void UpdateGameScene(Camera& cam, GameState& gameState);
 private:
-	std::vector<std::vector<BattlefieldCell>::iterator> findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator);
+	std::vector<std::vector<BattlefieldCell>::iterator> findViewportIterators(GameState::QuadTree* root, Camera& cam, GridGenerator& gridGenerator);
 
 	std::vector<std::vector<BattlefieldCell>::iterator> gameScene;
 };

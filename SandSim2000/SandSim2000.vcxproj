@@ -152,7 +152,6 @@
     <ClCompile Include="InputStateManager.cpp" />
     <ClCompile Include="MapEditor.cpp" />
     <ClCompile Include="MovementManager.cpp" />
-    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
     <ClCompile Include="TimeSplitter.cpp" />
@@ -174,7 +173,6 @@
     <ClInclude Include="InputStateManager.h" />
     <ClInclude Include="MapEditor.h" />
     <ClInclude Include="MovementManager.h" />
-    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="TerrainTile.h" />

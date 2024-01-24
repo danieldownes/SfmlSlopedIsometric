@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 #include "GameState.h"
 #include "BattlefieldCell.h"
 
@@ -12,7 +13,8 @@ public:
 
     GameState& getState() { return state; }
 private:
-    void generateQuadTree(QuadTreeInternal* root);
+    void generateQuadTree(GameState::QuadTree* root);
 
     GameState state;
 };
+  

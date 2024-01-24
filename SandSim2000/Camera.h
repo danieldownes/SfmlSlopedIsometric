@@ -38,19 +38,9 @@ private:
     int screenY = 0.f;
 
     sf::Texture GrassTexture[3];
-    //sf::Texture AgentTexture;
 
     void Pan(sf::Event& event);
     void Zoom(sf::Event& event);
 
-    /*void drawRectFromQuadTreeNode(
-        QuadTree* node, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
-
-    void fillRectWithDuplicateSprites(
-        sf::FloatRect rect, TerrainTile terrain, unsigned int depth, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);
-    void fillRectWithDuplicateSprites(
-        QuadTreeLeaf* node, unsigned int maxDepth, sf::FloatRect& viewBounds, GridGenerator& gridGenerator, int& centerOffsetX, int& OffsetY);*/
-
     void initialiseGrassTextures();
-    //void initialiseAgentTexture();
 };

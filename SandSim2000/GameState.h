@@ -1,20 +1,51 @@
 #pragma once
-#include <time.h>
-#include <cmath>
-#include "QuadTree.h"
+#include <vector>
+#include <array>
+
+#include "SFML/Graphics/Rect.hpp"
 #include "BattlefieldCell.h"
 
-class GameState
-{
+class GameState {
 public:
-	// GameState is purely a storage header, no logic. A.k.a. a Singleton. 
-	// Please move all logic to GameStateManager and delete GameState.cpp
+    class QuadTree {
+    public:
+        virtual void f() {};
 
-	std::vector<BattlefieldCell> BattlefieldVector;
-	QuadTree* QuadTree = nullptr;
-private:
-	// Quad Tree should be stored publically like BattlefieldCell
-	// If possible, should also be a member property of GameState, 
-	// not it's own class.
+        QuadTree(const sf::IntRect& rect, const unsigned int& depth)
+            : depth(depth), quadRect(rect), children{ nullptr, nullptr, nullptr, nullptr } {}
+        ~QuadTree() {
+            for (QuadTree* child : children)
+                delete[] child;
+            delete this;
+        }
+
+        unsigned int getDepth() const { return depth; }
+        sf::IntRect getQuadRect() const { return quadRect; }
+
+        void setChildren(std::array<QuadTree*, 4> _children) { children = _children; }
+        std::array<QuadTree*, 4> getChildren() const { return children; }
+    protected:
+        unsigned int depth;
+        sf::IntRect quadRect;
+        std::array<QuadTree*, 4> children;
+    };
+
+    class QuadTreeLeaf : public QuadTree {
+    public:
+        virtual void f() {};
+
+        QuadTreeLeaf(const sf::IntRect& rect, const unsigned int& depth, std::vector<BattlefieldCell>::iterator& _iter)
+            : QuadTree(rect, depth), iter(_iter) {}
+
+        std::vector<BattlefieldCell>::iterator getIterator() { return iter; };
+    private:
+        std::vector<BattlefieldCell>::iterator iter;
+    };
+
+public:
+    std::vector<BattlefieldCell> BattlefieldVector;
+    QuadTree* quadTree = nullptr;
 };
+
+
 
