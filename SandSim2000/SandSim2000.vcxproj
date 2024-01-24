@@ -150,7 +150,6 @@
     <ClCompile Include="GridGenerator.cpp" />
     <ClCompile Include="InfantryAndCavalryAgent.cpp" />
     <ClCompile Include="InputStateManager.cpp" />
-    <ClCompile Include="MapEditor.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
@@ -171,7 +170,6 @@
     <ClInclude Include="InfantryAndCavalryAgent.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="InputStateManager.h" />
-    <ClInclude Include="MapEditor.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />

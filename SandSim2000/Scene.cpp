@@ -2,16 +2,19 @@
 
 #define MAX_TILE_DEPTH 5
 #define TILE_SIZE 100
-#define CAMERA_BORDER_WIDTH 300
+#define CAMERA_BORDER_WIDTH 0
 
 Scene::Scene() {}
 
 void Scene::UpdateGameScene(Camera& cam, GameState& gameState) {
 	GridGenerator gridGenerator;
-	gameScene = findViewportIterators(gameState.quadTree, cam, gridGenerator);
+	sf::IntRect viewbounds(CAMERA_BORDER_WIDTH, CAMERA_BORDER_WIDTH, cam.window.getSize().x - 2 * CAMERA_BORDER_WIDTH, cam.window.getSize().y - 3 * CAMERA_BORDER_WIDTH);
+
+	gameScene.clear();
+	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
 }
 
-std::vector<std::vector<BattlefieldCell>::iterator> Scene::findViewportIterators(GameState::QuadTree* root, Camera& cam, GridGenerator& gridGenerator) {
+void Scene::findViewportIterators(GameState::QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds) {
 	//Ensure first that the current QuadTree node is actually onscreen
 	int screenX, screenY;
 	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(root->getQuadRect().getPosition().x / TILE_SIZE, root->getQuadRect().getPosition().y / TILE_SIZE));
@@ -21,20 +24,15 @@ std::vector<std::vector<BattlefieldCell>::iterator> Scene::findViewportIterators
 	int sizeY = (root->getQuadRect().getSize().y + (TILE_SIZE / 2) * MAX_TILE_DEPTH) * cam.scaleY;
 
 	sf::IntRect isometricNodeRect(screenX - sizeX / 2, screenY, sizeX, sizeY);
-	sf::IntRect viewbounds(CAMERA_BORDER_WIDTH, CAMERA_BORDER_WIDTH, cam.window.getSize().x - 2 * CAMERA_BORDER_WIDTH, cam.window.getSize().y - 3 * CAMERA_BORDER_WIDTH);
 
 	if (!viewbounds.intersects(isometricNodeRect))
-		return std::vector<std::vector<BattlefieldCell>::iterator>();
+		return;
 
 	//If we are still going, dive into children to find iterators
-	if (typeid(*root) == typeid(GameState::QuadTreeLeaf))
-		return std::vector<std::vector<BattlefieldCell>::iterator>({ ((GameState::QuadTreeLeaf*)root)->getIterator() });
-	else {
-		std::vector<std::vector<BattlefieldCell>::iterator> iters;
-		for (GameState::QuadTree* child : ((GameState::QuadTree*)root)->getChildren()) {
-			std::vector<std::vector<BattlefieldCell>::iterator> childIters = findViewportIterators(child, cam, gridGenerator);
-			iters.insert(iters.end(), childIters.begin(), childIters.end());
-		}
-		return iters;
+	if (typeid(*root) == typeid(GameState::QuadTreeLeaf)) {
+		gameScene.push_back(((GameState::QuadTreeLeaf*)root)->getIterator());
+	} else {
+		for (GameState::QuadTree* child : ((GameState::QuadTree*)root)->getChildren())
+			findViewportIterators(child, cam, gridGenerator, viewbounds);
 	}
 }

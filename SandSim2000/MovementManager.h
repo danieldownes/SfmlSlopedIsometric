@@ -2,7 +2,7 @@
 #include <SFML/System.hpp>
 #include <vector>
 #include <iostream>
-#include "MapInfo.h"
+
 struct Node
 {
 	Node* pred;

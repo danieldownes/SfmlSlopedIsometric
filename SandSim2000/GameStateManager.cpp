@@ -19,7 +19,7 @@ void GameStateManager::generateQuadTree(GameState::QuadTree* root) {
     //TEMP: Lambda function to create a new random BattlefieldCell at (x, y)
     auto TEMP_RandomCell = [](int x, int y) {
         TerrainTile newTerr;
-        newTerr.depth = 2;
+        newTerr.depth = rand() % 3;
         newTerr.facing = 0;
         newTerr.terrain = "default";
 
@@ -58,19 +58,15 @@ void GameStateManager::generateQuadTree(GameState::QuadTree* root) {
         std::array<GameState::QuadTree*, 4> children;
 
         for (int i = 0; i < 4; i++) {
-            state.BattlefieldVector.push_back(TEMP_RandomCell(
-                (root->getQuadRect().getPosition().x + size * (i % 2)) / 100, 
-                (root->getQuadRect().getPosition().y + size * ((int)(i > 1))) / 100
-            ));
+            int x = root->getQuadRect().getPosition().x + size * (i % 2);       //+size when i = 1 or 3
+            int y = root->getQuadRect().getPosition().y + size * ((int)(i > 1)); //+size when i = 2 or 3  
+
+            state.BattlefieldVector.push_back(TEMP_RandomCell(x / 100, y / 100 ));
 
             std::vector<BattlefieldCell>::iterator iter = std::prev(state.BattlefieldVector.end());
 
             children[i] = new GameState::QuadTreeLeaf(
-                sf::IntRect(
-                    root->getQuadRect().getPosition().x + size * (i % 2),        //+size when i = 1 or 3
-                    root->getQuadRect().getPosition().y + size * ((int)(i > 1)), //+size when i = 2 or 3   
-                    size, size
-                ), 
+                sf::IntRect(x, y, size, size), 
                 root->getDepth() + 1,
                 iter
             );
