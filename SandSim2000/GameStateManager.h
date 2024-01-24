@@ -13,7 +13,7 @@ public:
 
     GameState& getState() { return state; }
 private:
-    void generateQuadTree(GameState::QuadTree* root);
+    void generateQuadTree(QuadTree* root);
 
     GameState state;
 };

@@ -171,6 +171,7 @@
     <ClInclude Include="InputState.h" />
     <ClInclude Include="InputStateManager.h" />
     <ClInclude Include="MovementManager.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="TerrainTile.h" />
