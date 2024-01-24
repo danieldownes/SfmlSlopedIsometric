@@ -6,7 +6,7 @@
 
 class GameStateManager {
 public:
-    GameStateManager(unsigned int mapSize);
+    GameStateManager(unsigned int numCells);
 
     void initialiseQuadTree(unsigned int battlefieldSize);
     void initializeBattlefieldVector(unsigned int numCells);

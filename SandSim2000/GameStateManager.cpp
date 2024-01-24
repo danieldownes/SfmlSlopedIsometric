@@ -10,9 +10,6 @@ void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize)
 {
     state.quadTree = new QuadTree(sf::IntRect(0, 0, battlefieldSize, battlefieldSize), 0);
     generateQuadTree((QuadTree*)state.quadTree);
-    /*Sam the quad tree should be a member property of 
-    the GameState and the GameStateManager should be 
-    where it's initialised. */
 }
 
 void GameStateManager::generateQuadTree(QuadTree* root) {
@@ -80,6 +77,6 @@ void GameStateManager::initializeBattlefieldVector(unsigned int numCells)
 {
     state.BattlefieldVector.resize(numCells);
     state.BattlefieldVector.clear();
-    initialiseQuadTree(std::sqrt(numCells) * 100);
+    initialiseQuadTree(std::floor(std::sqrt(numCells)) * 100);
 }
 
