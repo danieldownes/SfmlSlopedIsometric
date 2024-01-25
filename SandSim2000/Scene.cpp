@@ -10,7 +10,10 @@ void Scene::UpdateGameScene(Camera& cam, GameState& gameState) {
 	sf::IntRect viewbounds(0, 0, cam.window.getSize().x, cam.window.getSize().y);
 
 	gameScene.clear();
-	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
+	//this was throwing an error, too few arguments, it was missing the index argument
+	//so i quickly added this.
+	unsigned int index = 0;
+	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds, index);
 }
 
 void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds, unsigned int& index) {
