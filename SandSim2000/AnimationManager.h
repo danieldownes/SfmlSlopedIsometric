@@ -7,7 +7,6 @@
 
 #include "GridGenerator.h"
 #include "GameState.h"
-#include "MapInfo.h"
 
 class AnimationManager
 {
@@ -20,7 +19,6 @@ public:
 private:
 	void initializeDefaultTerrainTexure();
 	void initializeGrassTerrainTextures();
-	
 
 	std::vector<sf::Sprite> spriteMap;
 	sf::Texture defaultTerrainTexture;
