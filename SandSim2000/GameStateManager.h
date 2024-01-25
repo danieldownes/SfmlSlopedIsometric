@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include "GameState.h"
+#include "BattlefieldMap.h"
 #include "BattlefieldCell.h"
 
 
@@ -15,6 +16,7 @@ public:
 private:
     void generateQuadTree(QuadTree* root, unsigned int& index);
 
+    BattlefieldMap battlefieldMap;
     GameState state;
 };
   

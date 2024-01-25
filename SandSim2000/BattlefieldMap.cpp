@@ -3,15 +3,17 @@
 #include <cmath>
 #include <iostream>
 
-void BattlefieldMap::initMap(int mapSize)
+void BattlefieldMap::initMap(unsigned int mapSize)
 {
-    size = mapSize;
+    size = static_cast<int>(mapSize);
+
+    std::cout << size << std::endl;
 
     initDepthMap();
     initDirectionMap();
     initSpriteMap();
 
-    DebugOutputMap();
+    //DebugOutputMap();
 }
 
 void BattlefieldMap::initDepthMap()

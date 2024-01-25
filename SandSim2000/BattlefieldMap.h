@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GameState.h"
 #include "SFML/Graphics.hpp"
 
 struct BattlefielTileHeights
@@ -15,15 +14,13 @@ struct BattlefielTileHeights
 class BattlefieldMap
 {
 public:
-	BattlefieldMap(GameState* Gamestate) : gamestate(Gamestate) {}
+	BattlefieldMap() {}
 	~BattlefieldMap();
 
-	void initMap(int mapSize);
+	void initMap(unsigned int mapSize);
 
 	sf::Sprite** getMap() { return SpriteMap; }
 private:
-	GameState* gamestate;
-
 	int size = 0;
 
 	int** depthMap = nullptr;

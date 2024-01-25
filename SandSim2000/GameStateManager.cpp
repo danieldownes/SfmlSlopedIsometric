@@ -7,6 +7,7 @@ GameStateManager::GameStateManager(unsigned int numCells) {
 }
 
 void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize, unsigned int& index) {
+    battlefieldMap.initMap(static_cast<unsigned int>(battlefieldSize / 100));
     state.quadTree = new QuadTree(sf::IntRect(0, 0, battlefieldSize, battlefieldSize), 0);
     generateQuadTree((QuadTree*)state.quadTree, index);
 }
@@ -75,6 +76,6 @@ void GameStateManager::initializeBattlefieldVector(unsigned int numCells)
     state.BattlefieldVector.clear();
     state.BattlefieldVector.resize(numCells); 
     unsigned int index = 0;
-    initialiseQuadTree((int)std::floor(std::sqrt(numCells)) * 100, index);
+    initialiseQuadTree(static_cast<int>(std::floor(std::sqrt(numCells))) * 100, index);
 }
 

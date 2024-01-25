@@ -166,5 +166,6 @@ void Camera::initialiseGrassTextures() {
             std::cerr << "[TEXTURE][GRASS][FAILURE] File Path: " << filePath << std::endl;
             return;
         }
+        GrassTexture[i - 1].setSmooth(true);
     }
 }
