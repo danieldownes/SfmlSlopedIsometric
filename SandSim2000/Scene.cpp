@@ -2,25 +2,18 @@
 
 #define MAX_TILE_DEPTH 5
 #define TILE_SIZE 100
-#define CAMERA_BORDER_WIDTH 0
 
 Scene::Scene() {}
 
 void Scene::UpdateGameScene(Camera& cam, GameState& gameState) {
 	GridGenerator gridGenerator;
-	sf::IntRect viewbounds(CAMERA_BORDER_WIDTH, CAMERA_BORDER_WIDTH, cam.window.getSize().x - 2 * CAMERA_BORDER_WIDTH, cam.window.getSize().y - 3 * CAMERA_BORDER_WIDTH);
+	sf::IntRect viewbounds(0, 0, cam.window.getSize().x, cam.window.getSize().y);
 
 	gameScene.clear();
-	//gameScene.resize(6800);
-	unsigned int index = 0;
-	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds, index);
-	//gameScene.resize(index);
-	
-	//std::cout << "Scale: " << cam.scaleX << " Size: " << gameScene.size() << std::endl;
+	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
 }
 
 void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds, unsigned int& index) {
-	//Ensure first that the current QuadTree node is actually onscreen
 
 	int screenX, screenY;
 	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(root->quadRect.getPosition().x / TILE_SIZE, root->quadRect.getPosition().y / TILE_SIZE));
@@ -34,11 +27,9 @@ void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gr
 	if (!viewbounds.intersects(isometricNodeRect))
 		return;
 
-	//If we are still going, dive into children to find iterators
 
 	if (typeid(*root) == typeid(QuadTreeLeaf)) {
 		gameScene.insert(((QuadTreeLeaf*)root)->iter);
-		//gameScene[index++] = ((QuadTreeLeaf*)root)->iter;
 	} else {
 		for (QuadTree* child : ((QuadTree*)root)->children)
 			findViewportIterators(child, cam, gridGenerator, viewbounds, index);

@@ -6,8 +6,7 @@ GameStateManager::GameStateManager(unsigned int numCells) {
     initializeBattlefieldVector(numCells);
 }
 
-void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize, unsigned int& index)
-{
+void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize, unsigned int& index) {
     state.quadTree = new QuadTree(sf::IntRect(0, 0, battlefieldSize, battlefieldSize), 0);
     generateQuadTree((QuadTree*)state.quadTree, index);
 }
@@ -31,7 +30,6 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
     float size = root->quadRect.getSize().x / 2;
     if (size > CELLSIZE) {
 
-        //Make internal nodes at half the size
         std::array<QuadTree*, 4> children;
 
         for (int i = 0; i < 4; i++) {
@@ -51,12 +49,11 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
         root->children = children;
     } else {
 
-        //This is the final level - make leaf nodes of size 100 and create a battlefield cell for each and give the leaf its iterator
         std::array<QuadTree*, 4> children;
 
         for (int i = 0; i < 4; i++) {
-            int x = root->quadRect.getPosition().x + size * (i % 2);       //+size when i = 1 or 3
-            int y = root->quadRect.getPosition().y + size * ((int)(i > 1)); //+size when i = 2 or 3  
+            int x = root->quadRect.getPosition().x + size * (i % 2);
+            int y = root->quadRect.getPosition().y + size * ((int)(i > 1)); 
 
             state.BattlefieldVector[index] = TEMP_RandomCell(x / 100, y / 100 );
 

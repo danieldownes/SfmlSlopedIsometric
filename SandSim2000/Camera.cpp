@@ -141,10 +141,8 @@ void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
 
         sf::Sprite sprite = sf::Sprite();
 
-        //Sets the texture of the sprite to the corresponding Grass tile
         sprite.setTexture(GrassTexture[(2 - cell.terrain.depth)]);
         
-        // Get the sprite position
         int screenX, screenY;
         sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
         WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y - 50 * (2 - cell.terrain.depth), screenX, screenY);
