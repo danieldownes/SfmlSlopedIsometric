@@ -130,15 +130,13 @@ void Camera::Zoom(sf::Event& event) {
     }
 }
 
-void Camera::Draw(std::vector<std::vector<BattlefieldCell>::iterator>& gameScene) {
+void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
     window.clear(sf::Color::Black);
 
     GridGenerator gridGenerator;
     int centerOffsetX = window.getSize().x / 2;
 
     for (auto iter = gameScene.begin(); iter != gameScene.end(); iter++) {
-        if (&**iter == nullptr)
-            break;
         BattlefieldCell cell = **iter;
 
         sf::Sprite sprite = sf::Sprite();

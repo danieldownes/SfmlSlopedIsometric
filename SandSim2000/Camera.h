@@ -4,13 +4,14 @@
 #include "GameStateManager.h"
 #include "GridGenerator.h"
 #include <iostream>
+#include <set>
 
 class Camera {
 public:
     Camera();
 
     bool Update();
-    void Draw(std::vector<std::vector<BattlefieldCell>::iterator>& gameScene);
+    void Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene);
 
     void WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY);
     void ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY);

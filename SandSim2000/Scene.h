@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <set>
 #include "BattlefieldCell.h"
 #include "Camera.h"
 #include "GameState.h"
@@ -11,7 +11,7 @@ public:
 
 	void UpdateGameScene(Camera& cam, GameState& gameState);
 
-	std::vector<std::vector<BattlefieldCell>::iterator> gameScene;
+	std::set<std::vector<BattlefieldCell>::iterator> gameScene;
 private:
 	void findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds, unsigned int& index);
 };

@@ -48,7 +48,7 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
             generateQuadTree((QuadTree*)children[i], index);
         }
 
-        root->setChildren(children);
+        root->children = children;
     } else {
 
         //This is the final level - make leaf nodes of size 100 and create a battlefield cell for each and give the leaf its iterator
@@ -69,7 +69,7 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
             );
         }
 
-        root->setChildren(children);
+        root->children = children;
     }
 }
 

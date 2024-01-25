@@ -19,7 +19,6 @@ public:
 private:
 	void initializeDefaultTerrainTexure();
 	void initializeGrassTerrainTextures();
-	
 
 	std::vector<sf::Sprite> spriteMap;
 	sf::Texture defaultTerrainTexture;

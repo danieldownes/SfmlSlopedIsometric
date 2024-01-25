@@ -219,7 +219,7 @@ int main() {
 #include "Scene.h"
 
 int main() {    
-    unsigned int mapSize = 256;
+    unsigned int mapSize = 1024;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
 
     Camera camera;
@@ -230,7 +230,7 @@ int main() {
         if (!camera.Update()) 
             break;
         scene.UpdateGameScene(camera, gameStateManager.getState());
-        camera.Draw(scene.getGameScene());
+        camera.Draw(scene.gameScene);
     }
 
     camera.window.close();

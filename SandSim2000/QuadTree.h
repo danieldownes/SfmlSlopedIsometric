@@ -17,10 +17,6 @@ struct QuadTree {
         for (QuadTree* child : children)
             delete[] child;
     }
-
-    void setChildren(std::array<QuadTree*, 4> _children) { 
-        children = _children; 
-    }
 };
 
 struct QuadTreeLeaf : public QuadTree {
@@ -28,5 +24,4 @@ struct QuadTreeLeaf : public QuadTree {
 
     QuadTreeLeaf(const sf::IntRect& rect, const unsigned int& depth, std::vector<BattlefieldCell>::iterator& _iter)
         : QuadTree(rect, depth), iter(_iter) {}
-
 };
