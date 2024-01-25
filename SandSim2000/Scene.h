@@ -9,10 +9,9 @@ class Scene {
 public:
 	Scene();
 
-	std::vector<std::vector<BattlefieldCell>::iterator>& getGameScene() { return gameScene; }
 	void UpdateGameScene(Camera& cam, GameState& gameState);
-private:
-	void findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds);
 
 	std::vector<std::vector<BattlefieldCell>::iterator> gameScene;
+private:
+	void findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds, unsigned int& index);
 };

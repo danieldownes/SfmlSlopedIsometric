@@ -219,7 +219,7 @@ int main() {
 #include "Scene.h"
 
 int main() {    
-    unsigned int mapSize = 64;
+    unsigned int mapSize = 256;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
 
     Camera camera;

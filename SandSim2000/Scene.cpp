@@ -11,10 +11,15 @@ void Scene::UpdateGameScene(Camera& cam, GameState& gameState) {
 	sf::IntRect viewbounds(CAMERA_BORDER_WIDTH, CAMERA_BORDER_WIDTH, cam.window.getSize().x - 2 * CAMERA_BORDER_WIDTH, cam.window.getSize().y - 3 * CAMERA_BORDER_WIDTH);
 
 	gameScene.clear();
-	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
+	gameScene.resize(6800);
+	unsigned int index = 0;
+	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds, index);
+	gameScene.resize(index);
+	
+	//std::cout << "Scale: " << cam.scaleX << " Size: " << gameScene.size() << std::endl;
 }
 
-void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds) {
+void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds, unsigned int& index) {
 	//Ensure first that the current QuadTree node is actually onscreen
 
 	int screenX, screenY;
@@ -32,9 +37,9 @@ void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gr
 	//If we are still going, dive into children to find iterators
 
 	if (typeid(*root) == typeid(QuadTreeLeaf)) {
-		gameScene.push_back(((QuadTreeLeaf*)root)->iter);
+		gameScene[index++] = ((QuadTreeLeaf*)root)->iter;
 	} else {
 		for (QuadTree* child : ((QuadTree*)root)->children)
-			findViewportIterators(child, cam, gridGenerator, viewbounds);
+			findViewportIterators(child, cam, gridGenerator, viewbounds, index);
 	}
 }

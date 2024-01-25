@@ -6,13 +6,13 @@ GameStateManager::GameStateManager(unsigned int numCells) {
     initializeBattlefieldVector(numCells);
 }
 
-void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize)
+void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize, unsigned int& index)
 {
     state.quadTree = new QuadTree(sf::IntRect(0, 0, battlefieldSize, battlefieldSize), 0);
-    generateQuadTree((QuadTree*)state.quadTree);
+    generateQuadTree((QuadTree*)state.quadTree, index);
 }
 
-void GameStateManager::generateQuadTree(QuadTree* root) {
+void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
     //TEMP: Lambda function to create a new random BattlefieldCell at (x, y)
     auto TEMP_RandomCell = [](int x, int y) {
         TerrainTile newTerr;
@@ -45,7 +45,7 @@ void GameStateManager::generateQuadTree(QuadTree* root) {
                 root->depth + 1
             );
 
-            generateQuadTree((QuadTree*)children[i]);
+            generateQuadTree((QuadTree*)children[i], index);
         }
 
         root->setChildren(children);
@@ -58,9 +58,9 @@ void GameStateManager::generateQuadTree(QuadTree* root) {
             int x = root->quadRect.getPosition().x + size * (i % 2);       //+size when i = 1 or 3
             int y = root->quadRect.getPosition().y + size * ((int)(i > 1)); //+size when i = 2 or 3  
 
-            state.BattlefieldVector.push_back(TEMP_RandomCell(x / 100, y / 100 ));
+            state.BattlefieldVector[index] = TEMP_RandomCell(x / 100, y / 100 );
 
-            std::vector<BattlefieldCell>::iterator iter = std::prev(state.BattlefieldVector.end());
+            std::vector<BattlefieldCell>::iterator iter = state.BattlefieldVector.begin() + (index++);
 
             children[i] = new QuadTreeLeaf(
                 sf::IntRect(x, y, size, size), 
@@ -75,8 +75,9 @@ void GameStateManager::generateQuadTree(QuadTree* root) {
 
 void GameStateManager::initializeBattlefieldVector(unsigned int numCells) 
 {
-    state.BattlefieldVector.resize(numCells);
     state.BattlefieldVector.clear();
-    initialiseQuadTree(std::floor(std::sqrt(numCells)) * 100);
+    state.BattlefieldVector.resize(numCells); 
+    unsigned int index = 0;
+    initialiseQuadTree((int)std::floor(std::sqrt(numCells)) * 100, index);
 }
 
