@@ -7,11 +7,9 @@ void BattlefieldMap::initMap(unsigned int mapSize)
 {
     size = static_cast<int>(mapSize);
 
-    std::cout << size << std::endl;
-
     initDepthMap();
     initDirectionMap();
-    initSpriteMap();
+    initTextureMap();
 
     //DebugOutputMap();
 }
@@ -19,7 +17,6 @@ void BattlefieldMap::initMap(unsigned int mapSize)
 void BattlefieldMap::initDepthMap()
 {
     depthMap = new int* [size];
-    //in its current state will just make a 2d sin wave
     for (int y = 0; y < size; y++)
     {
         depthMap[y] = new int[size];
@@ -43,14 +40,14 @@ void BattlefieldMap::initDepthMap()
 
 void BattlefieldMap::initDirectionMap()
 {
-    directionMap = new BattlefielTileHeights * [size];
+    directionMap = new BattlefieldTileHeights * [size];
     for (int y = 0; y < size; y++)
     {
-        directionMap[y] = new BattlefielTileHeights[size];
+        directionMap[y] = new BattlefieldTileHeights[size];
         for (int x = 0; x < size; x++)
         {
             int thisTileHeight = depthMap[y][x];
-            directionMap[y][x] = BattlefielTileHeights(thisTileHeight);
+            directionMap[y][x] = BattlefieldTileHeights(thisTileHeight);
 
             if (y > 0)
                 directionMap[y][x].north = depthMap[y - 1][x];
@@ -64,18 +61,39 @@ void BattlefieldMap::initDirectionMap()
     }
 }
 
-void BattlefieldMap::initSpriteMap()
+void BattlefieldMap::initTextureMap()
 {
-    SpriteMap = new sf::Sprite * [size];
+    textureMap = new sf::Texture ** [size];
     for (int y = 0; y < size; y++)
     {
-        SpriteMap[y] = new sf::Sprite[size];
+        textureMap[y] = new sf::Texture*[size];
 
         for (int x = 0; x < size; x++)
         {
-
+            textureMap[y][x] = getTexture(directionMap[y][x]);
         }
     }
+}
+
+sf::Texture* BattlefieldMap::getTexture(BattlefieldTileHeights heights)
+{
+    std::string tilevalue = heights.evaluate();
+    for (int i = 0; i < grassTextures.size(); i++)
+    {
+        if (grassTextures[i].second == tilevalue)
+            return &grassTextures[i].first;
+    }
+    // if code has reached here, the grass texture for this type hasnt been initialised yet.
+    const std::string presetFilePath = "../resources/images/Terrain/Grass/";
+    sf::Texture texture;
+    if (!texture.loadFromFile(presetFilePath + tilevalue + ".png"))
+    {
+        std::cout << "[TEXTURE MISSING][GRASS]-" << tilevalue << std::endl;
+        texture.loadFromFile(presetFilePath + "Misc.png");
+    }
+    texture.setSmooth(true);
+    grassTextures.push_back(std::make_pair(texture, tilevalue));
+    return getTexture(heights);
 }
 
 BattlefieldMap::~BattlefieldMap()
@@ -84,12 +102,12 @@ BattlefieldMap::~BattlefieldMap()
     for (int i = 0; i < size; i++) {
         delete[] depthMap[i];
         delete[] directionMap[i];
-        delete[] SpriteMap[i];
+        delete[] textureMap[i];
     }
 
     delete[] depthMap;
     delete[] directionMap;
-    delete[] SpriteMap;
+    delete[] textureMap;
 }
 
 void BattlefieldMap::DebugOutputMap()
