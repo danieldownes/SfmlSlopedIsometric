@@ -146,7 +146,7 @@ void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
         
         int screenX, screenY;
         sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
-        WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y - 50 * (2 - cell.terrain.depth), screenX, screenY);
+        WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y, screenX, screenY);
         
         sprite.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
         sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));

@@ -84,13 +84,13 @@ sf::Texture* BattlefieldMap::getTexture(BattlefieldTileHeights heights)
             return &(it->first);
     }
     // if code has reached here, the grass texture for this type hasnt been initialised yet.
-    const std::string presetFilePath = "../resources/images/Terrain/Grass/";
+    const std::string presetFilePath = "../resources/images/Terrain/";
     sf::Texture texture;
     std::cout << "Loading Texture: " << tilevalue << "\n";
-    if (!texture.loadFromFile(presetFilePath + tilevalue + ".png"))
+    if (!texture.loadFromFile(presetFilePath + "grass/" + tilevalue + ".png"))
     {
         std::cout << "[TEXTURE MISSING][GRASS]-" << tilevalue << std::endl;
-        texture.loadFromFile(presetFilePath + "Misc.png");
+        texture.loadFromFile(presetFilePath + "NULLTERRAIN.png");
     }
     texture.setSmooth(true);
     grassTextures.push_back(std::make_pair(texture, tilevalue));
