@@ -13,5 +13,5 @@ public:
 
 	std::set<std::vector<BattlefieldCell>::iterator> gameScene;
 private:
-	void findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds, unsigned int& index);
+	void findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds);
 };
