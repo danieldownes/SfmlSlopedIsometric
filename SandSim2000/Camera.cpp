@@ -9,8 +9,6 @@ Camera::Camera()
     sf::Vector2u screenSize = window.getSize();
     offsetX = -(screenSize.x / 2.0f);
     offsetY = -(screenSize.y / 2.0f);
-
-    initialiseGrassTextures();
 }
 
 bool Camera::Update() {
@@ -154,18 +152,4 @@ void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
     }
 
     window.display();
-}
-
-void Camera::initialiseGrassTextures() {
-    const std::string presetFilePath = "../resources/images/Terrain/Grass/grass";
-    for (int i = 1; i < 4; i++)
-    {
-        const std::string filePath = presetFilePath + std::to_string(i) + ".png";
-        if (!GrassTexture[i - 1].loadFromFile(filePath))
-        {
-            std::cerr << "[TEXTURE][GRASS][FAILURE] File Path: " << filePath << std::endl;
-            return;
-        }
-        GrassTexture[i - 1].setSmooth(true);
-    }
 }

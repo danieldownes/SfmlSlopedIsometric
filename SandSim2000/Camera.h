@@ -38,10 +38,6 @@ private:
     int screenX = 0.f;
     int screenY = 0.f;
 
-    sf::Texture GrassTexture[3];
-
     void Pan(sf::Event& event);
     void Zoom(sf::Event& event);
-
-    void initialiseGrassTextures();
 };
