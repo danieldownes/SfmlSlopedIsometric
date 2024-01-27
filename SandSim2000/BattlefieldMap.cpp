@@ -48,28 +48,6 @@ void BattlefieldMap::initDirectionMap()
         {
             int thisTileHeight = depthMap[y][x];
             directionMap[y][x] = BattlefieldTileHeights(thisTileHeight);
-            /* 
-            //NORTH SOUTH EAST WEST CHECKS
-            if (y > 0)
-                directionMap[y][x].north = depthMap[y - 1][x];              //NORTH
-            if (y < size - 1)
-               directionMap[y][x].south = depthMap[y + 1][x];               //SOUTH
-            if (x > 0)
-                directionMap[y][x].east = depthMap[y][x - 1];               //EAST
-            if (x < size - 1)
-                directionMap[y][x].west = depthMap[y][x + 1];               //WEST
-            //THE REST
-            if (y > 0 && x > 0)
-                directionMap[y][x].northwest = depthMap[y - 1][x - 1];      //NW
-            if (y > 0 && x < size - 1)
-                directionMap[y][x].northeast = depthMap[y - 1][x + 1];      //NE
-            if (y < size - 1 && x > 0)
-                directionMap[y][x].southwest = depthMap[y + 1][x - 1];      //SW
-            if (y < size - 1 && x < size - 1)
-                directionMap[y][x].southeast = depthMap[y + 1][x + 1];      //SE
-            */
-
-            //Some AI Magic
 
             // NORTH
             directionMap[y][x].north = (y > 0) ? depthMap[y - 1][x] : thisTileHeight;
@@ -78,10 +56,10 @@ void BattlefieldMap::initDirectionMap()
             directionMap[y][x].south = (y < size - 1) ? depthMap[y + 1][x] : thisTileHeight;
 
             // EAST
-            directionMap[y][x].east = (x > 0) ? depthMap[y][x - 1] : thisTileHeight;
+            directionMap[y][x].west = (x > 0) ? depthMap[y][x - 1] : thisTileHeight;
 
             // WEST
-            directionMap[y][x].west = (x < size - 1) ? depthMap[y][x + 1] : thisTileHeight;
+            directionMap[y][x].east = (x < size - 1) ? depthMap[y][x + 1] : thisTileHeight;
 
             // NORTHWEST
             directionMap[y][x].northwest = (y > 0 && x > 0) ? depthMap[y - 1][x - 1] : thisTileHeight;
