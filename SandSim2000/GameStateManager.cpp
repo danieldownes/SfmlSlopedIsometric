@@ -13,21 +13,6 @@ void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize, unsigned
 }
 
 void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
-    //TEMP: Lambda function to create a new random BattlefieldCell at (x, y)
-    auto TEMP_RandomCell = [](int x, int y) {
-        TerrainTile newTerr;
-        newTerr.depth = rand() % 3;
-        newTerr.facing = 0;
-        newTerr.terrain = "default";
-
-        BattlefieldCell newCell;
-        newCell.x = x;
-        newCell.y = y;
-        newCell.terrain = newTerr;
-
-        return newCell;
-        };
-
     float size = root->quadRect.getSize().x / 2;
     if (size > CELLSIZE) {
 
@@ -56,7 +41,7 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
             int x = root->quadRect.getPosition().x + size * (i % 2);
             int y = root->quadRect.getPosition().y + size * ((int)(i > 1)); 
 
-            state.BattlefieldVector[index] = TEMP_RandomCell(x / 100, y / 100 );
+            state.BattlefieldVector[index] = generateCell(x / CELLSIZE, y/CELLSIZE);
 
             std::vector<BattlefieldCell>::iterator iter = state.BattlefieldVector.begin() + (index++);
 
@@ -69,6 +54,22 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
 
         root->children = children;
     }
+}
+
+BattlefieldCell GameStateManager::generateCell(int x, int y)
+{
+    TerrainTile newTerr;
+    newTerr.depth = battlefieldMap.getHeightAtPosition({ x, y});
+    newTerr.facing = 0;
+    newTerr.terrain = "default";
+
+    BattlefieldCell newCell;
+    newCell.x = x;
+    newCell.y = y;
+    newCell.terrain = newTerr;
+    newCell.texture = battlefieldMap.getTextureAtPosition({ x, y });
+
+    return newCell;
 }
 
 void GameStateManager::initializeBattlefieldVector(unsigned int numCells) 

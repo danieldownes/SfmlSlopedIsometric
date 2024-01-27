@@ -141,7 +141,8 @@ void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
 
         sf::Sprite sprite = sf::Sprite();
 
-        sprite.setTexture(GrassTexture[(2 - cell.terrain.depth)]);
+
+        sprite.setTexture(*cell.texture);
         
         int screenX, screenY;
         sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));

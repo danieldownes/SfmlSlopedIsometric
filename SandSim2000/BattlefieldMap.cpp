@@ -78,14 +78,15 @@ void BattlefieldMap::initTextureMap()
 sf::Texture* BattlefieldMap::getTexture(BattlefieldTileHeights heights)
 {
     std::string tilevalue = heights.evaluate();
-    for (int i = 0; i < grassTextures.size(); i++)
+    for (auto it = grassTextures.begin(); it != grassTextures.end(); ++it)
     {
-        if (grassTextures[i].second == tilevalue)
-            return &grassTextures[i].first;
+        if (it->second == tilevalue)
+            return &(it->first);
     }
     // if code has reached here, the grass texture for this type hasnt been initialised yet.
     const std::string presetFilePath = "../resources/images/Terrain/Grass/";
     sf::Texture texture;
+    std::cout << "Loading Texture: " << tilevalue << "\n";
     if (!texture.loadFromFile(presetFilePath + tilevalue + ".png"))
     {
         std::cout << "[TEXTURE MISSING][GRASS]-" << tilevalue << std::endl;
@@ -123,7 +124,7 @@ void BattlefieldMap::DebugOutputMap()
     for (int i = 0; i < size; i++)
     {
         for (int j = 0; j < size; j++)
-            std::cout << directionMap[i][j].height << "," << directionMap[i][j].north << "," << directionMap[i][j].south << "," << directionMap[i][j].east << "," << directionMap[i][j].west << " : ";
+            std::cout << directionMap[i][j].evaluate() << ":";
         std::cout << "\n";
     }
 }

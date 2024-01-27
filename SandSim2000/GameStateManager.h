@@ -15,6 +15,7 @@ public:
     GameState& getState() { return state; }
 private:
     void generateQuadTree(QuadTree* root, unsigned int& index);
+    BattlefieldCell generateCell(int x, int y);
 
     BattlefieldMap battlefieldMap;
     GameState state;

@@ -2,7 +2,10 @@
 
 #include "SFML/Graphics.hpp"
 #include <vector>
+#include <list>
 #include <string>
+
+#include <iostream>
 
 struct BattlefieldTileHeights
 {
@@ -28,7 +31,7 @@ public:
 	void initMap(unsigned int mapSize);
 
 	sf::Texture*** getMap() { return textureMap; }
-	sf::Texture* getTextureAtPosition(sf::Vector2i position) { return textureMap[position.y][position.x]; }
+	sf::Texture* getTextureAtPosition(sf::Vector2i position) { return textureMap[position.y][position.x]; std::cout << position.x << ":" << position.y << "\n"; }
 
 	int getHeightAtPosition(sf::Vector2i position) { return depthMap[position.y][position.x]; }
 private:
@@ -38,7 +41,7 @@ private:
 	BattlefieldTileHeights** directionMap = nullptr;
 	sf::Texture*** textureMap = nullptr;
 
-	std::vector<std::pair<sf::Texture, std::string>> grassTextures;
+	std::list<std::pair<sf::Texture, std::string>> grassTextures;
 
 	sf::Texture* getTexture(BattlefieldTileHeights heights);
 
