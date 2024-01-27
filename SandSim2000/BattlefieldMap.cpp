@@ -48,15 +48,65 @@ void BattlefieldMap::initDirectionMap()
         {
             int thisTileHeight = depthMap[y][x];
             directionMap[y][x] = BattlefieldTileHeights(thisTileHeight);
-
+            /* 
+            //NORTH SOUTH EAST WEST CHECKS
             if (y > 0)
-                directionMap[y][x].north = depthMap[y - 1][x];
+                directionMap[y][x].north = depthMap[y - 1][x];              //NORTH
             if (y < size - 1)
-                directionMap[y][x].south = depthMap[y + 1][x];
+               directionMap[y][x].south = depthMap[y + 1][x];               //SOUTH
             if (x > 0)
-                directionMap[y][x].east = depthMap[y][x - 1];
+                directionMap[y][x].east = depthMap[y][x - 1];               //EAST
             if (x < size - 1)
-                directionMap[y][x].west = depthMap[y][x + 1];
+                directionMap[y][x].west = depthMap[y][x + 1];               //WEST
+            //THE REST
+            if (y > 0 && x > 0)
+                directionMap[y][x].northwest = depthMap[y - 1][x - 1];      //NW
+            if (y > 0 && x < size - 1)
+                directionMap[y][x].northeast = depthMap[y - 1][x + 1];      //NE
+            if (y < size - 1 && x > 0)
+                directionMap[y][x].southwest = depthMap[y + 1][x - 1];      //SW
+            if (y < size - 1 && x < size - 1)
+                directionMap[y][x].southeast = depthMap[y + 1][x + 1];      //SE
+            */
+
+            //Some AI Magic
+
+            // NORTH
+            directionMap[y][x].north = (y > 0) ? depthMap[y - 1][x] : thisTileHeight;
+
+            // SOUTH
+            directionMap[y][x].south = (y < size - 1) ? depthMap[y + 1][x] : thisTileHeight;
+
+            // EAST
+            directionMap[y][x].east = (x > 0) ? depthMap[y][x - 1] : thisTileHeight;
+
+            // WEST
+            directionMap[y][x].west = (x < size - 1) ? depthMap[y][x + 1] : thisTileHeight;
+
+            // NORTHWEST
+            directionMap[y][x].northwest = (y > 0 && x > 0) ? depthMap[y - 1][x - 1] : thisTileHeight;
+
+            // NORTHEAST
+            directionMap[y][x].northeast = (y > 0 && x < size - 1) ? depthMap[y - 1][x + 1] : thisTileHeight;
+
+            // SOUTHWEST
+            directionMap[y][x].southwest = (y < size - 1 && x > 0) ? depthMap[y + 1][x - 1] : thisTileHeight;
+
+            // SOUTHEAST
+            directionMap[y][x].southeast = (y < size - 1 && x < size - 1) ? depthMap[y + 1][x + 1] : thisTileHeight;
+
+            // Adjust diagonal directions based on neighboring heights
+            if (y > 0 && x < size - 1 && depthMap[y - 1][x] != depthMap[y][x + 1])
+                directionMap[y][x].northeast = std::max(depthMap[y - 1][x], depthMap[y][x + 1]);
+
+            if (y > 0 && x > 0 && depthMap[y - 1][x] != depthMap[y][x - 1])
+                directionMap[y][x].northwest = std::max(depthMap[y - 1][x], depthMap[y][x - 1]);
+
+            if (y < size - 1 && x < size - 1 && depthMap[y + 1][x] != depthMap[y][x + 1])
+                directionMap[y][x].southeast = std::max(depthMap[y + 1][x], depthMap[y][x + 1]);
+
+            if (y < size - 1 && x > 0 && depthMap[y + 1][x] != depthMap[y][x - 1])
+                directionMap[y][x].southwest = std::max(depthMap[y + 1][x], depthMap[y][x - 1]);
         }
     }
 }
