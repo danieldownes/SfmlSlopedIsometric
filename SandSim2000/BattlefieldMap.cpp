@@ -112,6 +112,8 @@ void BattlefieldMap::initSpriteMap()
         for (int x = 0; x < size; x++)
         {
             spriteMap[y][x] = grass_spritesheet.getSprite(directionMap[y][x]);
+            //KEEP THIS HERE, dont know why but without this the texture pointer fails
+            //and all textures appear white. dont touch
             spriteMap[y][x]->setTexture(grass_spritesheet.texture);
         }
     }
