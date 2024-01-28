@@ -11,6 +11,7 @@ public:
     int x, y; // Coordinates of Iterator in QuadTree
     TerrainTile terrain;
     sf::Texture* texture;
+    int YOffset;
 
 
 

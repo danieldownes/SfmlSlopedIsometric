@@ -40,53 +40,67 @@ void BattlefieldMap::initDepthMap()
 
 void BattlefieldMap::initDirectionMap()
 {
-    directionMap = new BattlefieldTileHeights * [size];
+    directionMap = new Direction * [size];
+
     for (int y = 0; y < size; y++)
     {
-        directionMap[y] = new BattlefieldTileHeights[size];
+        directionMap[y] = new Direction[size];
+
         for (int x = 0; x < size; x++)
         {
-            int thisTileHeight = depthMap[y][x];
-            directionMap[y][x] = BattlefieldTileHeights(thisTileHeight);
+            directionMap[y][x] = F;  // Initialize all directions to F by default
 
-            // NORTH
-            directionMap[y][x].north = (y > 0) ? depthMap[y - 1][x] : thisTileHeight;
+            int height = depthMap[y][x];
 
-            // SOUTH
-            directionMap[y][x].south = (y < size - 1) ? depthMap[y + 1][x] : thisTileHeight;
-
-            // EAST
-            directionMap[y][x].west = (x > 0) ? depthMap[y][x - 1] : thisTileHeight;
-
-            // WEST
-            directionMap[y][x].east = (x < size - 1) ? depthMap[y][x + 1] : thisTileHeight;
-
-            // NORTHWEST
-            directionMap[y][x].northwest = (y > 0 && x > 0) ? depthMap[y - 1][x - 1] : thisTileHeight;
-
-            // NORTHEAST
-            directionMap[y][x].northeast = (y > 0 && x < size - 1) ? depthMap[y - 1][x + 1] : thisTileHeight;
-
-            // SOUTHWEST
-            directionMap[y][x].southwest = (y < size - 1 && x > 0) ? depthMap[y + 1][x - 1] : thisTileHeight;
-
-            // SOUTHEAST
-            directionMap[y][x].southeast = (y < size - 1 && x < size - 1) ? depthMap[y + 1][x + 1] : thisTileHeight;
-
-            // Adjust diagonal directions based on neighboring heights
-            if (y > 0 && x < size - 1 && depthMap[y - 1][x] != depthMap[y][x + 1])
-                directionMap[y][x].northeast = std::max(depthMap[y - 1][x], depthMap[y][x + 1]);
-
-            if (y > 0 && x > 0 && depthMap[y - 1][x] != depthMap[y][x - 1])
-                directionMap[y][x].northwest = std::max(depthMap[y - 1][x], depthMap[y][x - 1]);
-
-            if (y < size - 1 && x < size - 1 && depthMap[y + 1][x] != depthMap[y][x + 1])
-                directionMap[y][x].southeast = std::max(depthMap[y + 1][x], depthMap[y][x + 1]);
-
-            if (y < size - 1 && x > 0 && depthMap[y + 1][x] != depthMap[y][x - 1])
-                directionMap[y][x].southwest = std::max(depthMap[y + 1][x], depthMap[y][x - 1]);
+            // West
+            if (x > 0 && testLocation(x - 1, y, height) > 0)
+            {
+                directionMap[y][x] = W;
+            }
+            // North
+            else if (y > 0 && testLocation(x, y - 1, height) > 0)
+            {
+                directionMap[y][x] = N;
+            }
+            // East
+            else if (x < size - 1 && testLocation(x + 1, y, height) > 0)
+            {
+                directionMap[y][x] = E;
+            }
+            // South
+            else if (y < size - 1 && testLocation(x, y + 1, height) > 0)
+            {
+                directionMap[y][x] = S;
+            }
+            // Northwest
+            else if (x > 0 && y > 0 && testLocation(x - 1, y - 1, height) > 0)
+            {
+                directionMap[y][x] = NW;
+            }
+            // Northeast
+            else if (x < size - 1 && y > 0 && testLocation(x + 1, y - 1, height) > 0)
+            {
+                directionMap[y][x] = NE;
+            }
+            // Southwest
+            else if (x > 0 && y < size - 1 && testLocation(x - 1, y + 1, height) > 0)
+            {
+                directionMap[y][x] = SW;
+            }
+            // Southeast
+            else if (x < size - 1 && y < size - 1 && testLocation(x + 1, y + 1, height) > 0)
+            {
+                directionMap[y][x] = SE;
+            }
         }
     }
+}
+
+int BattlefieldMap::testLocation(int x, int y, int height)
+{
+    if (x > 0 && x < size - 1 && y > 0 && y < size - 1)
+        return depthMap[y][x] - height;
+    return 0;
 }
 
 void BattlefieldMap::initTextureMap()
@@ -103,9 +117,9 @@ void BattlefieldMap::initTextureMap()
     }
 }
 
-sf::Texture* BattlefieldMap::getTexture(BattlefieldTileHeights heights)
+sf::Texture* BattlefieldMap::getTexture(Direction direction)
 {
-    std::string tilevalue = heights.evaluate();
+    std::string tilevalue = evaluateDirection(direction);
     for (auto it = grassTextures.begin(); it != grassTextures.end(); ++it)
     {
         if (it->second == tilevalue)
@@ -122,7 +136,34 @@ sf::Texture* BattlefieldMap::getTexture(BattlefieldTileHeights heights)
     }
     texture.setSmooth(true);
     grassTextures.push_back(std::make_pair(texture, tilevalue));
-    return getTexture(heights);
+    return getTexture(direction);
+}
+
+std::string BattlefieldMap::evaluateDirection(Direction dir)
+{
+    switch (dir)
+    {
+    case F:
+        return "F";
+    case N:
+        return "N";
+    case NE:
+        return "NE";
+    case E:
+        return "E";
+    case SE:
+        return "SE";
+    case S:
+        return "S";
+    case SW:
+        return "SW";
+    case W:
+        return "W";
+    case NW:
+        return "NW";
+    default:
+        return "Invalid Direction";
+    }
 }
 
 BattlefieldMap::~BattlefieldMap()
@@ -146,13 +187,6 @@ void BattlefieldMap::DebugOutputMap()
     {
         for (int j = 0; j < size; j++)
             std::cout << depthMap[i][j] << " : ";
-        std::cout << "\n";
-    }
-    std::cout << "DIRECTION MAP" << "\n\n";
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size; j++)
-            std::cout << directionMap[i][j].evaluate() << ":";
         std::cout << "\n";
     }
 }

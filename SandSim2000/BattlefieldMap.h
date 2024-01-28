@@ -7,20 +7,9 @@
 
 #include <iostream>
 
-struct BattlefieldTileHeights
+enum Direction
 {
-	BattlefieldTileHeights(int h, int n, int s, int e, int w, int ne, int se, int sw, int nw) : height(h), north(n), south(s), east(e), west(w), northeast(ne), southeast(se), southwest(sw), northwest(nw) {}
-	BattlefieldTileHeights() : height(0), north(0), south(0), east(0), west(0), northeast(0), southeast(0), southwest(0), northwest(0) {}
-	BattlefieldTileHeights(int h) : height(h), north(h), south(h), east(h), west(h), northeast(h), southeast(h), southwest(h), northwest(h) {}
-
-	std::string evaluate() 
-	{
-		return std::to_string(height) + "-" + std::to_string(north) + "-" + std::to_string(northeast) + "-" + std::to_string(east) + "-" + std::to_string(southeast) + "-" + std::to_string(south) + "-" + std::to_string(southwest) + "-" + std::to_string(west) + "-" + std::to_string(northwest);
-	}
-
-	int height;
-	int north; int south; int east; int west;
-	int northeast; int southeast; int southwest; int northwest;
+	F, N, NE, E, SE, S, SW, W, NW
 };
 
 class BattlefieldMap
@@ -39,16 +28,19 @@ private:
 	int size = 0;
 
 	int** depthMap = nullptr;
-	BattlefieldTileHeights** directionMap = nullptr;
+	Direction** directionMap = nullptr;
 	sf::Texture*** textureMap = nullptr;
 
 	std::list<std::pair<sf::Texture, std::string>> grassTextures;
 
-	sf::Texture* getTexture(BattlefieldTileHeights heights);
+	sf::Texture* getTexture(Direction direction);
+	std::string evaluateDirection(Direction dir);
 
 	void initDepthMap();
 	void initDirectionMap();
 	void initTextureMap();
+
+	int testLocation(int x, int y, int height);
 
 	//testing, will print all the maps
 	void DebugOutputMap();
