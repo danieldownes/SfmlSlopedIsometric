@@ -22,8 +22,9 @@ public:
 
 	void initMap(unsigned int mapSize);
 
-	sf::Texture*** getMap() { return textureMap; }
-	sf::Texture* getTextureAtPosition(sf::Vector2i position) { return textureMap[position.y][position.x]; std::cout << position.x << ":" << position.y << "\n"; }
+	sf::Sprite* getSpriteAtPosition(sf::Vector2i position) {
+		return spriteMap[position.y][position.x]; 
+	}
 
 	int getHeightAtPosition(sf::Vector2i position) { return depthMap[position.y][position.x]; }
 private:
@@ -31,19 +32,15 @@ private:
 
 	int** depthMap = nullptr;
 	Direction** directionMap = nullptr;
-	sf::Texture*** textureMap = nullptr;
+	sf::Sprite*** spriteMap = nullptr;
 
 	std::list<std::pair<sf::Texture, std::string>> grassTextures;
 
-	sf::Texture* getTexture(Direction direction);
-	std::string evaluateDirection(Direction dir);
+	spritesheet grass_spritesheet;
 
 	void initDepthMap();
 	void initDirectionMap();
-	void initTextureMap();
+	void initSpriteMap();
 
 	int testLocation(int x, int y, int height);
-
-	//testing, will print all the maps
-	void DebugOutputMap();
 };

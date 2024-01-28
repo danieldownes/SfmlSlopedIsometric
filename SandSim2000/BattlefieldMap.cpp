@@ -6,12 +6,11 @@
 void BattlefieldMap::initMap(unsigned int mapSize)
 {
     size = static_cast<int>(mapSize);
-
+    grass_spritesheet = spritesheet("../resources/images/Terrain/grass/grass_spritesheet.png", 8, 2);
+        
     initDepthMap();
     initDirectionMap();
-    initTextureMap();
-
-    //DebugOutputMap();
+    initSpriteMap();
 }
 
 void BattlefieldMap::initDepthMap()
@@ -103,68 +102,21 @@ int BattlefieldMap::testLocation(int x, int y, int height)
     return 0;
 }
 
-void BattlefieldMap::initTextureMap()
+void BattlefieldMap::initSpriteMap()
 {
-    textureMap = new sf::Texture ** [size];
+    spriteMap = new sf::Sprite ** [size];
     for (int y = 0; y < size; y++)
     {
-        textureMap[y] = new sf::Texture*[size];
+        spriteMap[y] = new sf::Sprite * [size];
 
         for (int x = 0; x < size; x++)
         {
-            textureMap[y][x] = getTexture(directionMap[y][x]);
+            spriteMap[y][x] = grass_spritesheet.getSprite(directionMap[y][x]);
+            spriteMap[y][x]->setTexture(grass_spritesheet.texture);
         }
     }
 }
 
-sf::Texture* BattlefieldMap::getTexture(Direction direction)
-{
-    std::string tilevalue = evaluateDirection(direction);
-    for (auto it = grassTextures.begin(); it != grassTextures.end(); ++it)
-    {
-        if (it->second == tilevalue)
-            return &(it->first);
-    }
-    // if code has reached here, the grass texture for this type hasnt been initialised yet.
-    const std::string presetFilePath = "../resources/images/Terrain/";
-    sf::Texture texture;
-    std::cout << "Loading Texture: " << tilevalue << "\n";
-    if (!texture.loadFromFile(presetFilePath + "grass/" + tilevalue + ".png"))
-    {
-        std::cout << "[TEXTURE MISSING][GRASS]-" << tilevalue << std::endl;
-        texture.loadFromFile(presetFilePath + "NULLTERRAIN.png");
-    }
-    texture.setSmooth(true);
-    grassTextures.push_back(std::make_pair(texture, tilevalue));
-    return getTexture(direction);
-}
-
-std::string BattlefieldMap::evaluateDirection(Direction dir)
-{
-    switch (dir)
-    {
-    case F:
-        return "F";
-    case N:
-        return "N";
-    case NE:
-        return "NE";
-    case E:
-        return "E";
-    case SE:
-        return "SE";
-    case S:
-        return "S";
-    case SW:
-        return "SW";
-    case W:
-        return "W";
-    case NW:
-        return "NW";
-    default:
-        return "Invalid Direction";
-    }
-}
 
 BattlefieldMap::~BattlefieldMap()
 {
@@ -172,21 +124,10 @@ BattlefieldMap::~BattlefieldMap()
     for (int i = 0; i < size; i++) {
         delete[] depthMap[i];
         delete[] directionMap[i];
-        delete[] textureMap[i];
+        delete[] spriteMap[i];
     }
 
     delete[] depthMap;
     delete[] directionMap;
-    delete[] textureMap;
-}
-
-void BattlefieldMap::DebugOutputMap()
-{
-    std::cout << "DEPTH MAP" << "\n\n";
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size; j++)
-            std::cout << depthMap[i][j] << " : ";
-        std::cout << "\n";
-    }
+    delete[] spriteMap;
 }

@@ -10,6 +10,7 @@ void GameStateManager::initialiseQuadTree(unsigned int battlefieldSize, unsigned
     battlefieldMap.initMap(static_cast<unsigned int>(battlefieldSize / 100));
     state.quadTree = new QuadTree(sf::IntRect(0, 0, battlefieldSize, battlefieldSize), 0);
     generateQuadTree((QuadTree*)state.quadTree, index);
+
 }
 
 void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
@@ -67,7 +68,7 @@ BattlefieldCell GameStateManager::generateCell(int x, int y)
     newCell.x = x;
     newCell.y = y;
     newCell.terrain = newTerr;
-    newCell.texture = battlefieldMap.getTextureAtPosition({ x, y });
+    newCell.sprite = battlefieldMap.getSpriteAtPosition({ x, y });
     newCell.YOffset = battlefieldMap.getHeightAtPosition({ x, y }) * CELLSIZE / 4;
 
     return newCell;
