@@ -4,10 +4,10 @@
 
 #include "SFML/Graphics.hpp"
 
-class spritemap
+class spritesheet
 {
 public:
-    spritemap(const char* filepath, unsigned int columns, unsigned int rows);
+    spritesheet(const char* filepath, unsigned int columns, unsigned int rows);
     sf::Sprite* getSprite(unsigned int index);
     sf::Sprite* getSprite(sf::Vector2u position);
 private:

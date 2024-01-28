@@ -1,8 +1,8 @@
-#include "spritemap.h"
+#include "spritesheet.h"
 
 #include <iostream>
 
-spritemap::spritemap(const char* filepath, unsigned int columns, unsigned int rows)
+spritesheet::spritesheet(const char* filepath, unsigned int columns, unsigned int rows)
 {
     texture.loadFromFile(filepath);
     cell_width = texture.getSize().x / columns; cell_height = texture.getSize().y / rows;
@@ -20,13 +20,13 @@ spritemap::spritemap(const char* filepath, unsigned int columns, unsigned int ro
         }
     }
 }
-sf::Sprite* spritemap::getSprite(unsigned int index)
+sf::Sprite* spritesheet::getSprite(unsigned int index)
 {
     if (index < sprites.size())
         return &sprites[index];
     std::cerr << "[INVALID SPRITE POSITION]" << std::endl;
 }
-sf::Sprite* spritemap::getSprite(sf::Vector2u position)
+sf::Sprite* spritesheet::getSprite(sf::Vector2u position)
 {
     unsigned int index = position.y * sprite_dimensions.y + position.x;
     return getSprite(index);

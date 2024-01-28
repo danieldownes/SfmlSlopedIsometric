@@ -1,11 +1,13 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
 #include <vector>
 #include <list>
 #include <string>
-
 #include <iostream>
+
+#include "SFML/Graphics.hpp"
+
+#include "spritesheet.h"
 
 enum Direction
 {

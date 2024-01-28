@@ -153,7 +153,7 @@
     <ClCompile Include="InputStateManager.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="spritemap.cpp" />
+    <ClCompile Include="spritesheet.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
     <ClCompile Include="TimeSplitter.cpp" />
     <ClCompile Include="VehicleAgent.cpp" />
@@ -177,7 +177,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="spritemap.h" />
+    <ClInclude Include="spritesheet.h" />
     <ClInclude Include="TerrainTile.h" />
     <ClInclude Include="TimeSplitter.h" />
     <ClInclude Include="VehicleAgent.h" />
