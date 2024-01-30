@@ -60,7 +60,7 @@ void BattlefieldMap::initDirectionMap()
     directionMap[11] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     directionMap[12] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     directionMap[13] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
-    directionMap[14] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[14] = new Direction[size]{ F, F, W, W, W, W, W, W, W, W, W, W, W, W, F, F };
     directionMap[15] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
 }
     

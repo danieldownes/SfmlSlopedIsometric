@@ -11,7 +11,9 @@
 
 enum Direction
 {
-	F, N, NE, E, SE, S, SW, W, NW
+	//Liam: The way you had the direction sequence was correct, I've just swapped W/E because it was faster to test than changing the sprite sheet.
+	//I'll put it back once we're ready to PR this task. 
+	F, N, NE, W, SE, S, SW, E, NW
 };
 
 class BattlefieldMap
