@@ -15,86 +15,55 @@ void BattlefieldMap::initMap(unsigned int mapSize)
 
 void BattlefieldMap::initDepthMap()
 {
-    depthMap = new int* [size];
-    for (int y = 0; y < size; y++)
-    {
-        depthMap[y] = new int[size];
+    size = 16; // Set the size to 16x16
 
-        for (int x = 0; x < size; x++)
-        {
-            depthMap[y][x] = 0;
-        }
-    }
-    // use this for the hill in the middle of the map
-    int middle = static_cast<int>(size / 2);
-    depthMap[middle][middle] = 2;
-    for (int i = middle - 1; i <= middle + 1; i++)
-    {
-        depthMap[i][middle - 1] = 1;
-        depthMap[i][middle + 1] = 1;
-    }
-    depthMap[middle - 1][middle] = 1;
-    depthMap[middle + 1][middle] = 1;
+    depthMap = new int* [size];
+
+    // Directly initializing each row with hardcoded values
+    depthMap[0] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    depthMap[1] = new int[size] {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
+    depthMap[2] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[3] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[4] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[5] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[6] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[7] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[8] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[9] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[10] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[11] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[12] = new int[size] {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0};
+    depthMap[13] = new int[size] {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
+    depthMap[14] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    depthMap[15] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 }
+
 
 void BattlefieldMap::initDirectionMap()
 {
+    size = 16; // Set the size to 16x16
+
     directionMap = new Direction * [size];
 
-    for (int y = 0; y < size; y++)
-    {
-        directionMap[y] = new Direction[size];
-
-        for (int x = 0; x < size; x++)
-        {
-            directionMap[y][x] = F;  // Initialize all directions to F by default
-
-            int height = depthMap[y][x];
-
-            // West
-            if (x > 0 && testLocation(x - 1, y, height) > 0)
-            {
-                directionMap[y][x] = W;
-            }
-            // North
-            else if (y > 0 && testLocation(x, y - 1, height) > 0)
-            {
-                directionMap[y][x] = N;
-            }
-            // East
-            else if (x < size - 1 && testLocation(x + 1, y, height) > 0)
-            {
-                directionMap[y][x] = E;
-            }
-            // South
-            else if (y < size - 1 && testLocation(x, y + 1, height) > 0)
-            {
-                directionMap[y][x] = S;
-            }
-            // Northwest
-            else if (x > 0 && y > 0 && testLocation(x - 1, y - 1, height) > 0)
-            {
-                directionMap[y][x] = NW;
-            }
-            // Northeast
-            else if (x < size - 1 && y > 0 && testLocation(x + 1, y - 1, height) > 0)
-            {
-                directionMap[y][x] = NE;
-            }
-            // Southwest
-            else if (x > 0 && y < size - 1 && testLocation(x - 1, y + 1, height) > 0)
-            {
-                directionMap[y][x] = SW;
-            }
-            // Southeast
-            else if (x < size - 1 && y < size - 1 && testLocation(x + 1, y + 1, height) > 0)
-            {
-                directionMap[y][x] = SE;
-            }
-        }
-    }
+    // Directly initializing each row with F for Flat
+    directionMap[0] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[1] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[2] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[3] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[4] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[5] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[6] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[7] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[8] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[9] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[10] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[11] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[12] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[13] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[14] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
+    directionMap[15] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
 }
-
+    
 int BattlefieldMap::testLocation(int x, int y, int height)
 {
     if (x > 0 && x < size - 1 && y > 0 && y < size - 1)
