@@ -47,7 +47,7 @@ void BattlefieldMap::initDirectionMap()
     directionMap = new Direction * [size];
 
     directionMap[0] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
-    directionMap[1] = new Direction[size]{ F, F, E, E, E, E, E, E, E, E, E, E, E, E, F, F };
+    directionMap[1] = new Direction[size]{ F, NE, E, E, E, E, E, E, E, E, E, E, E, E, SE, F };
     directionMap[2] = new Direction[size]{ F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
     directionMap[3] = new Direction[size]{ F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
     directionMap[4] = new Direction[size]{ F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
@@ -60,7 +60,7 @@ void BattlefieldMap::initDirectionMap()
     directionMap[11] = new Direction[size]{ F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
     directionMap[12] = new Direction[size]{ F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
     directionMap[13] = new Direction[size]{ F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
-    directionMap[14] = new Direction[size]{ F, F, W, W, W, W, W, W, W, W, W, W, W, W, F, F };
+    directionMap[14] = new Direction[size]{ F, NW, W, W, W, W, W, W, W, W, W, W, W, W, SW, F };
     directionMap[15] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
 }
     
