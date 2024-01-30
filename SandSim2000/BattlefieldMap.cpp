@@ -62,9 +62,6 @@ void BattlefieldMap::initDirectionMap()
     directionMap[13] = new Direction[size]{ F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
     directionMap[14] = new Direction[size]{ F, F, W, W, W, W, W, W, W, W, W, W, W, W, F, F };
     directionMap[15] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
-
-
-
 }
     
 int BattlefieldMap::testLocation(int x, int y, int height)
