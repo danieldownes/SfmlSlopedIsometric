@@ -155,7 +155,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="spritesheet.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
-    <ClCompile Include="TimeSplitter.cpp" />
     <ClCompile Include="VehicleAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +165,6 @@
     <ClInclude Include="BattlefieldCell.h" />
     <ClInclude Include="BattlefieldMap.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="FieldAgents.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GridGenerator.h" />
@@ -179,7 +177,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="spritesheet.h" />
     <ClInclude Include="TerrainTile.h" />
-    <ClInclude Include="TimeSplitter.h" />
     <ClInclude Include="VehicleAgent.h" />
   </ItemGroup>
   <ItemGroup>

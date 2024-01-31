@@ -15,11 +15,8 @@ void BattlefieldMap::initMap(unsigned int mapSize)
 
 void BattlefieldMap::initDepthMap()
 {
-    size = 16; // Set the size to 16x16
-
     depthMap = new int* [size];
 
-    // Directly initializing each row with hardcoded values
     depthMap[0] = new int[size]     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[1] = new int[size]     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[2] = new int[size]     {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0};
@@ -42,8 +39,6 @@ void BattlefieldMap::initDepthMap()
 
 void BattlefieldMap::initDirectionMap()
 {
-    size = 16; // Set the size to 16x16
-
     directionMap = new Direction * [size];
 
     directionMap[0] = new Direction[size]   { F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
@@ -81,8 +76,6 @@ void BattlefieldMap::initSpriteMap()
         for (int x = 0; x < size; x++)
         {
             spriteMap[y][x] = grass_spritesheet.getSprite(directionMap[y][x]);
-            //KEEP THIS HERE, dont know why but without this the texture pointer fails
-            //and all textures appear white. dont touch
             spriteMap[y][x]->setTexture(grass_spritesheet.texture);
         }
     }
@@ -91,13 +84,11 @@ void BattlefieldMap::initSpriteMap()
 
 BattlefieldMap::~BattlefieldMap()
 {
-    //Cleanup maps
     for (int i = 0; i < size; i++) {
         delete[] depthMap[i];
         delete[] directionMap[i];
         delete[] spriteMap[i];
     }
-
     delete[] depthMap;
     delete[] directionMap;
     delete[] spriteMap;

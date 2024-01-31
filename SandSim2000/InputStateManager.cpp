@@ -1,7 +1,8 @@
-#include <SFML/Window/Keyboard.hpp>
 #include "InputStateManager.h"
 
 InputStateManager::InputStateManager() {}
+
+InputStateManager::~InputStateManager() {}
 
 InputStateManager& InputStateManager::getInstance() {
     static InputStateManager instance;
@@ -9,6 +10,7 @@ InputStateManager& InputStateManager::getInstance() {
 }
 
 void InputStateManager::updateInputState() {
+    state.isEscapePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
     state.isSpaceBarPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 }
 

@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 Camera::Camera()
-    : window(sf::VideoMode::getDesktopMode(), "Pan and Zoom", sf::Style::Fullscreen) {
+    : window(sf::VideoMode::getDesktopMode(), "The Great War", sf::Style::Fullscreen) {
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
     window.setMouseCursorGrabbed(true);
@@ -17,13 +17,21 @@ bool Camera::Update() {
         if (event.type == sf::Event::Closed) {
             return false;
         }
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            return false;
-        }
         Zoom(event);
     }
-    Pan(event);
+    const InputState& inputState = InputStateManager::getInstance().getInputState();
+
+    if (inputState.isEscapePressed) {
+        return false;
+    }
+
+    clickPan();
+    scrollPan();
+
+    return true;
 }
+
+
 
 void Camera::WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY) 
 {
@@ -37,53 +45,57 @@ void Camera::ScreenToWorld(int screenX, int screenY, float& outWorldX, float& ou
     outWorldY = ((float)screenY / scaleY) + offsetY;
 }
 
-void Camera::Pan(sf::Event& event) {
+void Camera::clickPan() {
     const int edgeThreshold = 150;
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     sf::Vector2u windowSize = window.getSize();
 
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Middle) {
-        mouseButtonPanning = true;
-        startPanX = mousePos.x;
-        startPanY = mousePos.y;
-    }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)) {
+        if (!mouseButtonPanning) {
+            mouseButtonPanning = true;
+            startPanX = mousePos.x;
+            startPanY = mousePos.y;
+        }
+        else {
+            offsetX -= (mousePos.x - startPanX) / scaleX;
+            offsetY -= (mousePos.y - startPanY) / scaleY;
 
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Middle) {
-        mouseButtonPanning = false;
-    }
-
-    if (mouseButtonPanning) {
-        offsetX -= (mousePos.x - startPanX) / scaleX;
-        offsetY -= (mousePos.y - startPanY) / scaleY;
-
-        startPanX = mousePos.x;
-        startPanY = mousePos.y;
-    }
-    else {
-        float panSpeedX = 0.0f;
-        float panSpeedY = 0.0f;
-
-        if (mousePos.x <= edgeThreshold)
-            panSpeedX = (edgeThreshold - mousePos.x) / (static_cast<float>(edgeThreshold) * scaleX);
-        else if (mousePos.x >= static_cast<int>(windowSize.x) - edgeThreshold)
-            panSpeedX = -(mousePos.x - (static_cast<int>(windowSize.x) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleX);
-
-        if (mousePos.y <= edgeThreshold)
-            panSpeedY = (edgeThreshold - mousePos.y) / (static_cast<float>(edgeThreshold) * scaleY);
-        else if (mousePos.y >= static_cast<int>(windowSize.y) - edgeThreshold)
-            panSpeedY = -(mousePos.y - (static_cast<int>(windowSize.y) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleY);
-
-        if (panSpeedX != 0.0f || panSpeedY != 0.0f) {
-            offsetX -= panSpeedX * 10;
-            offsetY -= panSpeedY * 10;
+            startPanX = mousePos.x;
+            startPanY = mousePos.y;
         }
     }
+    else {
+        mouseButtonPanning = false;
+    }
+}
 
-    //Clamp the offset so we can't pan off to infinity and beyond
-    /*if (offsetX > 12000) offsetX = 12000;
-    if (offsetX < -12000) offsetX = -12000;
-    if (offsetY > 10500) offsetY = 10500;
-    if (offsetY < -500) offsetY = -500;*/
+void Camera::scrollPan() {
+    const int edgeThreshold = 150;
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    sf::Vector2u windowSize = window.getSize();
+
+    float panSpeedX = 0.0f;
+    float panSpeedY = 0.0f;
+
+    if (mousePos.x <= edgeThreshold)
+        panSpeedX = (edgeThreshold - mousePos.x) / (static_cast<float>(edgeThreshold) * scaleX);
+    else if (mousePos.x >= static_cast<int>(windowSize.x) - edgeThreshold)
+        panSpeedX = -(mousePos.x - (static_cast<int>(windowSize.x) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleX);
+
+    if (mousePos.y <= edgeThreshold)
+        panSpeedY = (edgeThreshold - mousePos.y) / (static_cast<float>(edgeThreshold) * scaleY);
+    else if (mousePos.y >= static_cast<int>(windowSize.y) - edgeThreshold)
+        panSpeedY = -(mousePos.y - (static_cast<int>(windowSize.y) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleY);
+
+    if (panSpeedX != 0.0f || panSpeedY != 0.0f) {
+        offsetX -= panSpeedX * 10;
+        offsetY -= panSpeedY * 10;
+    }
+}
+
+void Camera::snapPan()
+{
+    //Once there units on the field, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
 }
 
 void Camera::Zoom(sf::Event& event) {
@@ -103,7 +115,6 @@ void Camera::Zoom(sf::Event& event) {
 
         bool scaleChanged = false;
 
-        //Clamp the zoom and prevent weird panning behaviour when zooming at these bounds
         if (scaleX > 2.0f) scaleX = 2.0f;
         else if (scaleX < 0.5f) scaleX = 0.5f;
         else scaleChanged = true;
@@ -118,12 +129,6 @@ void Camera::Zoom(sf::Event& event) {
 
             offsetX += worldXBeforeZoom - worldXAfterZoom;
             offsetY += worldYBeforeZoom - worldYAfterZoom;
-
-            //Clamp the offset so we can't pan off to infinity and beyond
-            /*if (offsetX > 12000) offsetX = 12000;
-            if (offsetX < -12000) offsetX = -12000;
-            if (offsetY > 10500) offsetY = 10500;
-            if (offsetY < -500) offsetY = -500;*/
         }
     }
 }

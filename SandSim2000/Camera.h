@@ -1,10 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include <SFML/Window/Mouse.hpp>  
 #include "GameStateManager.h"
 #include "GridGenerator.h"
 #include <iostream>
 #include <set>
+#include "InputStateManager.h"
+#include "InputState.h"
 
 class Camera {
 public:
@@ -16,8 +18,8 @@ public:
     void WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY);
     void ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY);
 
-    sf::RenderWindow window; 
-    
+    sf::RenderWindow window;
+
     float offsetX = 0.f;
     float offsetY = 0.f;
 
@@ -38,6 +40,8 @@ private:
     int screenX = 0.f;
     int screenY = 0.f;
 
-    void Pan(sf::Event& event);
+    void clickPan();
+    void scrollPan();
+    void snapPan();
     void Zoom(sf::Event& event);
 };
