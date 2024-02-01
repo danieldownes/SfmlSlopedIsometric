@@ -40,8 +40,8 @@ private:
     int screenX = 0.f;
     int screenY = 0.f;
 
-    void clickPan();
-    void scrollPan();
-    void snapPan();
+    void clickPan(const InputState& inputState);
+    void scrollPan(const InputState& inputState);
+    void snapPan(const InputState& inputState);
     void Zoom(sf::Event& event);
 };

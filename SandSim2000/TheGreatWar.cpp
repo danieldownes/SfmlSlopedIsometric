@@ -10,7 +10,7 @@ int main() {
     Scene scene;
 
     while (camera.window.isOpen()) {
-        InputStateManager::getInstance().updateInputState();
+        InputStateManager::getInstance().updateInputState(camera.window);
 
         sf::Event event;
         while (camera.window.pollEvent(event)) {

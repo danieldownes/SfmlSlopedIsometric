@@ -25,8 +25,9 @@ bool Camera::Update() {
         return false;
     }
 
-    clickPan();
-    scrollPan();
+    clickPan(inputState);
+    scrollPan(inputState);
+    snapPan(inputState);
 
     return true;
 }
@@ -45,12 +46,11 @@ void Camera::ScreenToWorld(int screenX, int screenY, float& outWorldX, float& ou
     outWorldY = ((float)screenY / scaleY) + offsetY;
 }
 
-void Camera::clickPan() {
-    const int edgeThreshold = 150;
-    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+void Camera::clickPan(const InputState& inputState) {
+    sf::Vector2i mousePos = inputState.mousePosition;
     sf::Vector2u windowSize = window.getSize();
 
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)) {
+    if (inputState.isMiddleMouseButtonPressed) {
         if (!mouseButtonPanning) {
             mouseButtonPanning = true;
             startPanX = mousePos.x;
@@ -69,9 +69,9 @@ void Camera::clickPan() {
     }
 }
 
-void Camera::scrollPan() {
+void Camera::scrollPan(const InputState& inputState) {
     const int edgeThreshold = 150;
-    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    sf::Vector2i mousePos = inputState.mousePosition;
     sf::Vector2u windowSize = window.getSize();
 
     float panSpeedX = 0.0f;
@@ -93,9 +93,10 @@ void Camera::scrollPan() {
     }
 }
 
-void Camera::snapPan()
+
+void Camera::snapPan(const InputState& inputState)
 {
-    //Once there units on the field, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
+    //Once there are scenery and units on the battlefield, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
 }
 
 void Camera::Zoom(sf::Event& event) {
