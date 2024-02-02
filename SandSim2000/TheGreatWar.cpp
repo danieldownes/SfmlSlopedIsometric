@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "InputStateManager.h"
 
+//Test
+
 int main() {
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
