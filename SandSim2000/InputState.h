@@ -22,5 +22,4 @@ struct InputState
     bool isLeftMouseButtonPressed;
     bool isRightMouseButtonPressed;
     bool isMiddleMouseButtonPressed;
-
 };

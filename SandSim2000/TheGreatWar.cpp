@@ -17,6 +17,9 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 camera.window.close();
             }
+            else if (event.type == sf::Event::MouseWheelScrolled) {
+                camera.Zoom(event);
+            }
         }
         if (!camera.Update()) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());

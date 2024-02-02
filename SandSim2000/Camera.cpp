@@ -13,12 +13,7 @@ Camera::Camera()
 
 bool Camera::Update() {
     sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            return false;
-        }
-        Zoom(event);
-    }
+
     const InputState& inputState = InputStateManager::getInstance().getInputState();
 
     if (inputState.isEscapePressed) {
@@ -32,7 +27,40 @@ bool Camera::Update() {
     return true;
 }
 
+void Camera::Zoom(sf::Event& event) {
+    if (event.type == sf::Event::MouseWheelScrolled) {
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        float worldXBeforeZoom, worldYBeforeZoom;
+        ScreenToWorld(mousePos.x, mousePos.y, worldXBeforeZoom, worldYBeforeZoom);
 
+        if (event.mouseWheelScroll.delta > 0) {
+            scaleX *= 1.05f;
+            scaleY *= 1.05f;
+        }
+        else if (event.mouseWheelScroll.delta < 0) {
+            scaleX *= 0.95f;
+            scaleY *= 0.95f;
+        }
+
+        bool scaleChanged = false;
+
+        if (scaleX > 2.0f) scaleX = 2.0f;
+        else if (scaleX < 0.5f) scaleX = 0.5f;
+        else scaleChanged = true;
+
+        if (scaleY > 2.0f) scaleY = 2.0f;
+        else if (scaleY < 0.5f) scaleY = 0.5f;
+        else scaleChanged = true;
+
+        if (scaleChanged) {
+            float worldXAfterZoom, worldYAfterZoom;
+            ScreenToWorld(mousePos.x, mousePos.y, worldXAfterZoom, worldYAfterZoom);
+
+            offsetX += worldXBeforeZoom - worldXAfterZoom;
+            offsetY += worldYBeforeZoom - worldYAfterZoom;
+        }
+    }
+}
 
 void Camera::WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY) 
 {
@@ -97,41 +125,6 @@ void Camera::scrollPan(const InputState& inputState) {
 void Camera::snapPan(const InputState& inputState)
 {
     //Once there are scenery and units on the battlefield, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
-}
-
-void Camera::Zoom(sf::Event& event) {
-    if (event.type == sf::Event::MouseWheelScrolled) {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        float worldXBeforeZoom, worldYBeforeZoom;
-        ScreenToWorld(mousePos.x, mousePos.y, worldXBeforeZoom, worldYBeforeZoom);
-
-        if (event.mouseWheelScroll.delta > 0) {
-            scaleX *= 1.05f;
-            scaleY *= 1.05f;
-        }
-        else if (event.mouseWheelScroll.delta < 0) {
-            scaleX *= 0.95f;
-            scaleY *= 0.95f;
-        }
-
-        bool scaleChanged = false;
-
-        if (scaleX > 2.0f) scaleX = 2.0f;
-        else if (scaleX < 0.5f) scaleX = 0.5f;
-        else scaleChanged = true;
-
-        if (scaleY > 2.0f) scaleY = 2.0f;
-        else if (scaleY < 0.5f) scaleY = 0.5f;
-        else scaleChanged = true;
-
-        if (scaleChanged) {
-            float worldXAfterZoom, worldYAfterZoom;
-            ScreenToWorld(mousePos.x, mousePos.y, worldXAfterZoom, worldYAfterZoom);
-
-            offsetX += worldXBeforeZoom - worldXAfterZoom;
-            offsetY += worldYBeforeZoom - worldYAfterZoom;
-        }
-    }
 }
 
 void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {

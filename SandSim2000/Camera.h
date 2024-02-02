@@ -18,6 +18,9 @@ public:
     void WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY);
     void ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY);
 
+    void Zoom(sf::Event& event);
+
+
     sf::RenderWindow window;
 
     float offsetX = 0.f;
@@ -43,5 +46,4 @@ private:
     void clickPan(const InputState& inputState);
     void scrollPan(const InputState& inputState);
     void snapPan(const InputState& inputState);
-    void Zoom(sf::Event& event);
 };
