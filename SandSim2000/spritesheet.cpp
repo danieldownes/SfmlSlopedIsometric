@@ -5,6 +5,7 @@
 spritesheet::spritesheet(const char* filepath, unsigned int columns, unsigned int rows)
 {
     texture.loadFromFile(filepath);
+    texture.setSmooth(true);
 
     cell_width = texture.getSize().x / columns; cell_height = texture.getSize().y / rows;
     sprite_dimensions = sf::Vector2u({ columns, rows });
