@@ -1,32 +1,29 @@
 #pragma once
-#include <string>
-#include <utility>
 
 class Agent {
-private:
-    std::string unit;
-    std::pair<float, float> position;
+protected:
+    int posX, posY;
     int health;
-    int morale;
+    int armour;
+    int speed;
+    int ballisticSkill;
 
 public:
-    Agent();
+    Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill);
     ~Agent();
 
-    void setUnit(const std::string& agentUnit);
-    void setPosition(const std::pair<float, float>& agentPosition);
-    void setStance(const std::string& agentStance);
-    void setHealth(int agentHealth);
-    void setMorale(int agentMorale);
-    void setPinned(bool agentPinned);
-    void setAmmo(int agentAmmo);
+    void move(int deltaX, int deltaY);
+    void takeDamage(int damage);
 
-
-    std::string getUnit() const;
-    std::pair<float, float> getPosition() const;
-    std::string getStance() const;
+    int getPosX() const;
+    int getPosY() const;
     int getHealth() const;
-    int getMorale() const;
-    bool isPinned() const;
-    int getAmmo() const;
+    int getArmour() const;
+    int getSpeed() const;
+    int getBallisticSkill() const;
+
+    void setHealth(int newHealth);
+    void setArmour(int newArmour);
+    void setSpeed(int newSpeed);
+    void setBallisticSkill(int newBallisticSkill);
 };

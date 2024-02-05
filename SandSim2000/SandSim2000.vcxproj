@@ -142,25 +142,20 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
-    <ClCompile Include="Application.cpp" />
     <ClCompile Include="AssetCRUDManager.cpp" />
     <ClCompile Include="BattlefieldMap.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="FieldAgents.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GridGenerator.cpp" />
-    <ClCompile Include="InfantryAndCavalryAgent.cpp" />
     <ClCompile Include="InputStateManager.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="spritesheet.cpp" />
+    <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
-    <ClCompile Include="VehicleAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="AnimationManager.h" />
-    <ClInclude Include="Application.h" />
     <ClInclude Include="AssetCRUDManager.h" />
     <ClInclude Include="BattlefieldCell.h" />
     <ClInclude Include="BattlefieldMap.h" />
@@ -168,19 +163,13 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GridGenerator.h" />
-    <ClInclude Include="InfantryAndCavalryAgent.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="InputStateManager.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="QuadTree.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="spritesheet.h" />
+    <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="TerrainTile.h" />
-    <ClInclude Include="VehicleAgent.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="TheGreatWar.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\thunder-skull_38043.ico" />

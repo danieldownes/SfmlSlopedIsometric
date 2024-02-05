@@ -1,12 +1,11 @@
 #include "BattlefieldMap.h"
-
 #include <cmath>
 #include <iostream>
 
 void BattlefieldMap::initMap(unsigned int mapSize)
 {
     size = static_cast<int>(mapSize);
-    grass_spritesheet = spritesheet("../resources/images/Terrain/grass/grass_spritesheet.png", 8, 2);
+    grass_spritesheet = SpriteManager("../resources/images/Terrain/grass/grass_spritesheet.png", 8, 2);
         
     initDepthMap();
     initDirectionMap();

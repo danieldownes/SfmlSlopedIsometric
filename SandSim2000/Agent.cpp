@@ -1,38 +1,64 @@
 #include "Agent.h"
 
-Agent::Agent()
-    : unit(""), position(0.0f, 0.0f), health(0), morale(0) {}
+Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill)
+    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill) {
+}
+
 
 Agent::~Agent() {}
 
-std::string Agent::getUnit() const {
-    return unit;
+
+void Agent::move(int deltaX, int deltaY) {
+    posX += deltaX;
+    posY += deltaY;
 }
 
-void Agent::setUnit(const std::string& newUnit) {
-    unit = newUnit;
+void Agent::takeDamage(int damage) {
+    int damageTaken = damage - armour;
+    if (damageTaken > 0) {
+        health -= damageTaken;
+        if (health < 0) {
+            health = 0;
+        }
+    }
 }
 
-std::pair<float, float> Agent::getPosition() const {
-    return position;
+int Agent::getPosX() const {
+    return posX;
 }
 
-void Agent::setPosition(const std::pair<float, float>& newPosition) {
-    position = newPosition;
+int Agent::getPosY() const {
+    return posY;
 }
 
 int Agent::getHealth() const {
     return health;
 }
 
+int Agent::getArmour() const {
+    return armour;
+}
+
+int Agent::getSpeed() const {
+    return speed;
+}
+
+int Agent::getBallisticSkill() const {
+    return ballisticSkill;
+}
+
 void Agent::setHealth(int newHealth) {
     health = newHealth;
 }
 
-int Agent::getMorale() const {
-    return morale;
+void Agent::setArmour(int newArmour) {
+    armour = newArmour;
 }
 
-void Agent::setMorale(int newMorale) {
-    morale = newMorale;
+void Agent::setSpeed(int newSpeed) {
+    speed = newSpeed;
+}
+
+void Agent::setBallisticSkill(int newBallisticSkill) {
+    ballisticSkill = newBallisticSkill;
 }

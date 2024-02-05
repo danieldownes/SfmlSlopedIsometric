@@ -1,13 +1,10 @@
 #pragma once
-
 #include <vector>
 #include <list>
 #include <string>
 #include <iostream>
-
 #include "SFML/Graphics.hpp"
-
-#include "spritesheet.h"
+#include "SpriteManager.h"
 
 enum Direction
 {
@@ -36,7 +33,7 @@ private:
 
 	std::list<std::pair<sf::Texture, std::string>> grassTextures;
 
-	spritesheet grass_spritesheet;
+	SpriteManager grass_spritesheet;
 
 	void initDepthMap();
 	void initDirectionMap();

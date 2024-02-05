@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "Agent.h"
 #include "TerrainTile.h"
 
 #include "SFML/Graphics.hpp"

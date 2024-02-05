@@ -1,8 +1,7 @@
-#include "spritesheet.h"
-
+#include "SpriteManager.h"
 #include <iostream>
 
-spritesheet::spritesheet(const char* filepath, unsigned int columns, unsigned int rows)
+SpriteManager::SpriteManager(const char* filepath, unsigned int columns, unsigned int rows)
 {
     texture.loadFromFile(filepath);
     texture.setSmooth(true);
@@ -22,13 +21,13 @@ spritesheet::spritesheet(const char* filepath, unsigned int columns, unsigned in
         }
     }
 }
-sf::Sprite* spritesheet::getSprite(unsigned int index)
+sf::Sprite* SpriteManager::getSprite(unsigned int index)
 {
     if (index < sprites.size())
         return &sprites[index];
     std::cerr << "[INVALID SPRITE POSITION]" << std::endl;
 }
-sf::Sprite* spritesheet::getSprite(sf::Vector2u position)
+sf::Sprite* SpriteManager::getSprite(sf::Vector2u position)
 {
     unsigned int index = position.y * sprite_dimensions.y + position.x;
     return getSprite(index);
