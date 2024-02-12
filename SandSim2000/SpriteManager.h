@@ -15,5 +15,4 @@ private:
     sf::Vector2u sprite_dimensions;
 
     std::vector<sf::Sprite> sprites;
-
 };
