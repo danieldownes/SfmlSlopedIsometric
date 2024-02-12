@@ -7,12 +7,6 @@ Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArm
 
 Agent::~Agent() {}
 
-
-void Agent::move(int deltaX, int deltaY) {
-    posX += deltaX;
-    posY += deltaY;
-}
-
 void Agent::takeDamage(int damage) {
     int damageTaken = damage - armour;
     if (damageTaken > 0) {

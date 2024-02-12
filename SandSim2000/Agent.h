@@ -12,7 +12,6 @@ public:
     Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill);
     ~Agent();
 
-    void move(int deltaX, int deltaY);
     void takeDamage(int damage);
 
     int getPosX() const;
