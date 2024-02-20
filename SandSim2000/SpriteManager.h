@@ -1,18 +1,21 @@
 #pragma once
 #include <vector>
 #include "SFML/Graphics.hpp"
+#include "SpriteSheet.h"
+#include <list>
 
 class SpriteManager
 {
 public:
-    SpriteManager(const char* filepath, unsigned int columns, unsigned int rows);
-    SpriteManager() {}
-    sf::Sprite* getSprite(unsigned int index);
-    sf::Sprite* getSprite(sf::Vector2u position);
-    sf::Texture texture;
-private:
-    int cell_height; int cell_width;
-    sf::Vector2u sprite_dimensions;
+    SpriteManager(const char* filePath);
+    SpriteManager() {};
+    std::list<std::pair<std::string, SpriteSheet>> spriteSheetList;
 
+<<<<<<< Updated upstream
     std::vector<sf::Sprite> sprites;
+=======
+    sf::Sprite* GetSprite(std::string spriteSheetID, int spriteIndex);
+
+    SpriteSheet& GetSpriteSheet(std::string spriteSheetID);
+>>>>>>> Stashed changes
 };

@@ -1,34 +1,35 @@
 #include "SpriteManager.h"
 #include <iostream>
 
-SpriteManager::SpriteManager(const char* filepath, unsigned int columns, unsigned int rows)
-{
-    texture.loadFromFile(filepath);
-    texture.setSmooth(true);
 
-    cell_width = texture.getSize().x / columns; cell_height = texture.getSize().y / rows;
-    sprite_dimensions = sf::Vector2u({ columns, rows });
-    for (int y = 0; y < rows; y++)
-    {
-        for (int x = 0; x < columns; x++)
-        {
-            sf::IntRect texture_rect = { x * cell_width, y * cell_height, cell_width, cell_height };
-
-            sf::Sprite sprite;
-            sprite.setTexture(texture); sprite.setTextureRect(texture_rect);
-
-            sprites.push_back(sprite);
-        }
-    }
-}
-sf::Sprite* SpriteManager::getSprite(unsigned int index)
+SpriteManager::SpriteManager(const char* filePath)
 {
-    if (index < sprites.size())
-        return &sprites[index];
-    std::cerr << "[INVALID SPRITE POSITION]" << std::endl;
+	spriteSheetList.push_back(std::make_pair("RedBaron", SpriteSheet(filePath, 3, 3)));
 }
-sf::Sprite* SpriteManager::getSprite(sf::Vector2u position)
+
+//gets the sprite from the spritesheet
+sf::Sprite* SpriteManager::GetSprite(std::string spriteSheetID, int spriteIndex)
 {
-    unsigned int index = position.y * sprite_dimensions.y + position.x;
-    return getSprite(index);
+	for (auto it = spriteSheetList.begin(); it != spriteSheetList.end(); ++it) 
+	{
+		if (it->first == spriteSheetID) 
+		{
+			return it->second.getSprite(spriteIndex);
+		}
+	}
+	std::cerr << "[INVALID SPRITE NOT IN LIST]" << std::endl;
 }
+
+//gets the spritesheet
+SpriteSheet& SpriteManager::GetSpriteSheet(std::string spriteSheetID)
+{
+	for (auto it = spriteSheetList.begin(); it != spriteSheetList.end(); ++it)
+	{
+		if (it->first == spriteSheetID)
+		{
+			return it->second;
+		}
+	}
+	std::cerr << "[INVALID SPRITE NOT IN LIST]" << std::endl;
+}
+
