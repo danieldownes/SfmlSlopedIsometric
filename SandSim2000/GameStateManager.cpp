@@ -59,11 +59,6 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
 
 BattlefieldCell GameStateManager::generateCell(int x, int y)
 {
-    TerrainTile newTerr;
-    newTerr.depth = battlefieldMap.getHeightAtPosition({ x, y});
-    newTerr.facing = 0;
-    newTerr.terrain = "default";
-
     BattlefieldCell newCell;
     newCell.x = x;
     newCell.y = y;
