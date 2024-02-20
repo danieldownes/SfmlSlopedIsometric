@@ -25,7 +25,24 @@ int main() {
             else if (event.type == sf::Event::MouseWheelScrolled) {
                 camera.Zoom(event);
             }
+
+            else if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    sf::Vector2i mousepos = InputStateManager::getInstance().getInputState().mousePosition;
+
+                    float x; float y;
+
+                    camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
+
+                    gameStateManager.placeUnit(sf::Vector2f(x, y));
+                }
+            }
         }
+
+
+
         if (!camera.Update()) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());
         camera.Draw(scene.gameScene);

@@ -31,8 +31,6 @@ private:
 	Direction** directionMap = nullptr;
 	sf::Sprite*** spriteMap = nullptr;
 
-	std::list<std::pair<sf::Texture, std::string>> grassTextures;
-
 	SpriteSheet grass_spritesheet;
 
 	void initDepthMap();
