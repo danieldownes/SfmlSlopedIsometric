@@ -7,15 +7,17 @@
 class SpriteManager
 {
 public:
-    SpriteManager(const char* filePath);
-    SpriteManager() {};
-    std::list<std::pair<std::string, SpriteSheet>> spriteSheetList;
+    SpriteManager();
 
-<<<<<<< Updated upstream
-    std::vector<sf::Sprite> sprites;
-=======
     sf::Sprite* GetSprite(std::string spriteSheetID, int spriteIndex);
-
     SpriteSheet& GetSpriteSheet(std::string spriteSheetID);
->>>>>>> Stashed changes
+
+    static SpriteManager* GetInstance();
+    void operator=(const SpriteManager&) = delete;
+
+
+private:
+    static SpriteManager* _instance;
+
+    std::list<std::pair<std::string, SpriteSheet>> spriteSheetList;
 };

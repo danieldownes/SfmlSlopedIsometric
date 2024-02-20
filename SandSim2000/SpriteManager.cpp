@@ -1,10 +1,17 @@
 #include "SpriteManager.h"
 #include <iostream>
 
+SpriteManager* SpriteManager::_instance = nullptr;;
 
-SpriteManager::SpriteManager(const char* filePath)
+SpriteManager::SpriteManager()
 {
-	spriteSheetList.push_back(std::make_pair("RedBaron", SpriteSheet(filePath, 3, 3)));
+	if (_instance == nullptr)
+		_instance = this;
+	else
+		std::cout << "2 instances of SpriteManager have been created" << std::endl;
+
+	spriteSheetList.push_back(std::make_pair("RedBaron", SpriteSheet("../resources/images/Flyers/The_Red_Baron/RedBaron.png", 3, 3)));
+	spriteSheetList.push_back(std::make_pair("GrassTerrain", SpriteSheet("../resources/images/Terrain/grass/grass_spritesheet.png", 8, 2)));
 }
 
 //gets the sprite from the spritesheet
@@ -31,5 +38,12 @@ SpriteSheet& SpriteManager::GetSpriteSheet(std::string spriteSheetID)
 		}
 	}
 	std::cerr << "[INVALID SPRITE NOT IN LIST]" << std::endl;
+}
+
+SpriteManager* SpriteManager::GetInstance()
+{
+	if (_instance == nullptr)
+		_instance = new SpriteManager();
+	return _instance;
 }
 

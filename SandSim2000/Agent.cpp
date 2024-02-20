@@ -1,7 +1,7 @@
 #include "Agent.h"
 
 Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType)
-    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), unitType(basicUnitType), agentSprites("RedBaron") {
+    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), unitType(basicUnitType) {
 }
 
 
@@ -60,7 +60,7 @@ void Agent::setBallisticSkill(int newBallisticSkill) {
 //gets a new sprite to be used in the program
 sf::Sprite* Agent::getNewSprite(int spriteIndex)
 {
-    sf::Sprite* selectedSprite = agentSprites.GetSprite("RedBaron", 0);
+    sf::Sprite* selectedSprite = SpriteManager::GetInstance()->GetSprite("RedBaron", 0);
     return selectedSprite;
 }
 

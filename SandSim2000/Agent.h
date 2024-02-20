@@ -9,8 +9,8 @@ protected:
     int armour;
     int speed;
     int ballisticSkill;
+
     sf::String unitType;
-    SpriteManager agentSprites;
     sf::Sprite* currentSprite;
     
 

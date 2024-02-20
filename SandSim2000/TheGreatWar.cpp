@@ -1,10 +1,13 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "InputStateManager.h"
+#include "SpriteManager.h"
 
 //Test
 
 int main() {
+    SpriteManager sprites = SpriteManager();
+
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
 
