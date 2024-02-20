@@ -2,6 +2,7 @@
 
 Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType)
     : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), unitType(basicUnitType) {
+    setAgentSprite(SpriteManager::GetInstance()->GetSprite("RedBaron", 0));
 }
 
 
