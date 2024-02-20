@@ -36,7 +36,7 @@ int main() {
 
                     camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
 
-                    gameStateManager.placeUnit(sf::Vector2f(x, y));
+                    gameStateManager.placeUnit(sf::Vector2f(x, y), &scene.gameScene);
                 }
             }
         }
