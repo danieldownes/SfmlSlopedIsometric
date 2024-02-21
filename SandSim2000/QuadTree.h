@@ -12,27 +12,20 @@ struct QuadTree {
     std::array<QuadTree*, 4> children;
 
 
-    virtual std::vector<BattlefieldCell>::iterator insert(BattlefieldCell* cell, int multiplier)
+    virtual void insert(Agent* agent, int multiplier)
     {
         std::cout << quadRect.left << ":" << quadRect.top << ":" << quadRect.width << ":" << quadRect.height << std::endl;
         for (int i = 0; i < 4; i++)
         {
             if (children[i] != nullptr)
             {
-                if (children[i]->quadRect.contains(sf::Vector2i(cell->x * multiplier, cell->y * multiplier)))
+                if (children[i]->quadRect.contains(sf::Vector2i(agent->getPosX() * multiplier, agent->getPosY() * multiplier)))
                 {
-                    return children[i]->insert(cell, multiplier);
+                    children[i]->insert(agent, multiplier);
+                    return;
                 }
             }
         }
-        std::vector<BattlefieldCell>::iterator fail;
-        return fail;
-    }
-
-    virtual std::vector<BattlefieldCell>::iterator insertOverride(BattlefieldCell* cell, int multiplier)
-    {
-        std::vector<BattlefieldCell>::iterator fail;
-        return fail;
     }
 
 
@@ -48,30 +41,13 @@ struct QuadTree {
 struct QuadTreeLeaf : public QuadTree {
     std::vector<BattlefieldCell>::iterator iter;
 
-    std::vector<BattlefieldCell>::iterator insert(BattlefieldCell* cell, int multiplier) override
+    void insert(Agent* agent, int multiplier) override
     {
         std::cout << "Child leaf" << std::endl;
-        
 
-        for (int i = 0; i < 4; ++i) {
-            sf::IntRect childRect = calculateChildRect(i);
-            children[i] = new QuadTreeLeaf(childRect, depth + 1, iter);
-        }
+        iter->Objects.push_back(*agent);
 
-        for (int i = 0; i < 4; ++i) {
-            if (children[i]->quadRect.contains(sf::Vector2i(cell->x * multiplier, cell->y * multiplier))) {
-                return children[i]->insertOverride(cell, multiplier);
-            }
-        }
-
-        std::vector<BattlefieldCell>::iterator fail;
-        return fail;
-    }
-
-    std::vector<BattlefieldCell>::iterator insertOverride(BattlefieldCell* cell, int multiplier) override
-    {
-        *iter = *cell;
-        return iter;
+        std::cout << iter->Objects.size() << std::endl;
     }
 
     QuadTreeLeaf(const sf::IntRect& rect, const unsigned int& depth, std::vector<BattlefieldCell>::iterator& _iter)

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-#include "TerrainTile.h"
+
+#include "Agent.h"
 
 #include "SFML/Graphics.hpp"
 
@@ -13,7 +14,8 @@ public:
     // which would be the terrain tile, or more, which could be scenery, ground unit, flyer unit, area effect, 
     // artillery shell etc. This will allow for many objects to be stored in 1 battlefield cell. Don't store the sprite 
     // directly in the battlefield cell, the Scene class will interface with the SpriteManager to get sprites.
-
+    
+    std::vector<Agent> Objects = std::vector<Agent>();
     sf::Sprite* sprite;
     int YOffset;
 

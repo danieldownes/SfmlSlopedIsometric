@@ -91,10 +91,5 @@ void GameStateManager::placeUnit(sf::Vector2f mouseWorldPosition, std::set<std::
     unit.getSprite()->setTexture(SpriteManager::GetInstance()->GetSpriteSheet("RedBaron").texture);
     state.Units.push_back(unit);
 
-    BattlefieldCell cell;
-    cell.x = intEuclidianPos.x;  cell.y = intEuclidianPos.y;
-    cell.sprite = unit.getSprite();
-    cell.YOffset = 0;
-
-    state.quadTree->insert(&cell, 100);
+    state.quadTree->insert(&unit, 100);
 }

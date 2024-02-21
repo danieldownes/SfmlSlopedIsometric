@@ -14,6 +14,7 @@ public:
 
     bool Update();
     void Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene);
+    void Draw(std::vector<sf::Sprite> sprites);
 
     void WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY);
     void ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY);

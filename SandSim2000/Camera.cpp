@@ -150,7 +150,42 @@ void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
         sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
         
         window.draw(sprite);
+
+        if(cell.Objects.size() != 0)
+        {
+            for (int i = 0; i < cell.Objects.size(); i++)
+            {
+                sprite = *cell.Objects[i].getSprite();
+
+                int screenX, screenY;
+                sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
+                WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y - cell.YOffset, screenX, screenY);
+
+                sprite.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
+                sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+
+                window.draw(sprite);
+            }
+        }
     }
 
+    window.display();
+}
+
+void Camera::Draw(std::vector<sf::Sprite> sprites)
+{
+    window.clear(sf::Color::Black);
+    int centerOffsetX = window.getSize().x / 2;
+
+    for (sf::Sprite s : sprites)
+    {
+        int screenX, screenY;
+        WorldToScreen(s.getPosition().x + centerOffsetX, s.getPosition().y, screenX, screenY);
+
+        s.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
+        s.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+
+        window.draw(s);
+    }
     window.display();
 }

@@ -54,3 +54,35 @@ void Scene::buildGameScene(take iterators from "findViewportIterators")
 	// Those sprite textures are inserted into the gameScene which the Camera::Draw() method will draw. 
 }
 */
+
+std::vector<sf::Sprite> Scene::buildGameScene()
+{
+	std::vector<sf::Sprite> sprites = std::vector<sf::Sprite>();
+	GridGenerator gridGenerator;
+
+	for (auto iter = gameScene.begin(); iter != gameScene.end(); iter++)
+	{
+		BattlefieldCell currentCell = **iter;
+		sf::Sprite sprite = *currentCell.sprite;
+
+		sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.x, currentCell.y));
+		sprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
+
+		sprites.push_back(sprite);
+
+		if (currentCell.Objects.size() != 0)
+		{
+			for (int i = 0; i < currentCell.Objects.size(); i++)
+			{
+				sf::Sprite _sprite = *currentCell.Objects[i].getSprite();
+
+				sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.Objects[i].getPosX(), currentCell.Objects[i].getPosY()));
+				_sprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
+
+				sprites.push_back(_sprite);
+			}
+		}
+	}
+	std::cout << sprites.size() << std::endl;
+	return sprites;
+}
