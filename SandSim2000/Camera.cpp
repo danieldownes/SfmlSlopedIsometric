@@ -127,6 +127,10 @@ void Camera::snapPan(const InputState& inputState)
     //Once there are scenery and units on the battlefield, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
 }
 
+// Alpha Team Suggestions: Currently the sprites are actually being handled here, that was fine for previous 
+// iterations but now needs refactoring. Remove the sprite functionality from this Draw() method and place it
+// in the Scene class. The Draw() method should only handle drawing what it finds in the gameScene.
+
 void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
     window.clear(sf::Color::Black);
 

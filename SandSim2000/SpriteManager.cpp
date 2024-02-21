@@ -3,6 +3,10 @@
 
 SpriteManager* SpriteManager::_instance = nullptr;;
 
+// Alpha Team Suggestions: Only a small point, please refactor the "key" name identical to the name of the 
+// sprite png file and the unitType. This will allow a smooth consistancy between the names of sprites, agents 
+// and their keys.
+
 SpriteManager::SpriteManager()
 {
 	if (_instance == nullptr)

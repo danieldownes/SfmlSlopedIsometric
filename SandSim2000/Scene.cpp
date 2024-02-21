@@ -34,3 +34,23 @@ void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gr
 			findViewportIterators(child, cam, gridGenerator, viewbounds);
 	}
 }
+
+
+// Alpha Team Suggestions: An additional method should be added here that checks the objects within 
+// the viewPort, gets their sprite using the SpriteManager and inserts them into the game scene.
+// Right now the Camera::Draw() method bypasses the SpriteManager and gets terrain sprites directly.
+// That will need refactored so that it only draws the sprites it receives from the Scene::gameScene property, 
+// not get and draw like it currently does. 
+// 
+// Some boilerplate pseudo code to accomplish this below:
+
+
+/*
+void Scene::buildGameScene(take iterators from "findViewportIterators")
+{
+	// Build game scene based on the objects who's interators are covered by the viewport.
+	// Pass Agent::unitType property to a new method in the SpriteManager which selects the correct 
+	// spritesheet based on the unitType value.
+	// Those sprite textures are inserted into the gameScene which the Camera::Draw() method will draw. 
+}
+*/
