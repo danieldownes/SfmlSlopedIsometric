@@ -127,51 +127,6 @@ void Camera::snapPan(const InputState& inputState)
     //Once there are scenery and units on the battlefield, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
 }
 
-// Alpha Team Suggestions: Currently the sprites are actually being handled here, that was fine for previous 
-// iterations but now needs refactoring. Remove the sprite functionality from this Draw() method and place it
-// in the Scene class. The Draw() method should only handle drawing what it finds in the gameScene.
-
-void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
-    window.clear(sf::Color::Black);
-
-    GridGenerator gridGenerator;
-    int centerOffsetX = window.getSize().x / 2;
-
-    for (auto iter = gameScene.begin(); iter != gameScene.end(); iter++) {
-        BattlefieldCell cell = **iter;
-
-        sf::Sprite sprite = *cell.sprite;
-
-        int screenX, screenY;
-        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
-        WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y - cell.YOffset, screenX, screenY);
-        
-        sprite.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
-        sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
-        
-        window.draw(sprite);
-
-        if(cell.Objects.size() != 0)
-        {
-            for (int i = 0; i < cell.Objects.size(); i++)
-            {
-                sprite = *cell.Objects[i].getSprite();
-
-                int screenX, screenY;
-                sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
-                WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y - cell.YOffset, screenX, screenY);
-
-                sprite.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
-                sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
-
-                window.draw(sprite);
-            }
-        }
-    }
-
-    window.display();
-}
-
 void Camera::Draw(std::vector<sf::Sprite> sprites)
 {
     window.clear(sf::Color::Black);

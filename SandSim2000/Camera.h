@@ -13,7 +13,6 @@ public:
     Camera();
 
     bool Update();
-    void Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene);
     void Draw(std::vector<sf::Sprite> sprites);
 
     void WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY);
