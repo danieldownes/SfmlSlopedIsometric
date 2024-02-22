@@ -14,7 +14,6 @@ SpriteManager::SpriteManager()
 	spriteSheetList.push_back(std::make_pair("GrassTerrain", SpriteSheet("../resources/images/Terrain/grass/grass_spritesheet.png", 8, 2)));
 }
 
-//gets the sprite from the spritesheet
 sf::Sprite* SpriteManager::GetSprite(std::string spriteSheetID, int spriteIndex)
 {
 	for (auto it = spriteSheetList.begin(); it != spriteSheetList.end(); ++it) 
@@ -27,7 +26,6 @@ sf::Sprite* SpriteManager::GetSprite(std::string spriteSheetID, int spriteIndex)
 	std::cerr << "[INVALID SPRITE NOT IN LIST]" << std::endl;
 }
 
-//gets the spritesheet
 SpriteSheet& SpriteManager::GetSpriteSheet(std::string spriteSheetID)
 {
 	for (auto it = spriteSheetList.begin(); it != spriteSheetList.end(); ++it)
