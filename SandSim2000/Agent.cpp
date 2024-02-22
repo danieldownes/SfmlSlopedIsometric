@@ -1,9 +1,5 @@
 #include "Agent.h"
 
-// Alpha Team Suggestions: the Agent sprite is still stored inside the Agent class and therefore the BattlefieldCell
-// and BattlefieldVector. This is not correct. Please remove the sprite from the Agent, go to the Scene for 
-// the next set of instructions. 
-
 Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType)
     : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), unitType(basicUnitType) {
 }

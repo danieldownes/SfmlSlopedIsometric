@@ -43,12 +43,12 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 	for (auto iter = gameScene.begin(); iter != gameScene.end(); iter++)
 	{
 		BattlefieldCell currentCell = **iter;
-		sf::Sprite sprite = *currentCell.terrainSprite;
+		sf::Sprite terrainSprite = *currentCell.terrainSprite;
 
 		sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.x, currentCell.y));
-		sprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
+		terrainSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 
-		sprites.push_back(sprite);
+		sprites.push_back(terrainSprite);
 
 		if (currentCell.Objects.size() != 0)
 		{
@@ -57,14 +57,14 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 				std::string spriteString = currentCell.Objects[i].getSpriteString();
 				int spriteIndex = currentCell.Objects[i].getSpriteIndex();
 
-				sf::Sprite _sprite = *SpriteManager::GetInstance()->GetSprite(spriteString, spriteIndex);
-				_sprite.setTexture(SpriteManager::GetInstance()->GetSpriteSheet(spriteString).texture);
+				sf::Sprite objectSprite = *SpriteManager::GetInstance()->GetSprite(spriteString, spriteIndex);
+				objectSprite.setTexture(SpriteManager::GetInstance()->GetSpriteSheet(spriteString).texture);
 
 
 				sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.Objects[i].getPosX(), currentCell.Objects[i].getPosY()));
-				_sprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
+				objectSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 
-				sprites.push_back(_sprite);
+				sprites.push_back(objectSprite);
 			}
 		}
 	}
