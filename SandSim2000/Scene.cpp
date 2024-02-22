@@ -35,6 +35,10 @@ void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gr
 	}
 }
 
+// Alpha Team Suggestions: Please refactor this method (or make a new one) so that it recieves spirtes from the SpriteManager
+// based on the name of each object. This is pretty much the way the Agent::setAgentSprite() method works,
+// but handled here rather than in the Agent class. Please check the BattlefieldCell class for next instruction.
+
 std::vector<sf::Sprite> Scene::buildGameScene()
 {
 	std::vector<sf::Sprite> sprites = std::vector<sf::Sprite>();

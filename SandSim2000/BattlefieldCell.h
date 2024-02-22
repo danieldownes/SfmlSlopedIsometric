@@ -8,12 +8,11 @@
 class BattlefieldCell {
 public:
 
-    int x, y; // Coordinates of Iterator in QuadTree
+    int x, y; 
 
-    // Alpha Team Suggestions: Rather than store a single sprite, store a vector that can have at least 1 object,
-    // which would be the terrain tile, or more, which could be scenery, ground unit, flyer unit, area effect, 
-    // artillery shell etc. This will allow for many objects to be stored in 1 battlefield cell. Don't store the sprite 
-    // directly in the battlefield cell, the Scene class will interface with the SpriteManager to get sprites.
+    // Alpha Team Suggestions: Please change the name "sprite" to "terrainSprite" so the distinction between an 
+    // Agent Sprite and a Terrain Sprite becomes much more clear. Please ensure you track down all 
+    // instances throughout the rest of the codebase of sprite and change it to terrainSprite.
     
     std::vector<Agent> Objects = std::vector<Agent>();
     sf::Sprite* sprite;
@@ -23,7 +22,6 @@ public:
 
 
 
-    //Don't worry about these ones yet.
+    //Don't worry about this yet.
     //Scenery
-    //std::vector<Agent> agents;
 };
