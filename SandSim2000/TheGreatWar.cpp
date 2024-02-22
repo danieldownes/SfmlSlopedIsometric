@@ -3,7 +3,6 @@
 #include "InputStateManager.h"
 #include "SpriteManager.h"
 
-//Test
 
 int main() {
     SpriteManager sprites = SpriteManager();

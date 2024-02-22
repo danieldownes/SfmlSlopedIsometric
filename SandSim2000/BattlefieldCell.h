@@ -14,10 +14,4 @@ public:
     sf::Sprite* terrainSprite;
     int YOffset;
 
-
-
-
-
-    //Don't worry about this yet.
-    //Scenery
 };
