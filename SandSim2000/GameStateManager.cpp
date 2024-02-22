@@ -59,16 +59,10 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
 
 BattlefieldCell GameStateManager::generateCell(int x, int y)
 {
-    TerrainTile newTerr;
-    newTerr.depth = battlefieldMap.getHeightAtPosition({ x, y});
-    newTerr.facing = 0;
-    newTerr.terrain = "default";
-
     BattlefieldCell newCell;
     newCell.x = x;
     newCell.y = y;
-    newCell.terrain = newTerr;
-    newCell.sprite = battlefieldMap.getSpriteAtPosition({ x, y });
+    newCell.terrainSprite = battlefieldMap.getSpriteAtPosition({ x, y });
     newCell.YOffset = battlefieldMap.getHeightAtPosition({ x, y }) * CELLSIZE / 4;
 
     return newCell;
@@ -82,3 +76,14 @@ void GameStateManager::initializeBattlefieldVector(unsigned int numCells)
     initialiseQuadTree(static_cast<int>(std::floor(std::sqrt(numCells))) * 100, index);
 }
 
+void GameStateManager::placeUnit(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene)
+{
+    GridGenerator gridgen = GridGenerator();
+    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(mouseWorldPosition);
+
+    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
+    Agent unit = Agent(intEuclidianPos.x, intEuclidianPos.y, 100, 100, 100, 100, "RedBaron");
+    state.Units.push_back(unit);
+
+    state.quadTree->insert(&unit, 100);
+}

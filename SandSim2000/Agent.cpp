@@ -1,17 +1,11 @@
 #include "Agent.h"
 
-Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill)
-    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill) {
+Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType)
+    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), unitType(basicUnitType) {
 }
 
 
 Agent::~Agent() {}
-
-
-void Agent::move(int deltaX, int deltaY) {
-    posX += deltaX;
-    posY += deltaY;
-}
 
 void Agent::takeDamage(int damage) {
     int damageTaken = damage - armour;

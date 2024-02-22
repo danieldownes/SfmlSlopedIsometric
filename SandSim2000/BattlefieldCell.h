@@ -1,22 +1,17 @@
 #pragma once
 #include <vector>
-#include "TerrainTile.h"
+
+#include "Agent.h"
 
 #include "SFML/Graphics.hpp"
 
 class BattlefieldCell {
 public:
 
-    int x, y; // Coordinates of Iterator in QuadTree
-    TerrainTile terrain;
-    sf::Sprite* sprite;
+    int x, y; 
+
+    std::vector<Agent> Objects = std::vector<Agent>();
+    sf::Sprite* terrainSprite;
     int YOffset;
 
-
-
-
-
-    //Don't worry about these ones yet.
-    //Scenery
-    //std::vector<Agent> agents;
 };

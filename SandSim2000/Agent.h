@@ -1,4 +1,6 @@
 #pragma once
+#include "SpriteManager.h"
+#include <SFML/Graphics/Sprite.hpp>
 
 class Agent {
 protected:
@@ -8,11 +10,14 @@ protected:
     int speed;
     int ballisticSkill;
 
+    sf::String unitType;
+    int spriteIndex = 0;
+    
+
 public:
-    Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill);
+    Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType);
     ~Agent();
 
-    void move(int deltaX, int deltaY);
     void takeDamage(int damage);
 
     int getPosX() const;
@@ -26,4 +31,7 @@ public:
     void setArmour(int newArmour);
     void setSpeed(int newSpeed);
     void setBallisticSkill(int newBallisticSkill);
+
+    std::string getSpriteString() { return unitType; }
+    int getSpriteIndex() { return spriteIndex; }
 };

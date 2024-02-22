@@ -10,6 +10,7 @@ public:
 	Scene();
 
 	void UpdateGameScene(Camera& cam, GameState& gameState);
+	std::vector<sf::Sprite> buildGameScene();
 
 	std::set<std::vector<BattlefieldCell>::iterator> gameScene;
 private:

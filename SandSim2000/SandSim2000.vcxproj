@@ -151,6 +151,7 @@
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +170,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SpriteManager.h" />
-    <ClInclude Include="TerrainTile.h" />
+    <ClInclude Include="SpriteSheet.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\thunder-skull_38043.ico" />

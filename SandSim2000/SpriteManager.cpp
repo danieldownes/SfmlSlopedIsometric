@@ -1,34 +1,47 @@
 #include "SpriteManager.h"
 #include <iostream>
 
-SpriteManager::SpriteManager(const char* filepath, unsigned int columns, unsigned int rows)
-{
-    texture.loadFromFile(filepath);
-    texture.setSmooth(true);
+SpriteManager* SpriteManager::_instance = nullptr;;
 
-    cell_width = texture.getSize().x / columns; cell_height = texture.getSize().y / rows;
-    sprite_dimensions = sf::Vector2u({ columns, rows });
-    for (int y = 0; y < rows; y++)
-    {
-        for (int x = 0; x < columns; x++)
-        {
-            sf::IntRect texture_rect = { x * cell_width, y * cell_height, cell_width, cell_height };
-
-            sf::Sprite sprite;
-            sprite.setTexture(texture); sprite.setTextureRect(texture_rect);
-
-            sprites.push_back(sprite);
-        }
-    }
-}
-sf::Sprite* SpriteManager::getSprite(unsigned int index)
+SpriteManager::SpriteManager()
 {
-    if (index < sprites.size())
-        return &sprites[index];
-    std::cerr << "[INVALID SPRITE POSITION]" << std::endl;
+	if (_instance == nullptr)
+		_instance = this;
+	else
+		std::cout << "2 instances of SpriteManager have been created" << std::endl;
+
+	spriteSheetList.push_back(std::make_pair("RedBaron", SpriteSheet("../resources/images/Flyers/The_Red_Baron/RedBaron.png", 3, 3)));
+	spriteSheetList.push_back(std::make_pair("GrassTerrain", SpriteSheet("../resources/images/Terrain/grass/grass_spritesheet.png", 8, 2)));
 }
-sf::Sprite* SpriteManager::getSprite(sf::Vector2u position)
+
+sf::Sprite* SpriteManager::GetSprite(std::string spriteSheetID, int spriteIndex)
 {
-    unsigned int index = position.y * sprite_dimensions.y + position.x;
-    return getSprite(index);
+	for (auto it = spriteSheetList.begin(); it != spriteSheetList.end(); ++it) 
+	{
+		if (it->first == spriteSheetID) 
+		{
+			return it->second.getSprite(spriteIndex);
+		}
+	}
+	std::cerr << "[INVALID SPRITE NOT IN LIST]" << std::endl;
 }
+
+SpriteSheet& SpriteManager::GetSpriteSheet(std::string spriteSheetID)
+{
+	for (auto it = spriteSheetList.begin(); it != spriteSheetList.end(); ++it)
+	{
+		if (it->first == spriteSheetID)
+		{
+			return it->second;
+		}
+	}
+	std::cerr << "[INVALID SPRITE NOT IN LIST]" << std::endl;
+}
+
+SpriteManager* SpriteManager::GetInstance()
+{
+	if (_instance == nullptr)
+		_instance = new SpriteManager();
+	return _instance;
+}
+

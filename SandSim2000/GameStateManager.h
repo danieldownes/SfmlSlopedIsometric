@@ -1,8 +1,13 @@
 #pragma once
 #include <cmath>
+#include <set>
+
 #include "GameState.h"
 #include "BattlefieldMap.h"
 #include "BattlefieldCell.h"
+#include "Agent.h"
+#include "InputStateManager.h"
+#include "GridGenerator.h"
 
 
 class GameStateManager {
@@ -11,6 +16,7 @@ public:
 
     void initialiseQuadTree(unsigned int battlefieldSize, unsigned int& index);
     void initializeBattlefieldVector(unsigned int numCells);
+    void placeUnit(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene);
 
     GameState& getState() { return state; }
 private:

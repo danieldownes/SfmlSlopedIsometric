@@ -127,26 +127,20 @@ void Camera::snapPan(const InputState& inputState)
     //Once there are scenery and units on the battlefield, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
 }
 
-void Camera::Draw(std::set<std::vector<BattlefieldCell>::iterator>& gameScene) {
+void Camera::Draw(std::vector<sf::Sprite> sprites)
+{
     window.clear(sf::Color::Black);
-
-    GridGenerator gridGenerator;
     int centerOffsetX = window.getSize().x / 2;
 
-    for (auto iter = gameScene.begin(); iter != gameScene.end(); iter++) {
-        BattlefieldCell cell = **iter;
-
-        sf::Sprite sprite = *cell.sprite;
-
+    for (sf::Sprite s : sprites)
+    {
         int screenX, screenY;
-        sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
-        WorldToScreen(isometricPosition.x + centerOffsetX, isometricPosition.y - cell.YOffset, screenX, screenY);
-        
-        sprite.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
-        sprite.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
-        
-        window.draw(sprite);
-    }
+        WorldToScreen(s.getPosition().x + centerOffsetX, s.getPosition().y, screenX, screenY);
 
+        s.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
+        s.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+
+        window.draw(s);
+    }
     window.display();
 }
