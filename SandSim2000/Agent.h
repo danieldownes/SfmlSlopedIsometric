@@ -11,7 +11,7 @@ protected:
     int ballisticSkill;
 
     sf::String unitType;
-    sf::Sprite* currentSprite;
+    int spriteIndex = 0;
     
 
 public:
@@ -32,8 +32,6 @@ public:
     void setSpeed(int newSpeed);
     void setBallisticSkill(int newBallisticSkill);
 
-    //organises the sprite for the agent
-    sf::Sprite* getNewSprite(int spriteIndex);
-    void setAgentSprite(sf::Sprite* newSprite);
-    sf::Sprite* getSprite();
+    std::string getSpriteString() { return unitType; }
+    int getSpriteIndex() { return spriteIndex; }
 };

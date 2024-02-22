@@ -6,7 +6,6 @@
 
 Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType)
     : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), unitType(basicUnitType) {
-    setAgentSprite(SpriteManager::GetInstance()->GetSprite("RedBaron", 0));
 }
 
 
@@ -60,23 +59,4 @@ void Agent::setSpeed(int newSpeed) {
 
 void Agent::setBallisticSkill(int newBallisticSkill) {
     ballisticSkill = newBallisticSkill;
-}
-
-//gets a new sprite to be used in the program
-sf::Sprite* Agent::getNewSprite(int spriteIndex)
-{
-    sf::Sprite* selectedSprite = SpriteManager::GetInstance()->GetSprite("RedBaron", 0);
-    return selectedSprite;
-}
-
-//sets the sprite
-void Agent::setAgentSprite(sf::Sprite* newSprite)
-{
-    currentSprite = newSprite;
-}
-
-//sends back the sprite to be used in the program
-sf::Sprite* Agent::getSprite()
-{
-    return currentSprite;
 }

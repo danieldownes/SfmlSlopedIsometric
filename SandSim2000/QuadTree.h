@@ -14,7 +14,6 @@ struct QuadTree {
 
     virtual void insert(Agent* agent, int multiplier)
     {
-        std::cout << quadRect.left << ":" << quadRect.top << ":" << quadRect.width << ":" << quadRect.height << std::endl;
         for (int i = 0; i < 4; i++)
         {
             if (children[i] != nullptr)
@@ -43,11 +42,7 @@ struct QuadTreeLeaf : public QuadTree {
 
     void insert(Agent* agent, int multiplier) override
     {
-        std::cout << "Child leaf" << std::endl;
-
         iter->Objects.push_back(*agent);
-
-        std::cout << iter->Objects.size() << std::endl;
     }
 
     QuadTreeLeaf(const sf::IntRect& rect, const unsigned int& depth, std::vector<BattlefieldCell>::iterator& _iter)
