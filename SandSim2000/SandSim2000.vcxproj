@@ -147,9 +147,11 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GridGenerator.cpp" />
+    <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="InputStateManager.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Scenery.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
@@ -164,11 +166,13 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GridGenerator.h" />
+    <ClInclude Include="Infantry.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="InputStateManager.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Scenery.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteSheet.h" />
   </ItemGroup>
