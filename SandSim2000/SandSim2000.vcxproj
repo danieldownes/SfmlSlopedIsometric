@@ -152,6 +152,7 @@
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scenery.cpp" />
+    <ClCompile Include="SceneryManager.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="TheGreatWar.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scenery.h" />
+    <ClInclude Include="SceneryManager.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteSheet.h" />
   </ItemGroup>
