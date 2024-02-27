@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "InputStateManager.h"
 #include "SpriteManager.h"
+#include "Tree.h"
 
 
 int main() {
@@ -35,10 +36,12 @@ int main() {
 
                     camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
 
-                    gameStateManager.placeUnit(sf::Vector2f(x, y), &scene.gameScene);
+                    gameStateManager.placeUnit(sf::Vector2f(x, y), &scene.gameScene, "RedBaron");
                 }
             }
         }
+
+        Tree tree = Tree(100,100);
 
         if (!camera.Update()) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());

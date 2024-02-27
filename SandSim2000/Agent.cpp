@@ -56,3 +56,7 @@ void Agent::setSpeed(int newSpeed) {
 void Agent::setBallisticSkill(int newBallisticSkill) {
     ballisticSkill = newBallisticSkill;
 }
+
+void Agent::setUnitType(sf::string unit) {
+    unitType = unit;
+}
