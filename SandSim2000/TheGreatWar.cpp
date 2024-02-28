@@ -3,6 +3,7 @@
 #include "InputStateManager.h"
 #include "SpriteManager.h"
 #include "Tree.h"
+#include "SceneryManager.h"
 
 
 int main() {
@@ -10,6 +11,8 @@ int main() {
 
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
+
+    SceneryManager sceneManager;
 
     Camera camera;
     Scene scene;
@@ -38,10 +41,21 @@ int main() {
 
                     gameStateManager.placeUnit(sf::Vector2f(x, y), &scene.gameScene, "RedBaron");
                 }
+
+                else if (event.mouseButton.button == sf::Mouse::Right)
+                {
+                    sf::Vector2i mousepos = InputStateManager::getInstance().getInputState().mousePosition;
+
+                    float x; float y;
+
+                    camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
+
+                    Tree tree(10,10);
+
+                    sceneManager.placeScenery(sf::Vector2f(x, y), &scene.gameScene, tree, gameStateManager);
+                }
             }
         }
-
-        Tree tree = Tree(100,100);
 
         if (!camera.Update()) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());

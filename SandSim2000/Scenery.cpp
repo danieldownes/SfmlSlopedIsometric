@@ -5,6 +5,4 @@
 
 //}
 
-Scenery::Scenery(int initialPosX, int initialPosY)
-{
-}
+

@@ -31,7 +31,7 @@ public:
     void setArmour(int newArmour);
     void setSpeed(int newSpeed);
     void setBallisticSkill(int newBallisticSkill);
-    void setUnitType(sf::string unit)
+    void setUnitType(sf::String unit);
 
     std::string getSpriteString() { return unitType; }
     int getSpriteIndex() { return spriteIndex; }
