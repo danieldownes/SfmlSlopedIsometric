@@ -16,7 +16,7 @@ protected:
 
 public:
     Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType);
-    ~Agent();
+    virtual ~Agent();
 
     void takeDamage(int damage);
 
