@@ -26,6 +26,7 @@ public:
     int getArmour() const;
     int getSpeed() const;
     int getBallisticSkill() const;
+    sf::String getUnitType() const;
 
     void setHealth(int newHealth);
     void setArmour(int newArmour);

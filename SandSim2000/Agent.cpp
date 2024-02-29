@@ -41,6 +41,11 @@ int Agent::getBallisticSkill() const {
     return ballisticSkill;
 }
 
+sf::String Agent::getUnitType() const
+{
+    return sf::String(unitType);
+}
+
 void Agent::setHealth(int newHealth) {
     health = newHealth;
 }
