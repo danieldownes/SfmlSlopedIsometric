@@ -3,9 +3,28 @@
 
 #define CELLSIZE 100
 
-// Josh: please "listen" to the inputState in this class. It's important to handle events based on the InputState and not Event due to storing input
-// states across frames. So please "listen" to the input state in this class and place scenery (Tree in this case) based on the bool isLeftMouseButtonPressed;
-// and bool isRightMouseButtonPressed; properties of the InputState.
+void SceneryManager::onUpdate(std::set<std::vector<BattlefieldCell>::iterator>* gameScene, GameStateManager& gameStateManager, Camera& camera, Scene& scene)
+{
+    InputState state2 = InputStateManager::getInstance().getInputState();
+    if (state2.isLeftMouseButtonPressed && leftClick == false)
+    {
+        sf::Vector2i mousepos = InputStateManager::getInstance().getInputState().mousePosition;
+
+        float x; float y;
+
+        camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
+
+        Tree tree(10, 10);
+
+        placeScenery(sf::Vector2f(x, y), &scene.gameScene, tree, gameStateManager);
+
+        leftClick = true;
+    }
+    else if (state2.isLeftMouseButtonPressed == false)
+    {
+        leftClick = false;
+    }
+}
 
 void SceneryManager::placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager)
 {
