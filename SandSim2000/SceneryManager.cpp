@@ -5,11 +5,7 @@
 
 void SceneryManager::onUpdate(std::set<std::vector<BattlefieldCell>::iterator>* gameScene, GameStateManager& gameStateManager, Camera& camera, Scene& scene)
 {
-    //Josh: Instead of creating a new intance of the InputState here, please include it in the header file, then you'll have access to the properties
-    // of the InputState. Currently it creates a new state, we need to have only 1 InputState to ensure the player input doesn't create conflicting
-    // commands. 
-    InputState state2 = InputStateManager::getInstance().getInputState();
-    if (state2.isLeftMouseButtonPressed && leftClick == false)
+    if (InputStateManager::getInstance().getInputState().isLeftMouseButtonPressed && leftClick == false)
     {
         sf::Vector2i mousepos = InputStateManager::getInstance().getInputState().mousePosition;
 
@@ -23,7 +19,7 @@ void SceneryManager::onUpdate(std::set<std::vector<BattlefieldCell>::iterator>* 
 
         leftClick = true;
     }
-    else if (state2.isLeftMouseButtonPressed == false)
+    else if (InputStateManager::getInstance().getInputState().isLeftMouseButtonPressed == false)
     {
         leftClick = false;
     }
