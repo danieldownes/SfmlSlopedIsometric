@@ -8,11 +8,9 @@ class InputStateManager {
 public:
     static InputStateManager& getInstance();
 
-    void updateInputState(sf::Window& window);
-    const InputState& getInputState() const;
+    InputState& updateInputState(sf::Window& window, InputState& state);
 
 private:
-    InputState state;
     InputStateManager();
     ~InputStateManager();
 

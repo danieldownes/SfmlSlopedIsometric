@@ -3,9 +3,6 @@
 
 #define CELLSIZE 100
 
-// Josh: I've changed this so it reads directly from the InputState, the InputStateManager is only 
-// for write/update/delete actions, reading should happen directly. Please check the InputStateManager.cpp
-// for another comment. 
 void SceneryManager::onUpdate(
     const InputState& state, 
     std::set<std::vector<BattlefieldCell>::iterator>* gameScene, 

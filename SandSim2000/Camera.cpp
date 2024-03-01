@@ -11,10 +11,10 @@ Camera::Camera()
     offsetY = -(screenSize.y / 2.0f);
 }
 
-bool Camera::Update() {
+bool Camera::Update(InputState& state) {
     sf::Event event;
 
-    const InputState& inputState = InputStateManager::getInstance().getInputState();
+    const InputState& inputState = state;
 
     if (inputState.isEscapePressed) {
         return false;

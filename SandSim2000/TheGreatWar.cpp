@@ -18,8 +18,10 @@ int main() {
     Camera camera;
     Scene scene;
 
+    InputState state;
+
     while (camera.window.isOpen()) {
-        InputStateManager::getInstance().updateInputState(camera.window);
+        state = InputStateManager::getInstance().updateInputState(camera.window, state);
 
         sf::Event event;
         while (camera.window.pollEvent(event)) {
@@ -30,10 +32,9 @@ int main() {
                 camera.Zoom(event);
             }
         }
-        //Josh, this needs changed to correctly take the InputState as an argument. 
-        sceneManager.onUpdate(InputState& state, &scene.gameScene, gameStateManager, camera, scene);
+        sceneManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
 
-        if (!camera.Update()) { break; }
+        if (!camera.Update(state)) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());
         camera.Draw(scene.buildGameScene());
     }
