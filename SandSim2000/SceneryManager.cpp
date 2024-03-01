@@ -3,11 +3,19 @@
 
 #define CELLSIZE 100
 
-void SceneryManager::onUpdate(std::set<std::vector<BattlefieldCell>::iterator>* gameScene, GameStateManager& gameStateManager, Camera& camera, Scene& scene)
+// Josh: I've changed this so it reads directly from the InputState, the InputStateManager is only 
+// for write/update/delete actions, reading should happen directly. Please check the InputStateManager.cpp
+// for another comment. 
+void SceneryManager::onUpdate(
+    const InputState& state, 
+    std::set<std::vector<BattlefieldCell>::iterator>* gameScene, 
+    GameStateManager& gameStateManager, 
+    Camera& camera, 
+    Scene& scene)
 {
-    if (InputStateManager::getInstance().getInputState().isLeftMouseButtonPressed && leftClick == false)
+    if (state.isLeftMouseButtonPressed && leftClick == false)
     {
-        sf::Vector2i mousepos = InputStateManager::getInstance().getInputState().mousePosition;
+        sf::Vector2i mousepos = state.mousePosition;
 
         float x; float y;
 
@@ -19,11 +27,12 @@ void SceneryManager::onUpdate(std::set<std::vector<BattlefieldCell>::iterator>* 
 
         leftClick = true;
     }
-    else if (InputStateManager::getInstance().getInputState().isLeftMouseButtonPressed == false)
+    else if (state.isLeftMouseButtonPressed == false)
     {
         leftClick = false;
     }
 }
+
 
 void SceneryManager::placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager)
 {

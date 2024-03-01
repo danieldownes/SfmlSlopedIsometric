@@ -7,6 +7,7 @@
 #include "BattlefieldCell.h"
 #include "Agent.h"
 #include "InputStateManager.h"
+#include "InputState.h"
 #include "GridGenerator.h"
 #include "Scenery.h"
 #include "Tree.h"
@@ -17,7 +18,12 @@
 class SceneryManager
 {
 public:
-	void onUpdate(std::set<std::vector<BattlefieldCell>::iterator>* gameScene, GameStateManager& gameStateManager, Camera& camera, Scene& scene);
+	void onUpdate(
+		const InputState& state, 
+		std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+		GameStateManager& gameStateManager, 
+		Camera& camera, 
+		Scene& scene);
 	void placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager);
 	void setX(int xPosition);
 	void setY(int yPosition);
@@ -25,4 +31,3 @@ public:
 private:
 	bool leftClick = false;
 };
-

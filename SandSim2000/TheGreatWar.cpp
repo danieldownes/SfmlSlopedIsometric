@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "InputStateManager.h"
+#include "InputState.h"
 #include "SpriteManager.h"
 #include "Tree.h"
 #include "SceneryManager.h"
@@ -29,8 +30,8 @@ int main() {
                 camera.Zoom(event);
             }
         }
-
-        sceneManager.onUpdate(&scene.gameScene, gameStateManager, camera, scene);
+        //Josh, this needs changed to correctly take the InputState as an argument. 
+        sceneManager.onUpdate(InputState& state, &scene.gameScene, gameStateManager, camera, scene);
 
         if (!camera.Update()) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());
