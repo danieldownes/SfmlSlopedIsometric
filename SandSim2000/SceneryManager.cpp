@@ -3,6 +3,10 @@
 
 #define CELLSIZE 100
 
+// Josh: please "listen" to the inputState in this class. It's important to handle events based on the InputState and not Event due to storing input
+// states across frames. So please "listen" to the input state in this class and place scenery (Tree in this case) based on the bool isLeftMouseButtonPressed;
+// and bool isRightMouseButtonPressed; properties of the InputState.
+
 void SceneryManager::placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager)
 {
     GridGenerator gridgen = GridGenerator();

@@ -28,7 +28,7 @@ int main() {
             else if (event.type == sf::Event::MouseWheelScrolled) {
                 camera.Zoom(event);
             }
-
+            //Josh: please move these conditions listening for events to the sceneryManager. Check my comments over there next. 
             else if (event.type == sf::Event::MouseButtonPressed)
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
