@@ -6,8 +6,8 @@ Camera::Camera()
     window.setVerticalSyncEnabled(true);
     window.setMouseCursorGrabbed(true);
 
-    sf::Vector2u screenSize = window.getSize();
-    offsetX = -(screenSize.x / 2.0f);
+    screenSize = window.getSize();
+    offsetX = - (screenSize.x / 2.0f);
     offsetY = -(screenSize.y / 2.0f);
 }
 
@@ -70,7 +70,7 @@ void Camera::WorldToScreen(float worldX, float worldY, int& outScreenX, int& out
 
 void Camera::ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY)
 {
-    outWorldX = ((float)screenX / scaleX) + offsetX;
+    outWorldX = (((float)screenX / scaleX) + offsetX) + ((1920-screenSize.x)/2.f);
     outWorldY = ((float)screenY / scaleY) + offsetY;
 }
 

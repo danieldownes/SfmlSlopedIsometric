@@ -15,7 +15,7 @@
 #include "Camera.h"
 #include "Scene.h"
 
-class SceneryManager
+class AgentManager
 {
 public:
 	void onUpdate(

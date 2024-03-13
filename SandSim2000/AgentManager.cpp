@@ -1,9 +1,9 @@
-#include "SceneryManager.h"
+#include "AgentManager.h"
 #include <typeinfo>
 
 #define CELLSIZE 100
 
-void SceneryManager::onUpdate(
+void AgentManager::onUpdate(
     const InputState& state, 
     std::set<std::vector<BattlefieldCell>::iterator>* gameScene, 
     GameStateManager& gameStateManager, 
@@ -31,7 +31,7 @@ void SceneryManager::onUpdate(
 }
 
 
-void SceneryManager::placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager)
+void AgentManager::placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager)
 {
     GridGenerator gridgen = GridGenerator();
     sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(mouseWorldPosition);

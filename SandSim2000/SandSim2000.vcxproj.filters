@@ -63,7 +63,7 @@
     <ClCompile Include="Scenery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneryManager.cpp">
+    <ClCompile Include="AgentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tree.cpp">
@@ -128,7 +128,7 @@
     <ClInclude Include="Scenery.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneryManager.h">
+    <ClInclude Include="AgentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">

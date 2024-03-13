@@ -28,6 +28,8 @@ public:
 
     float scaleX = 1.f;
     float scaleY = 1.f;
+
+    sf::Vector2u screenSize;
 private:
     sf::View view;
 

@@ -4,7 +4,7 @@
 #include "InputState.h"
 #include "SpriteManager.h"
 #include "Tree.h"
-#include "SceneryManager.h"
+#include "AgentManager.h"
 
 
 int main() {
@@ -13,7 +13,7 @@ int main() {
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
 
-    SceneryManager sceneManager;
+    AgentManager sceneManager;
 
     Camera camera;
     Scene scene;
