@@ -70,8 +70,8 @@ void Camera::WorldToScreen(float worldX, float worldY, int& outScreenX, int& out
 
 void Camera::ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY)
 {
-    outWorldX = (((float)screenX / scaleX) + offsetX) + ((1920-screenSize.x)/2.f);
-    outWorldY = ((float)screenY / scaleY) + offsetY;
+    outWorldX = (((float)screenX / scaleX) + offsetX) + ((1920.f-screenSize.x)/2.f);
+    outWorldY = (((float)screenY / scaleY) + offsetY) - ((1080.f - screenSize.y)/32.f);
 }
 
 void Camera::clickPan(const InputState& inputState) {
