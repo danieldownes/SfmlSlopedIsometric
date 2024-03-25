@@ -68,6 +68,5 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 			}
 		}
 	}
-	std::cout << sprites.size() << std::endl;
 	return sprites;
 }

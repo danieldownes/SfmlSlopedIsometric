@@ -12,7 +12,7 @@ class Camera {
 public:
     Camera();
 
-    bool Update();
+    bool Update(InputState& state);
     void Draw(std::vector<sf::Sprite> sprites);
 
     void WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY);
@@ -28,6 +28,8 @@ public:
 
     float scaleX = 1.f;
     float scaleY = 1.f;
+
+    sf::Vector2u screenSize;
 private:
     sf::View view;
 

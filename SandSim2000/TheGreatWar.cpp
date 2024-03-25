@@ -1,7 +1,10 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "InputStateManager.h"
+#include "InputState.h"
 #include "SpriteManager.h"
+#include "Tree.h"
+#include "AgentManager.h"
 
 
 int main() {
@@ -10,11 +13,15 @@ int main() {
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
 
+    AgentManager sceneManager;
+
     Camera camera;
     Scene scene;
 
+    InputState state;
+
     while (camera.window.isOpen()) {
-        InputStateManager::getInstance().updateInputState(camera.window);
+        state = InputStateManager::getInstance().updateInputState(camera.window, state);
 
         sf::Event event;
         while (camera.window.pollEvent(event)) {
@@ -24,23 +31,10 @@ int main() {
             else if (event.type == sf::Event::MouseWheelScrolled) {
                 camera.Zoom(event);
             }
-
-            else if (event.type == sf::Event::MouseButtonPressed)
-            {
-                if (event.mouseButton.button == sf::Mouse::Left)
-                {
-                    sf::Vector2i mousepos = InputStateManager::getInstance().getInputState().mousePosition;
-
-                    float x; float y;
-
-                    camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
-
-                    gameStateManager.placeUnit(sf::Vector2f(x, y), &scene.gameScene);
-                }
-            }
         }
+        sceneManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
 
-        if (!camera.Update()) { break; }
+        if (!camera.Update(state)) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());
         camera.Draw(scene.buildGameScene());
     }

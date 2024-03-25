@@ -9,7 +9,7 @@ InputStateManager& InputStateManager::getInstance() {
     return instance;
 }
 
-void InputStateManager::updateInputState(sf::Window& window) {
+InputState& InputStateManager::updateInputState(sf::Window& window, InputState& state) {
     state.isEscapePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
     state.isSpaceBarPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
@@ -19,9 +19,5 @@ void InputStateManager::updateInputState(sf::Window& window) {
     state.isRightMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Right);
     state.isMiddleMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Middle);
 
-
-}
-
-const InputState& InputStateManager::getInputState() const {
     return state;
 }

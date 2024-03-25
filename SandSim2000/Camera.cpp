@@ -6,15 +6,15 @@ Camera::Camera()
     window.setVerticalSyncEnabled(true);
     window.setMouseCursorGrabbed(true);
 
-    sf::Vector2u screenSize = window.getSize();
-    offsetX = -(screenSize.x / 2.0f);
+    screenSize = window.getSize();
+    offsetX = - (screenSize.x / 2.0f);
     offsetY = -(screenSize.y / 2.0f);
 }
 
-bool Camera::Update() {
+bool Camera::Update(InputState& state) {
     sf::Event event;
 
-    const InputState& inputState = InputStateManager::getInstance().getInputState();
+    const InputState& inputState = state;
 
     if (inputState.isEscapePressed) {
         return false;
@@ -70,8 +70,8 @@ void Camera::WorldToScreen(float worldX, float worldY, int& outScreenX, int& out
 
 void Camera::ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY)
 {
-    outWorldX = ((float)screenX / scaleX) + offsetX;
-    outWorldY = ((float)screenY / scaleY) + offsetY;
+    outWorldX = (((float)screenX / scaleX) + offsetX) + ((1920.f-screenSize.x)/2.f);
+    outWorldY = (((float)screenY / scaleY) + offsetY) - ((1080.f - screenSize.y)/32.f);
 }
 
 void Camera::clickPan(const InputState& inputState) {

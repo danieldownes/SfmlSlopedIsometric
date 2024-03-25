@@ -16,7 +16,7 @@ protected:
 
 public:
     Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType);
-    ~Agent();
+    virtual ~Agent();
 
     void takeDamage(int damage);
 
@@ -26,11 +26,13 @@ public:
     int getArmour() const;
     int getSpeed() const;
     int getBallisticSkill() const;
+    sf::String getUnitType() const;
 
     void setHealth(int newHealth);
     void setArmour(int newArmour);
     void setSpeed(int newSpeed);
     void setBallisticSkill(int newBallisticSkill);
+    void setUnitType(sf::String unit);
 
     std::string getSpriteString() { return unitType; }
     int getSpriteIndex() { return spriteIndex; }
