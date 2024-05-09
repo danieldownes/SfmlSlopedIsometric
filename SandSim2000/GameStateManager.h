@@ -19,7 +19,6 @@ public:
     void placeUnit(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, sf::String unitType);
 
     GameState& getState() { return state; }
-private:
     void generateQuadTree(QuadTree* root, unsigned int& index);
     BattlefieldCell generateCell(int x, int y);
 

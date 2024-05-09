@@ -13,7 +13,7 @@ int main() {
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
 
-    AgentManager sceneManager;
+    AgentManager agentManager;
 
     Camera camera;
     Scene scene;
@@ -32,7 +32,7 @@ int main() {
                 camera.Zoom(event);
             }
         }
-        sceneManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
+        agentManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
 
         if (!camera.Update(state)) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());
@@ -40,4 +40,3 @@ int main() {
     }
     return 0;
 }
-

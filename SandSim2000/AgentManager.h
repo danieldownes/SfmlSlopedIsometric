@@ -19,7 +19,7 @@ class AgentManager
 {
 public:
 	void onUpdate(
-		const InputState& state, 
+		InputState& state, 
 		std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
 		GameStateManager& gameStateManager, 
 		Camera& camera, 
@@ -27,6 +27,7 @@ public:
 	void placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager);
 	void placeAgent(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent 
 		agent, GameStateManager& gameStateManager);
+	void updateAgentPosition();
 	void setX(int xPosition);
 	void setY(int yPosition);
 
