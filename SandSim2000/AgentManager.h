@@ -25,9 +25,12 @@ public:
 		Camera& camera, 
 		Scene& scene);
 	void placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager);
+	void placeAgent(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent 
+		agent, GameStateManager& gameStateManager);
 	void setX(int xPosition);
 	void setY(int yPosition);
 
 private:
 	bool leftClick = false;
+	bool rightClick = false;
 };
