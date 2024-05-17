@@ -75,15 +75,3 @@ void GameStateManager::initializeBattlefieldVector(unsigned int numCells)
     unsigned int index = 0;
     initialiseQuadTree(static_cast<int>(std::floor(std::sqrt(numCells))) * 100, index);
 }
-
-void GameStateManager::placeUnit(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, sf::String unitType)
-{
-    GridGenerator gridgen = GridGenerator();
-    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(mouseWorldPosition);
-
-    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
-    Agent unit = Agent(intEuclidianPos.x, intEuclidianPos.y, 100, 100, 100, 100, unitType);
-    state.Units.push_back(unit);
-
-    state.quadTree->insert(&unit, 100);
-}

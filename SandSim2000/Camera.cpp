@@ -16,9 +16,7 @@ bool Camera::Update(InputState& state) {
 
     const InputState& inputState = state;
 
-    if (inputState.isEscapePressed) {
-        return false;
-    }
+    if(inputState.isEscapePressed) return false; 
 
     clickPan(inputState);
     scrollPan(inputState);
@@ -124,10 +122,10 @@ void Camera::scrollPan(const InputState& inputState) {
 
 void Camera::snapPan(const InputState& inputState)
 {
-    //Once there are scenery and units on the battlefield, snap panning will be possible via hotkeys, snapping the camera to the position of a unit.
+    //Once there are scenery and units on the battlefield, snap panning should be done via hotkeys, snapping the camera to the position of a unit.
 }
 
-void Camera::Draw(std::vector<sf::Sprite> sprites)
+void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
 {
     window.clear(sf::Color::Black);
     int centerOffsetX = window.getSize().x / 2;
@@ -137,10 +135,30 @@ void Camera::Draw(std::vector<sf::Sprite> sprites)
         int screenX, screenY;
         WorldToScreen(s.getPosition().x + centerOffsetX, s.getPosition().y, screenX, screenY);
 
-        s.setPosition(static_cast<float>(screenX - 50 * scaleX), static_cast<float>(screenY));
+        s.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
         s.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
 
         window.draw(s);
     }
+    ScreenToWorld(inputState.mousePosition.x - (window.getSize().x/2) - 50, inputState.mousePosition.y - 100, worldX, worldY);
+
+    GridGenerator gridGenerator;
+    selectedCell = gridGenerator.transformToIsometricGrid(worldX, worldY);
+
+
+    sf::Font font;
+    if (!font.loadFromFile("../resources/fonts/Diamond Gothic.ttf")) {
+        std::cerr << "Failed to load font!" << std::endl;
+    }
+    sf::Text text1;
+    text1.setFont(font); 
+
+    text1.setString("Mouse (X: " + std::to_string(selectedCell.x) + ", Y: " + std::to_string(selectedCell.y) + ")");
+    text1.setCharacterSize(24);
+    text1.setFillColor(sf::Color::White); 
+    text1.setPosition(10, 10); 
+
+    window.draw(text1);
+
     window.display();
 }

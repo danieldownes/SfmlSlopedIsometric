@@ -36,7 +36,7 @@ int main() {
 
         if (!camera.Update(state)) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState());
-        camera.Draw(scene.buildGameScene());
+        camera.Draw(scene.buildGameScene(), state);
     }
     return 0;
 }

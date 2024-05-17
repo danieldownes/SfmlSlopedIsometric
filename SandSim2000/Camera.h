@@ -13,13 +13,12 @@ public:
     Camera();
 
     bool Update(InputState& state);
-    void Draw(std::vector<sf::Sprite> sprites);
+    void Draw(std::vector<sf::Sprite> sprites, const InputState& state);
 
     void WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY);
     void ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY);
 
     void Zoom(sf::Event& event);
-
 
     sf::RenderWindow window;
 
@@ -30,6 +29,7 @@ public:
     float scaleY = 1.f;
 
     sf::Vector2u screenSize;
+    sf::Vector2f selectedCell;
 private:
     sf::View view;
 
