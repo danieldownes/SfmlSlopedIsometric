@@ -19,8 +19,9 @@ bool Camera::Update(InputState& state) {
     if(inputState.isEscapePressed) return false; 
 
     clickPan(inputState);
-    scrollPan(inputState);
+    //scrollPan(inputState);
     snapPan(inputState);
+    //MousePolygonMapHitboxDetector(inputState);
 
     return true;
 }
@@ -119,7 +120,6 @@ void Camera::scrollPan(const InputState& inputState) {
     }
 }
 
-
 void Camera::snapPan(const InputState& inputState)
 {
     //Once there are scenery and units on the battlefield, snap panning should be done via hotkeys, snapping the camera to the position of a unit.
@@ -132,14 +132,20 @@ void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
 
     for (sf::Sprite s : sprites)
     {
-        int screenX, screenY;
-        WorldToScreen(s.getPosition().x + centerOffsetX, s.getPosition().y, screenX, screenY);
 
+        WorldToScreen(s.getPosition().x + centerOffsetX, s.getPosition().y, screenX, screenY);
+        /*
+        if (s.getPosition().x == 0 && s.getPosition().y == 0)
+        {
+            std::cout << "Cell (0,0) Screen Coordinates: (X: " << screenX  + 50 << ", Y: " << screenY + 100 << ")" << std::endl;
+        }
+        */
         s.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
         s.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
 
         window.draw(s);
     }
+
     ScreenToWorld(inputState.mousePosition.x - (window.getSize().x/2) - 50, inputState.mousePosition.y - 100, worldX, worldY);
 
     GridGenerator gridGenerator;
@@ -153,12 +159,22 @@ void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
     sf::Text text1;
     text1.setFont(font); 
 
-    text1.setString("Mouse (X: " + std::to_string(selectedCell.x) + ", Y: " + std::to_string(selectedCell.y) + ")");
+    text1.setString("Mouse Grid (X: " + std::to_string(selectedCell.x) + ", Y: " + std::to_string(selectedCell.y) + ")");
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::White); 
     text1.setPosition(10, 10); 
 
     window.draw(text1);
+
+    sf::Text text2;
+    text2.setFont(font);
+
+    text2.setString("Mouse Window(X: " + std::to_string(inputState.mousePosition.x) + ", Y: " + std::to_string(inputState.mousePosition.y) + ")");
+    text2.setCharacterSize(24);
+    text2.setFillColor(sf::Color::White);
+    text2.setPosition(10, 40);
+
+    window.draw(text2);
 
     window.display();
 }

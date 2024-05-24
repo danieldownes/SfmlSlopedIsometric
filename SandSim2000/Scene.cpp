@@ -1,16 +1,16 @@
 #include "Scene.h"
-
 #define MAX_TILE_DEPTH 5
 #define TILE_SIZE 100
 
 Scene::Scene() {}
 
-void Scene::UpdateGameScene(Camera& cam, GameState& gameState) {
+void Scene::UpdateGameScene(Camera& cam, GameState& gameState, InputState& inputState) {
 	GridGenerator gridGenerator;
 	sf::IntRect viewbounds(0, 0, cam.window.getSize().x, cam.window.getSize().y);
 
 	gameScene.clear();
 	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
+	getBattlefieldCellFromMouseClick(cam);
 
 }
 
@@ -26,8 +26,7 @@ void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gr
 
 	sf::IntRect isometricNodeRect(screenX - sizeX / 2, screenY, sizeX, sizeY);
 
-	if (!viewbounds.intersects(isometricNodeRect))
-		return;
+	if (!viewbounds.intersects(isometricNodeRect)) return;
 
 	if (typeid(*root) == typeid(QuadTreeLeaf)) {
 		gameScene.insert(((QuadTreeLeaf*)root)->iter);
@@ -48,8 +47,8 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 		sf::Sprite terrainSprite = *currentCell.terrainSprite;
 
 		sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.x, currentCell.y));
-		terrainSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 
+		terrainSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 		sprites.push_back(terrainSprite);
 
 		if (currentCell.Objects.size() != 0)
@@ -62,7 +61,6 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 				sf::Sprite objectSprite = *SpriteManager::GetInstance()->GetSprite(spriteString, spriteIndex);
 				objectSprite.setTexture(SpriteManager::GetInstance()->GetSpriteSheet(spriteString).texture);
 
-
 				sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.Objects[i].getPosX(), currentCell.Objects[i].getPosY()));
 				objectSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 
@@ -71,4 +69,28 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 		}
 	}
 	return sprites;
+}
+
+sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam) {
+	sf::Vector2i placeholder(-1, -1);
+
+	if (gameScene.empty()) {
+		std::cout << "No cells in viewport." << std::endl;
+		return placeholder;
+	}
+
+	float worldX = 0.0f; 
+	float worldY = 0.0f; 
+
+	int screenX, screenY;
+
+	int centerOffsetX = cam.window.getSize().x / 2;
+
+	// Use WorldToScreen to convert world coordinates to screen coordinates
+	cam.WorldToScreen(worldX + centerOffsetX, worldY, screenX, screenY);
+
+	// Output the screen coordinates of the battlefield cell
+	std::cout << "Screen coordinates of the battlefield cell: (" << screenX + 50 << ", " << screenY + 100 << ")" << std::endl;
+
+	return sf::Vector2i(screenX, screenY);
 }

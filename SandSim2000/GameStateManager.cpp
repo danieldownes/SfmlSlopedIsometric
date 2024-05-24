@@ -32,7 +32,6 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
 
             generateQuadTree((QuadTree*)children[i], index);
         }
-
         root->children = children;
     } else {
 
@@ -52,7 +51,6 @@ void GameStateManager::generateQuadTree(QuadTree* root, unsigned int& index) {
                 iter
             );
         }
-
         root->children = children;
     }
 }
@@ -62,6 +60,7 @@ BattlefieldCell GameStateManager::generateCell(int x, int y)
     BattlefieldCell newCell;
     newCell.x = x;
     newCell.y = y;
+    newCell.vertices = battlefieldMap.getVertices(x, y);
     newCell.terrainSprite = battlefieldMap.getSpriteAtPosition({ x, y });
     newCell.YOffset = battlefieldMap.getHeightAtPosition({ x, y }) * CELLSIZE / 4;
 

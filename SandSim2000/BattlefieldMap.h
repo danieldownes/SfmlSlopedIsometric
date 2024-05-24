@@ -17,15 +17,15 @@ public:
 	BattlefieldMap() {}
 	~BattlefieldMap();
 
+	sf::Sprite* getSpriteAtPosition(sf::Vector2i position) { return spriteMap[position.y][position.x]; }
+
 	void initMap(unsigned int mapSize);
-
-	sf::Sprite* getSpriteAtPosition(sf::Vector2i position) {
-		return spriteMap[position.y][position.x]; 
-	}
-
 	int getHeightAtPosition(sf::Vector2i position) { return depthMap[position.y][position.x]; }
-private:
+	std::vector<sf::Vector2i> getVertices(int x, int y);
 	int size = 0;
+
+private:
+
 
 	int** depthMap = nullptr;
 	Direction** directionMap = nullptr;

@@ -1,5 +1,5 @@
 #include "AgentManager.h"
-#include <typeinfo>
+
 
 #define CELLSIZE 100
 

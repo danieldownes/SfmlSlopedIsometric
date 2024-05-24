@@ -1,7 +1,7 @@
 #pragma once
 #include <cmath>
 #include <set>
-
+#include <typeinfo>
 #include "GameState.h"
 #include "BattlefieldMap.h"
 #include "BattlefieldCell.h"

@@ -1,14 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>  
-#include "GameStateManager.h"
-#include "GridGenerator.h"
 #include <iostream>
 #include <set>
+#include "GameStateManager.h"
+#include "GridGenerator.h"
 #include "InputStateManager.h"
 #include "InputState.h"
+#include "BattlefieldCell.h"
 
-class Camera {
+
+class Camera { 
 public:
     Camera();
 

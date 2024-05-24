@@ -94,7 +94,7 @@ void BattlefieldMap::initDirectionMap()
     directionMap[15] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     */
 }
-    
+
 int BattlefieldMap::testLocation(int x, int y, int height)
 {
     if (x > 0 && x < size - 1 && y > 0 && y < size - 1)
@@ -117,6 +117,35 @@ void BattlefieldMap::initSpriteMap()
     }
 }
 
+std::vector<sf::Vector2i> BattlefieldMap::getVertices(int x, int y)
+{
+    std::vector<sf::Vector2i> vertices;
+    int directionValue;
+
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            if (i == y && j == x) {
+                directionValue = directionMap[0][0];
+                break;
+            }
+        }
+    }
+    switch (directionValue)
+    {
+        case 0:
+                vertices.push_back(sf::Vector2i(0, 0));
+                vertices.push_back(sf::Vector2i(50, 25));
+                vertices.push_back(sf::Vector2i(0, 50));
+                vertices.push_back(sf::Vector2i(-50, 25));
+            break;
+        case 1: 
+            break;
+        default: 
+            break;
+    } 
+
+    return vertices;
+}
 
 BattlefieldMap::~BattlefieldMap()
 {
