@@ -1,31 +1,32 @@
 #include "Scene.h"
-
 #define MAX_TILE_DEPTH 5
 #define TILE_SIZE 100
 
 Scene::Scene() {}
 
-void Scene::UpdateGameScene(Camera& cam, GameState& gameState) {
+void Scene::UpdateGameScene(Camera& cam, GameState& gameState, InputState& inputState) {
 	GridGenerator gridGenerator;
 	sf::IntRect viewbounds(0, 0, cam.window.getSize().x, cam.window.getSize().y);
 
 	gameScene.clear();
 	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
+	getBattlefieldCellFromMouseClick(cam, inputState);
+
 }
 
 void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds) {
 
 	int screenX, screenY;
 	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(root->quadRect.getPosition().x / TILE_SIZE, root->quadRect.getPosition().y / TILE_SIZE));
-	cam.WorldToScreen(isometricPosition.x + cam.window.getSize().x / 2, isometricPosition.y, screenX, screenY);
+	cam.WorldToScreen(isometricPosition.x + static_cast<float>(cam.window.getSize().x) / 2, isometricPosition.y, screenX, screenY);
 
 	int sizeX = root->quadRect.getSize().x * cam.scaleX;
-	int sizeY = (root->quadRect.getSize().y / 2 + (TILE_SIZE / 2) * MAX_TILE_DEPTH) * cam.scaleY;
+	int sizeY = static_cast<float>(root->quadRect.getSize().y) / 2 * cam.scaleY
+		+ static_cast<float>(TILE_SIZE) / 2 * MAX_TILE_DEPTH * cam.scaleY;
 
 	sf::IntRect isometricNodeRect(screenX - sizeX / 2, screenY, sizeX, sizeY);
 
-	if (!viewbounds.intersects(isometricNodeRect))
-		return;
+	if (!viewbounds.intersects(isometricNodeRect)) return;
 
 	if (typeid(*root) == typeid(QuadTreeLeaf)) {
 		gameScene.insert(((QuadTreeLeaf*)root)->iter);
@@ -46,8 +47,8 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 		sf::Sprite terrainSprite = *currentCell.terrainSprite;
 
 		sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.x, currentCell.y));
-		terrainSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 
+		terrainSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 		sprites.push_back(terrainSprite);
 
 		if (currentCell.Objects.size() != 0)
@@ -60,7 +61,6 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 				sf::Sprite objectSprite = *SpriteManager::GetInstance()->GetSprite(spriteString, spriteIndex);
 				objectSprite.setTexture(SpriteManager::GetInstance()->GetSpriteSheet(spriteString).texture);
 
-
 				sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.Objects[i].getPosX(), currentCell.Objects[i].getPosY()));
 				objectSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 
@@ -70,3 +70,73 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 	}
 	return sprites;
 }
+
+sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
+	sf::Vector2i placeholder(-1, -1);
+
+	if (gameScene.empty()) {
+		std::cout << "No cells in viewport." << std::endl;
+		return placeholder;
+	}
+
+	float worldX = 0.0f;
+	float worldY = 0.0f;
+
+	int screenX, screenY;
+	int centerOffsetX = cam.window.getSize().x / 2;
+
+	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
+		const BattlefieldCell& cell = *(*iter);
+
+		if (cell.x == 0 && cell.y == 0) {
+			worldX = 0.0f;
+			worldY = 0.0f;
+
+			cam.WorldToScreen(worldX + centerOffsetX, worldY, screenX, screenY);
+
+			//std::cout << "Screen coordinates of the battlefield cell: (" << screenX + 50 << ", " << screenY + 100 << ")" << std::endl;
+		}
+	}
+
+
+	return placeholder;
+}
+
+/*
+sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
+	sf::Vector2i placeholder(-1, -1);
+
+	if (gameScene.empty()) {
+		std::cout << "No cells in viewport." << std::endl;
+		return placeholder;
+	}
+
+	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
+		BattlefieldCell& cell = *(*iter);
+
+		std::vector<sf::Vector2i>& vertices = cell.vertices;
+
+		if (pointInPolygon(inputState.mousePosition, vertices)) {
+			std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
+			return sf::Vector2i(cell.x, cell.y);
+		}
+	}
+
+	std::cout << "Mouse cursor is not inside any cell." << std::endl;
+
+	return placeholder;
+}
+
+bool Scene::pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices) {
+	int i, j, nvert = vertices.size();
+	bool c = false;
+
+	for (i = 0, j = nvert - 1; i < nvert; j = i++) {
+		if (((vertices[i].y >= point.y) != (vertices[j].y >= point.y)) &&
+			(point.x <= (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x))
+			c = !c;
+	}
+
+	return c;
+}
+*/

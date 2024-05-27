@@ -13,16 +13,16 @@ int main() {
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
 
-    AgentManager sceneManager;
+    AgentManager agentManager;
 
+    InputState state;
     Camera camera;
     Scene scene;
 
-    InputState state;
 
     while (camera.window.isOpen()) {
         state = InputStateManager::getInstance().updateInputState(camera.window, state);
-
+        /*
         sf::Event event;
         while (camera.window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -32,12 +32,12 @@ int main() {
                 camera.Zoom(event);
             }
         }
-        sceneManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
+        */
+        agentManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
 
         if (!camera.Update(state)) { break; }
-        scene.UpdateGameScene(camera, gameStateManager.getState());
-        camera.Draw(scene.buildGameScene());
+        scene.UpdateGameScene(camera, gameStateManager.getState(), state);
+        camera.Draw(scene.buildGameScene(), state);
     }
     return 0;
 }
-

@@ -16,29 +16,93 @@ sf::Vector2f GridGenerator::cartesianToIsometricTransform(const sf::Vector2f& ca
     isometricPosition.y = C + D;
     return isometricPosition;
 }
-
+/*
 sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2f& isometricPosition)
 {
     sf::Vector2f cartesianPosition;
     const float spriteDimension = 50.0f;
     float det = 1.0f / (1 * 0.5 - 0 * -1);
-    cartesianPosition.x = (((isometricPosition.x + isometricPosition.y * 2) / 2) - 25) / 50;
-    cartesianPosition.y = (((det * (-isometricPosition.x * 0.5 + isometricPosition.y * 1)) - 50) / 100) - 1;
+    cartesianPosition.x = round((((isometricPosition.x + isometricPosition.y * 2) / 2) - 25) / 50 * 10) / 10;
+    cartesianPosition.y = round(((((det * (-isometricPosition.x * 0.5 + isometricPosition.y * 1)) - 50) / 100) - 1) * 10) / 10;
     return cartesianPosition;
 }
 
+sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2f& isometricPosition)
+{
+    sf::Vector2f cartesianPosition;
+    const float spriteDimension = 50.0f;
+    const float invSpriteDimension = 1.0f / spriteDimension;
+
+    // Apply the inverted transformation
+    cartesianPosition.x = (isometricPosition.x / invSpriteDimension + isometricPosition.y / (2.0f * invSpriteDimension)) / 2.0f;
+    cartesianPosition.y = (isometricPosition.y / (2.0f * invSpriteDimension) - (isometricPosition.x / invSpriteDimension)) / 2.0f;
+
+    return cartesianPosition;
+}
+*/
+
+sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2f& isometricPosition)
+{
+    sf::Vector2f cartesianPosition;
+    const float spriteWidth = 100.0f;
+    const float spriteHeight = spriteWidth / 2.0f;
+
+    cartesianPosition.x = isometricPosition.x / spriteWidth;
+    cartesianPosition.y = (isometricPosition.y / spriteHeight) - 2;
+
+    return cartesianPosition;
+}
 
 sf::Vector2f GridGenerator::mouseToIsometric(const sf::Vector2i& mouseCoords)
 {
     const float spriteDimension = 50.0f;
-    float det = 1.0f / (1 * 0.5 - 0 * -1);
     sf::Vector2f isometricCoords;
     isometricCoords.x = (mouseCoords.x / spriteDimension) - 8 * (mouseCoords.y / spriteDimension);
     isometricCoords.y = 8 * (mouseCoords.x / spriteDimension) + (mouseCoords.y / spriteDimension);
     return isometricCoords;
 }
 
+sf::Vector2f GridGenerator::isometricFromMouse(const sf::Vector2i& mouseCoords)
+{
 
+    sf::Vector2f isometricPosition;
+    const float spriteWidth = 100.0f; 
+    const float spriteHeight = 50.0f;
+
+    const float A = mouseCoords.x * 1.0f * spriteWidth / 2;
+    const float B = mouseCoords.y * -1.0f * spriteHeight / 2;
+    const float C = mouseCoords.x * 0.5f * spriteWidth / 2;
+    const float D = mouseCoords.y * 0.5f * spriteHeight / 2;
+
+    const float determinate = 1.0f / (A * D - B * C);
+
+    const float inverted_A = D * determinate;
+    const float inverted_B = -B * determinate;
+    const float inverted_C = -C * determinate;
+    const float inverted_D = A * determinate;
+
+    isometricPosition.x = inverted_A * mouseCoords.x + inverted_B * mouseCoords.y;
+    isometricPosition.y = inverted_C * mouseCoords.x + inverted_D * mouseCoords.y;
+
+
+    return isometricPosition;
+}
+
+sf::Vector2f GridGenerator::transformToIsometric(const float worldX, const float worldY)
+{
+    sf::Vector2f isometricPosition;
+    const float spriteWidth = 50.0f;
+    const float spriteHeight = 25.0f;
+    const float A = worldX * 50.0f / spriteWidth;
+    const float B = worldY * 25.0f / spriteHeight;
+    const float C = worldX * -50.0f / spriteWidth;
+    const float D = worldY * 25.0f / spriteHeight;
+    isometricPosition.x = A + B;
+    isometricPosition.y = C + D;
+    return isometricPosition;
+}
+
+/*
 sf::Vector2f GridGenerator::cellSelector(const sf::Vector2f cartesianCell, int corner)
 {
     sf::Vector2f selectedCell;
@@ -51,8 +115,37 @@ sf::Vector2f GridGenerator::cellSelector(const sf::Vector2f cartesianCell, int c
     if (corner == 4) selectedCell.y = selectedCell.y + 1;
     return selectedCell;
 }
+*/
 
-sf::Vector2f GridGenerator::mouseCellCalc(const sf::Vector2f mouseCoord)
+sf::Vector2f GridGenerator::transformToIsometricGrid(const float worldX, const float worldY)
+{
+    const float spriteWidth = 100.0f;  // Width of one tile in isometric space
+    const float spriteHeight = 50.0f;  // Height of one tile in isometric space
+
+    // Apply the inverse isometric transformation equations
+    float tempX = (worldX / (spriteWidth / 2.0f) + worldY / (spriteHeight / 2.0f)) / 2.0f;
+    float tempY = (worldY / (spriteHeight / 2.0f) - (worldX / (spriteWidth / 2.0f))) / 2.0f;
+
+    int gridX = static_cast<int>(floor(tempX));
+    int gridY = static_cast<int>(floor(tempY));
+
+    return sf::Vector2f(static_cast<float>(gridX), static_cast<float>(gridY));
+}
+
+sf::Vector2f GridGenerator::cellSelector(const sf::Vector2i mouse)
+{
+    sf::Vector2f selectedCell;
+    const int tileHeight = 50;
+    const int tileWidth = 100;
+    const int screenHeight = (1080 / 2) + 100;
+    const int screenWidth = 1920;
+    const sf::Vector2f origin = { 0,0 };
+    selectedCell.x = (mouse.x - screenWidth) / tileWidth;
+    selectedCell.y = (mouse.y - screenHeight) / tileHeight;
+    return selectedCell;
+}
+
+sf::Vector2f GridGenerator::mouseCellCalc(const sf::Vector2i mouseCoord)
 {
     sf::Vector2f mouseCellPosition;
     int tileWidth = 100;

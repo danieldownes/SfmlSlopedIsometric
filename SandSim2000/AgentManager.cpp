@@ -1,10 +1,10 @@
 #include "AgentManager.h"
-#include <typeinfo>
+
 
 #define CELLSIZE 100
 
 void AgentManager::onUpdate(
-    const InputState& state, 
+    InputState& state, 
     std::set<std::vector<BattlefieldCell>::iterator>* gameScene, 
     GameStateManager& gameStateManager, 
     Camera& camera, 
@@ -12,29 +12,18 @@ void AgentManager::onUpdate(
 {
     if (state.isLeftMouseButtonPressed && leftClick == false)
     {
-        sf::Vector2i mousepos = state.mousePosition;
 
-        float x; float y;
+        Tree tree(0,0);
 
-        camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
-
-        Tree tree(10, 10);
-
-        placeScenery(sf::Vector2f(x, y), &scene.gameScene, tree, gameStateManager);
+        placeScenery(camera.selectedCell, &scene.gameScene, tree, gameStateManager);
 
         leftClick = true;
     }
-    else if (state.isRightMouseButtonPressed && rightClick == false)
+    else if (state.isRightMouseButtonPressed && rightClick == false) 
     {
-        sf::Vector2i mousepos = state.mousePosition;
-
-        float x; float y;
-
-        camera.ScreenToWorld(mousepos.x, mousepos.y, x, y);
-
         Agent baron(10, 10, -1, -1, -1, -1, "RedBaron");
 
-        placeAgent(sf::Vector2f(x, y), &scene.gameScene, baron, gameStateManager);
+        placeAgent(camera.selectedCell, &scene.gameScene, baron, gameStateManager);
 
         leftClick = true;
     }
@@ -49,20 +38,14 @@ void AgentManager::onUpdate(
 }
 
 
-void AgentManager::placeScenery(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
+void AgentManager::placeScenery(sf::Vector2f isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
 {
-    GridGenerator gridgen = GridGenerator();
-    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(mouseWorldPosition);
-
-    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
-
     if (sceneObject.getUnitType() == "Tree")
     {
-        Tree tree = Tree(intEuclidianPos.x, intEuclidianPos.y);
-
+        Tree tree = Tree(isometricCell.x, isometricCell.y);
         gameStateManager.getState().Units.push_back(tree);
 
-        gameStateManager.getState().quadTree->insert(&tree, 100);
+        gameStateManager.getState().quadTree->insert(&tree, 100); 
     }
 }
 
@@ -82,5 +65,3 @@ void AgentManager::placeAgent(sf::Vector2f mouseWorldPosition, std::set<std::vec
         gameStateManager.getState().quadTree->insert(&baron, 100);
     }
 }
-
-
