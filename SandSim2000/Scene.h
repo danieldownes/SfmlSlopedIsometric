@@ -12,7 +12,9 @@ public:
 
 	void UpdateGameScene(Camera& cam, GameState& gameState, InputState& inputState);
 	std::vector<sf::Sprite> buildGameScene();
-	sf::Vector2i getBattlefieldCellFromMouseClick(Camera& cam);
+	sf::Vector2i getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState);
+
+	bool pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices);
 
 	std::set<std::vector<BattlefieldCell>::iterator> gameScene;
 private:
