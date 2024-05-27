@@ -94,7 +94,7 @@ sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& in
 
 			cam.WorldToScreen(worldX + centerOffsetX, worldY, screenX, screenY);
 
-			std::cout << "Screen coordinates of the battlefield cell: (" << screenX + 50 << ", " << screenY + 100 << ")" << std::endl;
+			//std::cout << "Screen coordinates of the battlefield cell: (" << screenX + 50 << ", " << screenY + 100 << ")" << std::endl;
 		}
 	}
 

@@ -22,7 +22,7 @@ int main() {
 
     while (camera.window.isOpen()) {
         state = InputStateManager::getInstance().updateInputState(camera.window, state);
-
+        /*
         sf::Event event;
         while (camera.window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -32,6 +32,7 @@ int main() {
                 camera.Zoom(event);
             }
         }
+        */
         agentManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
 
         if (!camera.Update(state)) { break; }

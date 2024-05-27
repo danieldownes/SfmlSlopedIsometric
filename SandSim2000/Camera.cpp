@@ -19,7 +19,7 @@ bool Camera::Update(InputState& state) {
     if(inputState.isEscapePressed) return false; 
 
     clickPan(inputState);
-    //scrollPan(inputState);
+    scrollPan(inputState);
     snapPan(inputState);
     //MousePolygonMapHitboxDetector(inputState);
 
@@ -134,12 +134,6 @@ void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
     {
 
         WorldToScreen(s.getPosition().x + centerOffsetX, s.getPosition().y, screenX, screenY);
-        /*
-        if (s.getPosition().x == 0 && s.getPosition().y == 0)
-        {
-            std::cout << "Cell (0,0) Screen Coordinates: (X: " << screenX  + 50 << ", Y: " << screenY + 100 << ")" << std::endl;
-        }
-        */
         s.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
         s.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
 
@@ -165,16 +159,6 @@ void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
     text1.setPosition(10, 10); 
 
     window.draw(text1);
-
-    sf::Text text2;
-    text2.setFont(font);
-
-    text2.setString("Mouse Window(X: " + std::to_string(inputState.mousePosition.x) + ", Y: " + std::to_string(inputState.mousePosition.y) + ")");
-    text2.setCharacterSize(24);
-    text2.setFillColor(sf::Color::White);
-    text2.setPosition(10, 40);
-
-    window.draw(text2);
 
     window.display();
 }
