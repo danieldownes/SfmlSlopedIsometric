@@ -15,7 +15,6 @@ void Scene::UpdateGameScene(Camera& cam, GameState& gameState, InputState& input
 }
 
 void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds) {
-
 	int screenX, screenY;
 	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(root->quadRect.getPosition().x / TILE_SIZE, root->quadRect.getPosition().y / TILE_SIZE));
 	cam.WorldToScreen(isometricPosition.x + static_cast<float>(cam.window.getSize().x) / 2, isometricPosition.y, screenX, screenY);
@@ -72,35 +71,52 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 }
 
 sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
-	sf::Vector2i placeholder(-1, -1);
+    sf::Vector2i placeholder(-1, -1);
 
-	if (gameScene.empty()) {
-		std::cout << "No cells in viewport." << std::endl;
-		return placeholder;
-	}
+    if (gameScene.empty()) {
+        std::cout << "No cells in viewport." << std::endl;
+        return placeholder;
+    }
 
-	float worldX = 0.0f;
-	float worldY = 0.0f;
+    int centerOffsetX = cam.window.getSize().x / 2;
 
-	int screenX, screenY;
-	int centerOffsetX = cam.window.getSize().x / 2;
+    for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
+        BattlefieldCell& cell = *(*iter);
 
-	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
-		const BattlefieldCell& cell = *(*iter);
+        // Transform cell vertices to screen coordinates
+        std::vector<sf::Vector2i> screenVertices;
+        for (const auto& vertex : cell.vertices) {
+            int screenX, screenY;
+            cam.WorldToScreen(vertex.x + centerOffsetX, vertex.y, screenX, screenY);
+            screenVertices.emplace_back(screenX + 50, screenY + 100);
+        }
 
-		if (cell.x == 0 && cell.y == 0) {
-			worldX = 0.0f;
-			worldY = 0.0f;
+        // Check if the mouse position is inside the polygon
+        if (pointInPolygon(inputState.mousePosition, screenVertices)) {
+            std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
+            return sf::Vector2i(cell.x, cell.y);
+        }
+    }
 
-			cam.WorldToScreen(worldX + centerOffsetX, worldY, screenX, screenY);
-
-			//std::cout << "Screen coordinates of the battlefield cell: (" << screenX + 50 << ", " << screenY + 100 << ")" << std::endl;
-		}
-	}
-
-
-	return placeholder;
+    std::cout << "Mouse cursor is not inside any cell." << std::endl;
+    return placeholder;
 }
+
+bool Scene::pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices) {
+    int i, j, nvert = vertices.size();
+    bool c = false;
+
+    for (i = 0, j = nvert - 1; i < nvert; j = i++) {
+        if (((vertices[i].y > point.y) != (vertices[j].y > point.y)) &&
+            (point.x < (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x)) {
+            c = !c;
+        }
+    }
+
+    return c;
+}
+
+
 
 /*
 sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
@@ -111,6 +127,19 @@ sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& in
 		return placeholder;
 	}
 
+	// Debug output for the first element's vertices
+    if (!gameScene.empty()) {
+        auto iter = gameScene.begin();
+        BattlefieldCell& cell = *(*iter);
+        std::vector<sf::Vector2i>& vertices = cell.vertices;
+
+        std::cout << "First cell position - (X: "<< cell.windowX << ", Y: "<< cell.windowY << "). Vertices: ";
+        for (const auto& vertex : vertices) {
+			std::cout << "(" << vertex.x << ", " << vertex.y << ")" << std::endl;
+        }
+		
+    }
+
 	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
 		BattlefieldCell& cell = *(*iter);
 
@@ -118,12 +147,12 @@ sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& in
 
 		if (pointInPolygon(inputState.mousePosition, vertices)) {
 			std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
-			return sf::Vector2i(cell.x, cell.y);
+			//return sf::Vector2i(cell.x, cell.y);
 		}
 	}
 
 	std::cout << "Mouse cursor is not inside any cell." << std::endl;
-
+	
 	return placeholder;
 }
 

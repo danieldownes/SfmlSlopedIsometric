@@ -21,6 +21,7 @@ int main() {
 
 
     while (camera.window.isOpen()) {
+
         state = InputStateManager::getInstance().updateInputState(camera.window, state);
         /*
         sf::Event event;

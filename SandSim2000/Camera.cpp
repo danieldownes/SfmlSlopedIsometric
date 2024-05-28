@@ -13,15 +13,14 @@ Camera::Camera()
 
 bool Camera::Update(InputState& state) {
     sf::Event event;
-
+    while (window.pollEvent(event)) {}
     const InputState& inputState = state;
 
     if(inputState.isEscapePressed) return false; 
 
     clickPan(inputState);
-    scrollPan(inputState);
+    //scrollPan(inputState);
     snapPan(inputState);
-    //MousePolygonMapHitboxDetector(inputState);
 
     return true;
 }
