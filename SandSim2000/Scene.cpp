@@ -10,7 +10,7 @@ void Scene::UpdateGameScene(Camera& cam, GameState& gameState, InputState& input
 
 	gameScene.clear();
 	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
-	getBattlefieldCellFromMouseClick(cam, inputState);
+	getBattlefieldCellFromMouseClick(cam, gridGenerator, inputState);
 
 }
 
@@ -70,36 +70,62 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 	return sprites;
 }
 
-sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
-    sf::Vector2i placeholder(-1, -1);
+sf::Vector2i Scene::getScreenPositionOfCell(const BattlefieldCell& cell, Camera& cam, GridGenerator& gridGenerator) {
+	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
 
-    if (gameScene.empty()) {
-        std::cout << "No cells in viewport." << std::endl;
-        return placeholder;
-    }
+	int screenX, screenY;
+	cam.WorldToScreen(isometricPosition.x + cam.window.getSize().x / 2, isometricPosition.y, screenX, screenY);
 
-    int centerOffsetX = cam.window.getSize().x / 2;
+	screenX += 50;  
+	screenY += 100;
 
-    for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
-        BattlefieldCell& cell = *(*iter);
+	return sf::Vector2i(screenX, screenY);
+}
 
-        // Transform cell vertices to screen coordinates
-        std::vector<sf::Vector2i> screenVertices;
-        for (const auto& vertex : cell.vertices) {
-            int screenX, screenY;
-            cam.WorldToScreen(vertex.x + centerOffsetX, vertex.y, screenX, screenY);
-            screenVertices.emplace_back(screenX + 50, screenY + 100);
-        }
 
-        // Check if the mouse position is inside the polygon
-        if (pointInPolygon(inputState.mousePosition, screenVertices)) {
-            std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
-            return sf::Vector2i(cell.x, cell.y);
-        }
-    }
+sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, GridGenerator& gridGenerator, InputState& inputState) {
+	sf::Vector2i placeholder(-1, -1);
 
-    std::cout << "Mouse cursor is not inside any cell." << std::endl;
-    return placeholder;
+	if (gameScene.empty()) {
+		std::cout << "No cells in viewport." << std::endl;
+		return placeholder;
+	}
+
+	int cellsToCheck = 24;
+	int count = 0;
+
+	for (auto iter = gameScene.begin(); iter != gameScene.end() && count < cellsToCheck; ++iter, ++count) {
+		BattlefieldCell& cell = *(*iter);
+
+		sf::Vector2i screenPosition = getScreenPositionOfCell(cell, cam, gridGenerator);
+
+		
+		std::vector<sf::Vector2i> screenVertices;
+		for (const auto& vertex : cell.vertices) {
+			screenVertices.emplace_back(screenPosition.x + vertex.x, screenPosition.y + vertex.y);
+		}
+		
+		std::cout << "Screen vertices of cell (" << cell.x << ", " << cell.y << "):" << std::endl;
+		for (const auto& vertex : screenVertices) {
+			std::cout << "(" << vertex.x << ", " << vertex.y << ")" << std::endl;
+		}
+
+		
+		//std::vector<sf::Vector2i> screenVertices;
+		for (const auto& vertex : cell.vertices) {
+			screenVertices.emplace_back(screenPosition.x + vertex.x, screenPosition.y + vertex.y);
+		}
+
+		if (pointInPolygon(inputState.mousePosition, screenVertices)) {
+			//std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
+			return sf::Vector2i(cell.x, cell.y);
+		}
+		
+	}
+
+	//std::cout << "Mouse cursor is not inside any cell." << std::endl;
+
+	return placeholder;
 }
 
 bool Scene::pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices) {
@@ -116,9 +142,9 @@ bool Scene::pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vect
     return c;
 }
 
-
-
 /*
+	// For 1 Cell
+
 sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
 	sf::Vector2i placeholder(-1, -1);
 
@@ -127,45 +153,26 @@ sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& in
 		return placeholder;
 	}
 
-	// Debug output for the first element's vertices
-    if (!gameScene.empty()) {
-        auto iter = gameScene.begin();
-        BattlefieldCell& cell = *(*iter);
-        std::vector<sf::Vector2i>& vertices = cell.vertices;
-
-        std::cout << "First cell position - (X: "<< cell.windowX << ", Y: "<< cell.windowY << "). Vertices: ";
-        for (const auto& vertex : vertices) {
-			std::cout << "(" << vertex.x << ", " << vertex.y << ")" << std::endl;
-        }
-		
-    }
+	int centerOffsetX = cam.window.getSize().x / 2;
 
 	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
 		BattlefieldCell& cell = *(*iter);
 
-		std::vector<sf::Vector2i>& vertices = cell.vertices;
+		std::vector<sf::Vector2i> screenVertices;
+		for (const auto& vertex : cell.vertices) {
+			int screenX, screenY;
+			cam.WorldToScreen(vertex.x + centerOffsetX, vertex.y, screenX, screenY);
+			screenVertices.emplace_back(screenX + 50, screenY + 100);
+		}
 
-		if (pointInPolygon(inputState.mousePosition, vertices)) {
+		if (pointInPolygon(inputState.mousePosition, screenVertices)) {
 			std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
-			//return sf::Vector2i(cell.x, cell.y);
+			return sf::Vector2i(cell.x, cell.y);
 		}
 	}
 
 	std::cout << "Mouse cursor is not inside any cell." << std::endl;
-	
 	return placeholder;
 }
 
-bool Scene::pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices) {
-	int i, j, nvert = vertices.size();
-	bool c = false;
-
-	for (i = 0, j = nvert - 1; i < nvert; j = i++) {
-		if (((vertices[i].y >= point.y) != (vertices[j].y >= point.y)) &&
-			(point.x <= (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x))
-			c = !c;
-	}
-
-	return c;
-}
 */

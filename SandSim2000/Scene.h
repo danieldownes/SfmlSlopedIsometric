@@ -12,7 +12,8 @@ public:
 
 	void UpdateGameScene(Camera& cam, GameState& gameState, InputState& inputState);
 	std::vector<sf::Sprite> buildGameScene();
-	sf::Vector2i getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState);
+	sf::Vector2i getScreenPositionOfCell(const BattlefieldCell& cell, Camera& cam, GridGenerator& gridGenerator);
+	sf::Vector2i getBattlefieldCellFromMouseClick(Camera& cam, GridGenerator& gridGenerator, InputState& inputState);
 
 	bool pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices);
 
