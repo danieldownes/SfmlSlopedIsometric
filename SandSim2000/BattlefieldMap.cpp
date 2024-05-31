@@ -165,26 +165,26 @@ std::vector<sf::Vector2i> BattlefieldMap::getVertices(int x, int y)
             vertices.push_back(sf::Vector2i(-50, 0));
             break;
         case 5:
-            vertices.push_back(sf::Vector2i(0, 0));
-            vertices.push_back(sf::Vector2i(50, 50));
-            vertices.push_back(sf::Vector2i(0, 75));
+            vertices.push_back(sf::Vector2i(0, -25));
+            vertices.push_back(sf::Vector2i(50, 25));
+            vertices.push_back(sf::Vector2i(0, 50));
             vertices.push_back(sf::Vector2i(-50, 25));
             break;
         case 6:
-            vertices.push_back(sf::Vector2i(0, 0));
+            vertices.push_back(sf::Vector2i(0, -25));
             vertices.push_back(sf::Vector2i(50, 50));
-            vertices.push_back(sf::Vector2i(0, 75));
+            vertices.push_back(sf::Vector2i(0, 50));
             vertices.push_back(sf::Vector2i(-50, 25));
             break;
         case 7:
-            vertices.push_back(sf::Vector2i(0, 0));
-            vertices.push_back(sf::Vector2i(50, 25));
-            vertices.push_back(sf::Vector2i(0, 75));
-            vertices.push_back(sf::Vector2i(-50, 50));
+            vertices.push_back(sf::Vector2i(0, -25));
+            vertices.push_back(sf::Vector2i(50, 0));
+            vertices.push_back(sf::Vector2i(0, 50));
+            vertices.push_back(sf::Vector2i(-50, 25));
             break;
         case 8:
-            vertices.push_back(sf::Vector2i(0, 0));
-            vertices.push_back(sf::Vector2i(50, 0));
+            vertices.push_back(sf::Vector2i(0, -25));
+            vertices.push_back(sf::Vector2i(50, -25));
             vertices.push_back(sf::Vector2i(0, 50));
             vertices.push_back(sf::Vector2i(-50, 25));
             break;
