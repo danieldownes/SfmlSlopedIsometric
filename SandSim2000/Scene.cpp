@@ -74,9 +74,9 @@ sf::Vector2i Scene::getScreenPositionOfCell(const BattlefieldCell& cell, Camera&
 	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
 
 	int screenX, screenY;
-	cam.WorldToScreen(isometricPosition.x + cam.window.getSize().x / 2, isometricPosition.y, screenX, screenY);
+	cam.WorldToScreen(isometricPosition.x + cam.window.getSize().x / 2, isometricPosition.y - cell.YOffset, screenX, screenY);
 
-	screenX += 50;  
+	screenX += 50;
 	screenY += 100;
 
 	return sf::Vector2i(screenX, screenY);
@@ -91,15 +91,13 @@ sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, GridGenerator&
 		return placeholder;
 	}
 
-	int cellsToCheck = 24;
-	int count = 0;
+	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
 
-	for (auto iter = gameScene.begin(); iter != gameScene.end() && count < cellsToCheck; ++iter, ++count) {
 		BattlefieldCell& cell = *(*iter);
 
 		sf::Vector2i screenPosition = getScreenPositionOfCell(cell, cam, gridGenerator);
-
 		
+		/*
 		std::vector<sf::Vector2i> screenVertices;
 		for (const auto& vertex : cell.vertices) {
 			screenVertices.emplace_back(screenPosition.x + vertex.x, screenPosition.y + vertex.y);
@@ -110,14 +108,15 @@ sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, GridGenerator&
 			std::cout << "(" << vertex.x << ", " << vertex.y << ")" << std::endl;
 		}
 
-		
-		//std::vector<sf::Vector2i> screenVertices;
+		*/
+
+		std::vector<sf::Vector2i> screenVertices;
 		for (const auto& vertex : cell.vertices) {
 			screenVertices.emplace_back(screenPosition.x + vertex.x, screenPosition.y + vertex.y);
 		}
 
 		if (pointInPolygon(inputState.mousePosition, screenVertices)) {
-			//std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
+			std::cout << "Cell (X: " << cell.x << ", Y" << cell.y << ") Offset:" << cell.YOffset << std::endl;
 			return sf::Vector2i(cell.x, cell.y);
 		}
 		
