@@ -9,15 +9,15 @@ InputStateManager& InputStateManager::getInstance() {
     return instance;
 }
 
-InputState& InputStateManager::updateInputState(sf::Window& window, InputState& state) {
-    state.isEscapePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
-    state.isSpaceBarPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+InputState& InputStateManager::updateInputState(sf::Window& window, InputState& inputState) {
+    inputState.isEscapePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
+    inputState.isSpaceBarPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
 
-    state.mousePosition = sf::Mouse::getPosition(window);
-    state.isLeftMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-    state.isRightMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Right);
-    state.isMiddleMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Middle);
+    inputState.mousePosition = sf::Mouse::getPosition(window);
+    inputState.isLeftMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+    inputState.isRightMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Right);
+    inputState.isMiddleMouseButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Middle);
 
-    return state;
+    return inputState;
 }

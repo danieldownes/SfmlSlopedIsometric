@@ -4,22 +4,22 @@
 #define CELLSIZE 100
 
 void AgentManager::onUpdate(
-    InputState& state, 
+    InputState& inputState, 
     std::set<std::vector<BattlefieldCell>::iterator>* gameScene, 
     GameStateManager& gameStateManager, 
     Camera& camera, 
     Scene& scene)
 {
-    if (state.isLeftMouseButtonPressed && leftClick == false)
+    if (inputState.isLeftMouseButtonPressed && leftClick == false)
     {
 
         Tree tree(0,0);
 
-        placeScenery(camera.selectedCell, &scene.gameScene, tree, gameStateManager);
+        placeScenery(inputState.selectedCell, &scene.gameScene, tree, gameStateManager);
 
         leftClick = true;
     }
-    else if (state.isRightMouseButtonPressed && rightClick == false) 
+    else if (inputState.isRightMouseButtonPressed && rightClick == false)
     {
         Agent baron(10, 10, -1, -1, -1, -1, "RedBaron");
 
@@ -27,22 +27,22 @@ void AgentManager::onUpdate(
 
         leftClick = true;
     }
-    else if (state.isLeftMouseButtonPressed == false)
+    else if (inputState.isLeftMouseButtonPressed == false)
     {
         leftClick = false;
     }
-    else if (state.isRightMouseButtonPressed == false)
+    else if (inputState.isRightMouseButtonPressed == false)
     {
         rightClick = false;
     }
 }
 
 
-void AgentManager::placeScenery(sf::Vector2f isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
+void AgentManager::placeScenery(sf::Vector2i selectedCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
 {
     if (sceneObject.getUnitType() == "Tree")
     {
-        Tree tree = Tree(isometricCell.x, isometricCell.y);
+        Tree tree = Tree(selectedCell.x, selectedCell.y);
         gameStateManager.getState().Units.push_back(tree);
 
         gameStateManager.getState().quadTree->insert(&tree, 100); 

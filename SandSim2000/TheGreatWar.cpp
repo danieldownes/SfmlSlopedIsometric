@@ -15,14 +15,14 @@ int main() {
 
     AgentManager agentManager;
 
-    InputState state;
+    InputState inputState;
     Camera camera;
     Scene scene;
 
 
     while (camera.window.isOpen()) {
 
-        state = InputStateManager::getInstance().updateInputState(camera.window, state);
+        inputState = InputStateManager::getInstance().updateInputState(camera.window, inputState);
         /*
         sf::Event event;
         while (camera.window.pollEvent(event)) {
@@ -34,11 +34,11 @@ int main() {
             }
         }
         */
-        agentManager.onUpdate(state, &scene.gameScene, gameStateManager, camera, scene);
+        agentManager.onUpdate(inputState, &scene.gameScene, gameStateManager, camera, scene);
 
-        if (!camera.Update(state)) { break; }
-        scene.UpdateGameScene(camera, gameStateManager.getState(), state);
-        camera.Draw(scene.buildGameScene(), state);
+        if (!camera.Update(inputState)) { break; }
+        scene.UpdateGameScene(camera, gameStateManager.getState(), inputState);
+        camera.Draw(scene.buildGameScene(), inputState);
     }
     return 0;
 }

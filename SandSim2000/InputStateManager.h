@@ -1,14 +1,15 @@
 #pragma once
 #include <SFML/Window/Mouse.hpp>  
 #include <SFML/Window/Keyboard.hpp>
-#include "InputState.h"
 #include <iostream>
+#include "InputState.h"
+
 
 class InputStateManager {
 public:
     static InputStateManager& getInstance();
 
-    InputState& updateInputState(sf::Window& window, InputState& state);
+    InputState& updateInputState(sf::Window& window, InputState& inputState);
 
 private:
     InputStateManager();
