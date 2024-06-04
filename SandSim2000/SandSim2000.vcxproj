@@ -167,6 +167,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="GlobalConstants.h" />
     <ClInclude Include="GridGenerator.h" />
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="InputState.h" />

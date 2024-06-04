@@ -9,4 +9,3 @@ public:
     static const int mapSize = 16;
     
 };
-
