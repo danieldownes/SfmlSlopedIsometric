@@ -19,7 +19,7 @@ bool Camera::Update(InputState& state) {
     if(inputState.isEscapePressed) return false; 
 
     clickPan(inputState);
-    //scrollPan(inputState);
+    scrollPan(inputState);
     snapPan(inputState);
 
     return true;
