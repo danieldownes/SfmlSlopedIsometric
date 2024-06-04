@@ -15,7 +15,7 @@ void BattlefieldMap::initMap(unsigned int mapSize)
 void BattlefieldMap::initDepthMap()
 {
     depthMap = new int* [size];
-    /*
+    
     depthMap[0] = new int[size]     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[1] = new int[size]     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[2] = new int[size]     {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0};
@@ -32,8 +32,8 @@ void BattlefieldMap::initDepthMap()
     depthMap[13] = new int[size]    {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0};
     depthMap[14] = new int[size]    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[15] = new int[size]    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    */
     
+    /*
     depthMap[0] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[1] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[2] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -50,14 +50,14 @@ void BattlefieldMap::initDepthMap()
     depthMap[13] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[14] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     depthMap[15] = new int[size] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    
+    */
 }
 
 
 void BattlefieldMap::initDirectionMap()
 {
     directionMap = new Direction * [size];
-    /*
+    
     directionMap[0] = new Direction[size]   { F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     directionMap[1] = new Direction[size]   { F, NE, E, E, E, E, E, E, E, E, E, E, E, E, SE, F };
     directionMap[2] = new Direction[size]   { F, N, NE, E, E, SE, F, F, F, F, F, F, F, F, S, F };
@@ -74,8 +74,8 @@ void BattlefieldMap::initDirectionMap()
     directionMap[13] = new Direction[size]  { F, N, F, F, F, F, F, F, F, F, F, F, F, F, S, F };
     directionMap[14] = new Direction[size]  { F, NW, W, W, W, W, W, W, W, W, W, W, W, W, SW, F };
     directionMap[15] = new Direction[size]  { F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
-    */
     
+    /*
     directionMap[0] = new Direction[size] { F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     directionMap[1] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     directionMap[2] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
@@ -92,7 +92,7 @@ void BattlefieldMap::initDirectionMap()
     directionMap[13] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     directionMap[14] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
     directionMap[15] = new Direction[size]{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F };
-    
+    */
 }
 
 int BattlefieldMap::testLocation(int x, int y, int height)
@@ -125,20 +125,68 @@ std::vector<sf::Vector2i> BattlefieldMap::getVertices(int x, int y)
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             if (i == y && j == x) {
-                directionValue = directionMap[0][0];
+                directionValue = directionMap[i][j];
                 break;
             }
         }
     }
+
+    
     switch (directionValue)
     {
         case 0:
-                vertices.push_back(sf::Vector2i(0, 0));
-                vertices.push_back(sf::Vector2i(50, 25));
-                vertices.push_back(sf::Vector2i(0, 50));
-                vertices.push_back(sf::Vector2i(-50, 25));
+            vertices.push_back(sf::Vector2i(0, 0));
+            vertices.push_back(sf::Vector2i(50, 25));
+            vertices.push_back(sf::Vector2i(0, 50));
+            vertices.push_back(sf::Vector2i(-50, 25));
             break;
         case 1: 
+            vertices.push_back(sf::Vector2i(0, 0));
+            vertices.push_back(sf::Vector2i(50, 0));
+            vertices.push_back(sf::Vector2i(0, 25));
+            vertices.push_back(sf::Vector2i(-50, 25));
+            break;
+
+        case 2:
+            vertices.push_back(sf::Vector2i(0, 0));
+            vertices.push_back(sf::Vector2i(50, 25));
+            vertices.push_back(sf::Vector2i(-50, 25));
+            break;
+        case 3:
+            vertices.push_back(sf::Vector2i(0, 0));
+            vertices.push_back(sf::Vector2i(50, 25));
+            vertices.push_back(sf::Vector2i(0, 25));
+            vertices.push_back(sf::Vector2i(-50, 0));
+            break;
+        case 4:
+            vertices.push_back(sf::Vector2i(0, 0));
+            vertices.push_back(sf::Vector2i(50, 25));
+            vertices.push_back(sf::Vector2i(0, 50));
+            vertices.push_back(sf::Vector2i(-50, 0));
+            break;
+        case 5:
+            vertices.push_back(sf::Vector2i(0, -25));
+            vertices.push_back(sf::Vector2i(50, 25));
+            vertices.push_back(sf::Vector2i(0, 50));
+            vertices.push_back(sf::Vector2i(-50, 0));
+            break;
+        case 6:
+            vertices.push_back(sf::Vector2i(0, -25));
+            vertices.push_back(sf::Vector2i(50, 50));
+            vertices.push_back(sf::Vector2i(0, 50));
+            vertices.push_back(sf::Vector2i(-50, 25));
+            break;
+        case 7:
+            vertices.push_back(sf::Vector2i(0, -25));
+            vertices.push_back(sf::Vector2i(50, 0));
+            vertices.push_back(sf::Vector2i(0, 50));
+            vertices.push_back(sf::Vector2i(-50, 25));
+            break;
+        case 8:
+            vertices.push_back(sf::Vector2i(0, -25));
+            vertices.push_back(sf::Vector2i(50, -25));
+            vertices.push_back(sf::Vector2i(0, 50));
+            vertices.push_back(sf::Vector2i(-50, 25));
             break;
         default: 
             break;

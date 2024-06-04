@@ -24,7 +24,7 @@ public:
 		GameStateManager& gameStateManager, 
 		Camera& camera, 
 		Scene& scene);
-	void placeScenery(sf::Vector2f isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager);
+	void placeScenery(sf::Vector2i selectedCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager);
 	void placeAgent(sf::Vector2f cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent 
 		agent, GameStateManager& gameStateManager);
 	void updateAgentPosition();

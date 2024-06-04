@@ -13,7 +13,7 @@ Camera::Camera()
 
 bool Camera::Update(InputState& state) {
     sf::Event event;
-
+    while (window.pollEvent(event)) {}
     const InputState& inputState = state;
 
     if(inputState.isEscapePressed) return false; 
@@ -21,7 +21,6 @@ bool Camera::Update(InputState& state) {
     clickPan(inputState);
     scrollPan(inputState);
     snapPan(inputState);
-    //MousePolygonMapHitboxDetector(inputState);
 
     return true;
 }
@@ -142,10 +141,6 @@ void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
 
     ScreenToWorld(inputState.mousePosition.x - (window.getSize().x/2) - 50, inputState.mousePosition.y - 100, worldX, worldY);
 
-    GridGenerator gridGenerator;
-    selectedCell = gridGenerator.transformToIsometricGrid(worldX, worldY);
-
-
     sf::Font font;
     if (!font.loadFromFile("../resources/fonts/Diamond Gothic.ttf")) {
         std::cerr << "Failed to load font!" << std::endl;
@@ -153,7 +148,7 @@ void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
     sf::Text text1;
     text1.setFont(font); 
 
-    text1.setString("Mouse Grid (X: " + std::to_string(selectedCell.x) + ", Y: " + std::to_string(selectedCell.y) + ")");
+    text1.setString("Mouse Grid (X: " + std::to_string(inputState.selectedCell.x) + ", Y: " + std::to_string(inputState.selectedCell.y) + ")");
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::White); 
     text1.setPosition(10, 10); 

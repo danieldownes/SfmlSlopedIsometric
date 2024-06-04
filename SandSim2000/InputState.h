@@ -19,6 +19,7 @@ struct InputState
     bool isVPressed;
 
     sf::Vector2i mousePosition;
+    sf::Vector2i selectedCell;
     bool isLeftMouseButtonPressed;
     bool isRightMouseButtonPressed;
     bool isMiddleMouseButtonPressed;

@@ -10,12 +10,11 @@ void Scene::UpdateGameScene(Camera& cam, GameState& gameState, InputState& input
 
 	gameScene.clear();
 	findViewportIterators(gameState.quadTree, cam, gridGenerator, viewbounds);
-	getBattlefieldCellFromMouseClick(cam, inputState);
+	getBattlefieldCellFromMouseClick(cam, gridGenerator, inputState);
 
 }
 
 void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds) {
-
 	int screenX, screenY;
 	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(root->quadRect.getPosition().x / TILE_SIZE, root->quadRect.getPosition().y / TILE_SIZE));
 	cam.WorldToScreen(isometricPosition.x + static_cast<float>(cam.window.getSize().x) / 2, isometricPosition.y, screenX, screenY);
@@ -71,72 +70,68 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 	return sprites;
 }
 
-sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
-	sf::Vector2i placeholder(-1, -1);
-
-	if (gameScene.empty()) {
-		std::cout << "No cells in viewport." << std::endl;
-		return placeholder;
-	}
-
-	float worldX = 0.0f;
-	float worldY = 0.0f;
+sf::Vector2i Scene::getScreenPositionOfCell(const BattlefieldCell& cell, Camera& cam, GridGenerator& gridGenerator) {
+	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(cell.x, cell.y));
 
 	int screenX, screenY;
-	int centerOffsetX = cam.window.getSize().x / 2;
+	cam.WorldToScreen(isometricPosition.x + cam.window.getSize().x / 2, isometricPosition.y - cell.YOffset, screenX, screenY);
 
-	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
-		const BattlefieldCell& cell = *(*iter);
+	screenX += 50;
+	screenY += 100;
 
-		if (cell.x == 0 && cell.y == 0) {
-			worldX = 0.0f;
-			worldY = 0.0f;
-
-			cam.WorldToScreen(worldX + centerOffsetX, worldY, screenX, screenY);
-
-			//std::cout << "Screen coordinates of the battlefield cell: (" << screenX + 50 << ", " << screenY + 100 << ")" << std::endl;
-		}
-	}
-
-
-	return placeholder;
+	return sf::Vector2i(screenX, screenY);
 }
 
-/*
-sf::Vector2i Scene::getBattlefieldCellFromMouseClick(Camera& cam, InputState& inputState) {
+
+void Scene::getBattlefieldCellFromMouseClick(Camera& cam, GridGenerator& gridGenerator, InputState& inputState) {
 	sf::Vector2i placeholder(-1, -1);
 
 	if (gameScene.empty()) {
-		std::cout << "No cells in viewport." << std::endl;
-		return placeholder;
+		std::cout << "Scene::getBattlefieldCellFromMouseClick Error: No cells in viewport." << std::endl;
+		inputState.selectedCell = placeholder;
+		return;
 	}
+
+	const int radius = 100;
+	sf::Vector2i mousePos = inputState.mousePosition;
+	sf::IntRect boundingBox(mousePos.x - radius, mousePos.y - radius, 2 * radius, 2 * radius);
+
+	int cellsInBoundingBox = 0;
 
 	for (auto iter = gameScene.begin(); iter != gameScene.end(); ++iter) {
 		BattlefieldCell& cell = *(*iter);
 
-		std::vector<sf::Vector2i>& vertices = cell.vertices;
+		sf::Vector2i screenPosition = getScreenPositionOfCell(cell, cam, gridGenerator);
 
-		if (pointInPolygon(inputState.mousePosition, vertices)) {
-			std::cout << "Mouse cursor is inside the cell at (" << cell.x << ", " << cell.y << ")" << std::endl;
-			return sf::Vector2i(cell.x, cell.y);
+		if (boundingBox.contains(screenPosition)) {
+			cellsInBoundingBox++;
+
+			std::vector<sf::Vector2i> screenVertices;
+
+			for (const auto& vertex : cell.vertices) {
+				screenVertices.emplace_back(screenPosition.x + vertex.x, screenPosition.y + vertex.y);
+			}
+
+			if (pointInPolygon(mousePos, screenVertices)) {
+				inputState.selectedCell = sf::Vector2i(cell.x, cell.y);
+				return;
+			}
 		}
 	}
-
-	std::cout << "Mouse cursor is not inside any cell." << std::endl;
-
-	return placeholder;
+	inputState.selectedCell = placeholder;
 }
+
 
 bool Scene::pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices) {
-	int i, j, nvert = vertices.size();
-	bool c = false;
+    int i, j, nvert = vertices.size();
+    bool c = false;
 
-	for (i = 0, j = nvert - 1; i < nvert; j = i++) {
-		if (((vertices[i].y >= point.y) != (vertices[j].y >= point.y)) &&
-			(point.x <= (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x))
-			c = !c;
-	}
+    for (i = 0, j = nvert - 1; i < nvert; j = i++) {
+        if (((vertices[i].y > point.y) != (vertices[j].y > point.y)) &&
+            (point.x < (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x)) {
+            c = !c;
+        }
+    }
 
-	return c;
+    return c;
 }
-*/
