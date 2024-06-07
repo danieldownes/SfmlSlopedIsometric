@@ -41,7 +41,7 @@ sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2f& is
 }
 */
 
-sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2f& isometricPosition)
+sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2i& isometricPosition)
 {
     sf::Vector2f cartesianPosition;
     const float spriteWidth = 100.0f;

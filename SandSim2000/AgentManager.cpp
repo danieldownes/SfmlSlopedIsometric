@@ -1,5 +1,6 @@
 #include "AgentManager.h"
 
+
 /*                        +++++++++++++ Agent Manager +++++++++++++                             */
 /* Method: UpdateImpassableTerrainNodes - Sets selected nodes as impassable terrain             */
 /* Method: PropagateWaveFrontHeuristics - Sets heuristics for nodes in a wave out from target   */
@@ -17,7 +18,7 @@ void AgentManager::onUpdate(
     Camera& camera,
     Scene& scene)
 {
-    /*
+    
     if (state.isLeftMouseButtonPressed && leftClick == false)
     {
         startCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
@@ -45,18 +46,14 @@ void AgentManager::onUpdate(
 
     if (state.isSpaceBarPressed)
     {
-        std::cout << "output cleared" << std::endl;
         targetCell = nullptr;
         startCell = nullptr;
     }
-    */
+    
 }
 
 void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene)
 {
-    startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, 8 * 100, 2 * 100, 4);
-    targetCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, 8 * 100, 13 * 100, 4);
-
     if (startCell != nullptr && targetCell != nullptr)
     {
         generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4);
@@ -64,8 +61,8 @@ void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, In
 
         if (AStar(startCell, targetCell) == 1)
         {
-            printPathGrid(&gameStateManager->getState());
-            printGhostGrid();
+            //printPathGrid(&gameStateManager->getState());
+            //printGhostGrid();
 
             std::vector<BattlefieldCell*>* path = getPath();
 
@@ -315,11 +312,14 @@ void AgentManager::generateGhostGrid(GameState* state, BattlefieldCell* start, B
         }
         GhostGrid.push_back(line);
     }
-    std::cout << "X:" << GhostGrid[0].size() << std::endl;
-    std::cout << "Y:" << GhostGrid.size() << std::endl;
 
-    std::cout << GhostGrid[0][0]->x << ":" << GhostGrid[0][0]->y << std::endl;
-    std::cout << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->x << ":" << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->y << std::endl;
+    // Calculate width and height of the GhostGrid
+    int width = right - left;
+    int height = bottom - top;
+
+    // Print width and height
+    std::cout << "GhostGrid width: " << width << std::endl;
+    std::cout << "GhostGrid height: " << height << std::endl;
 }
 
 BattlefieldCell* AgentManager::getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY)

@@ -1,6 +1,8 @@
 #pragma once
-#include <array>
+
 #include "SFML/Graphics/Rect.hpp"
+
+#include <array>
 #include <vector>
 #include <iostream>
 
@@ -11,6 +13,8 @@ struct QuadTree {
     sf::IntRect quadRect;
     std::array<QuadTree*, 4> children;
 
+    int offsetX[4] = { 0, 1, 0, 1 };
+    int offsetY[4] = { 0, 0, 1, 1 };
 
     virtual void insert(Agent* agent, int multiplier)
     {
@@ -27,6 +31,36 @@ struct QuadTree {
         }
     }
 
+    QuadTree* getNode(QuadTree* node, int targetX, int targetY, int targetLevel) {
+        if (node == nullptr) return nullptr;
+
+        if (node->quadRect.getPosition().x == targetX && node->quadRect.getPosition().y == targetY && node->depth == targetLevel) return node;
+
+        for (int i = 0; i < 4; ++i) {
+            int childX = node->quadRect.getPosition().x * 2 + offsetX[i];
+            int childY = node->quadRect.getPosition().y * 2 + offsetY[i];
+            QuadTree* result = getNode(node->children[i], targetX, targetY, targetLevel);
+            if (result != nullptr) {
+                return result;
+            }
+        }
+        return nullptr;
+    }
+
+    virtual BattlefieldCell* getCell(QuadTree* node, int targetX, int targetY, int targetLevel)
+    {
+        if (node == nullptr) return nullptr;
+
+        for (int i = 0; i < 4; ++i) {
+            int childX = node->quadRect.getPosition().x * 2 + offsetX[i];
+            int childY = node->quadRect.getPosition().y * 2 + offsetY[i];
+            BattlefieldCell* result = node->children[i]->getCell(node->children[i], targetX, targetY, targetLevel);
+            if (result != nullptr) {
+                return result;
+            }
+        }
+        return nullptr;
+    }
 
     QuadTree(const sf::IntRect& rect, const unsigned int& depth)
         : depth(depth), quadRect(rect), children{ nullptr, nullptr, nullptr, nullptr } {}
@@ -43,6 +77,13 @@ struct QuadTreeLeaf : public QuadTree {
     void insert(Agent* agent, int multiplier) override
     {
         iter->Objects.push_back(*agent);
+    }
+
+    BattlefieldCell* getCell(QuadTree* node, int targetX, int targetY, int targetLevel) override
+    {
+        if (node->quadRect.getPosition().x == targetX && node->quadRect.getPosition().y == targetY && node->depth == targetLevel) return iter._Unwrapped();
+
+        return nullptr;
     }
 
     QuadTreeLeaf(const sf::IntRect& rect, const unsigned int& depth, std::vector<BattlefieldCell>::iterator& _iter)
