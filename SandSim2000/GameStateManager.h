@@ -21,6 +21,7 @@ public:
     void generateQuadTree(QuadTree* root, unsigned int& index);
     BattlefieldCell generateCell(int x, int y);
 
+    BattlefieldCell* getCell(int x, int y);
 
     BattlefieldMap battlefieldMap;
     GameState state;

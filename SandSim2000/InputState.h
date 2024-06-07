@@ -8,7 +8,8 @@ struct InputState
     bool isQPressed;
     bool isWPressed;
     bool isEPressed;
-    bool isRPressed;
+    bool isRPressed; 
+    bool isTPressed;
     bool isAPressed;
     bool isSPressed;
     bool isDPressed;

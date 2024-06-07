@@ -1,6 +1,5 @@
 #include "AgentManager.h"
 
-
 /*                        +++++++++++++ Agent Manager +++++++++++++                             */
 /* Method: UpdateImpassableTerrainNodes - Sets selected nodes as impassable terrain             */
 /* Method: PropagateWaveFrontHeuristics - Sets heuristics for nodes in a wave out from target   */
@@ -50,6 +49,9 @@ void AgentManager::onUpdate(
         startCell = nullptr;
     }
     
+    if (state.isTPressed) {
+        placeScenery(state.selectedCell, gameScene, sceneObject, gameStateManager);
+    }
 }
 
 void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene)
@@ -89,14 +91,18 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
         gameStateManager.getState().Units.push_back(tree);
 
         gameStateManager.getState().quadTree->insert(&tree, 100);
+
+        BattlefieldCell* cell = gameStateManager.getCell(isometricCell.x, isometricCell.y);
+
+        if (cell != nullptr)
+        {
+            cell->impassableTerrain = true;
+        }
     }
 }
 
 void AgentManager::placeAgent(sf::Vector2i mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
 {
-
-    std::cout << "Agent Placed" << std::endl;
-
     if (agent.getUnitType() == "RedBaron")
     {
         Agent baron = Agent(mouseWorldPosition.x, mouseWorldPosition.y, -1, -1, -1, -1, "RedBaron");

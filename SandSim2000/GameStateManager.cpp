@@ -67,6 +67,15 @@ BattlefieldCell GameStateManager::generateCell(int x, int y)
     return newCell;
 }
 
+BattlefieldCell* GameStateManager::getCell(int x, int y) {
+    for (auto& cell : state.BattlefieldVector) {
+        if (cell.x == x && cell.y == y) {
+            return &cell;
+        }
+    }
+    return nullptr;
+}
+
 void GameStateManager::initializeBattlefieldVector(unsigned int numCells) 
 {
     state.BattlefieldVector.clear();
