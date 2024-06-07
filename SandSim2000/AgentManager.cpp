@@ -69,9 +69,10 @@ void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, In
             for (int i = 0; i < path->size(); i++)
             {
                 sf::Vector2i cellPosition = sf::Vector2i(path->at(i)->x, path->at(i)->y);
-                Tree tree(10, 10);
 
-                placeScenery(cellPosition, &scene.gameScene, tree, *gameStateManager);
+                Agent baron(10, 10, -1, -1, -1, -1, "RedBaron");
+
+                placeAgent(cellPosition, &scene.gameScene, baron, *gameStateManager);
             }
 
         }
@@ -93,14 +94,12 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
 
 void AgentManager::placeAgent(sf::Vector2i mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
 {
-    GridGenerator gridgen = GridGenerator();
-    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(mouseWorldPosition);
 
-    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
+    std::cout << "Agent Placed" << std::endl;
 
     if (agent.getUnitType() == "RedBaron")
     {
-        Agent baron = Agent(intEuclidianPos.x, intEuclidianPos.y, -1, -1, -1, -1, "RedBaron");
+        Agent baron = Agent(mouseWorldPosition.x, mouseWorldPosition.y, -1, -1, -1, -1, "RedBaron");
 
         gameStateManager.getState().Units.push_back(baron);
 
