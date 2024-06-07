@@ -50,7 +50,10 @@ void AgentManager::onUpdate(
     }
     
     if (state.isTPressed) {
-        placeScenery(state.selectedCell, gameScene, sceneObject, gameStateManager);
+
+        Tree tree(10, 10);
+
+        placeScenery(state.selectedCell, gameScene, tree, gameStateManager);
     }
 }
 
