@@ -31,13 +31,18 @@ public:
 		GameStateManager& gameStateManager,
 		Camera& camera,
 		Scene& scene);
+
+	void UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene, std::set<std::vector<BattlefieldCell>::iterator>* gameScene);
+
 	void placeScenery(sf::Vector2i isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager);
+
 	void placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager);
-	void updateAgentPosition();
+
+
 	void setX(int xPosition);
 	void setY(int yPosition);
 
-	void UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene);
+
 
 	// DEBUG method only
 	void printGhostGrid();
@@ -58,7 +63,7 @@ private:
 
 	// -----Pathfinding---- //
 	// call these function in this order
-	void generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level);
+	void generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level, std::set<std::vector<BattlefieldCell>::iterator>* gameScene);
 	void cleanHeuristics();
 	void propagateWaveFrontHeuristics(BattlefieldCell* target, GameState* state);
 	int AStar(BattlefieldCell* start, BattlefieldCell* goal);

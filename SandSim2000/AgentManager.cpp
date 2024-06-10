@@ -22,7 +22,7 @@ void AgentManager::onUpdate(
     {
         startCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
 
-        UpdatePathfindingGoals(&gameStateManager, state, scene);
+        UpdatePathfindingGoals(&gameStateManager, state, scene, gameScene);
 
         leftClick = true;
     }
@@ -30,7 +30,7 @@ void AgentManager::onUpdate(
     {
         targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
 
-        UpdatePathfindingGoals(&gameStateManager, state, scene);
+        UpdatePathfindingGoals(&gameStateManager, state, scene, gameScene);
 
         rightClick = true;
     }
@@ -57,11 +57,11 @@ void AgentManager::onUpdate(
     }
 }
 
-void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene)
+void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene, std::set<std::vector<BattlefieldCell>::iterator>* gameScene)
 {
     if (startCell != nullptr && targetCell != nullptr)
     {
-        generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4);
+        generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4, gameScene);
         propagateWaveFrontHeuristics(targetCell, &gameStateManager->state);
 
         if (AStar(startCell, targetCell) == 1)
@@ -301,34 +301,43 @@ int max(int value_1, int value_2)
 }
 
 #define PADDING 2
-void AgentManager::generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level)
+void AgentManager::generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level, std::set<std::vector<BattlefieldCell>::iterator>* gameScene)
 {
+    // Print the number of BattlefieldCell objects in gameScene
+    if (gameScene) {
+        std::cout << "Number of BattlefieldCell objects in gameScene: " << gameScene->size() << std::endl;
+    } else {
+        std::cout << "gameScene is a null pointer." << std::endl;
+        return;
+    }
+
     int gridSize = std::sqrt(std::pow(4, level));
     int cellWidth = (state->quadTree->quadRect.getSize().x / std::pow(2, level));
     int cellHeight = (state->quadTree->quadRect.getSize().y / std::pow(2, level));
 
-    left = max(min(start->x - PADDING, goal->x - PADDING), 0);
-    right = min(max(start->x + PADDING + 1, goal->x + PADDING + 1), gridSize);
-    top = max(min(start->y - PADDING, goal->y - PADDING), 0);
-    bottom = min(max(start->y + PADDING + 1, goal->y + PADDING + 1), gridSize);
+    left = std::max(std::min(start->x - PADDING, goal->x - PADDING), 0);
+    right = std::min(std::max(start->x + PADDING + 1, goal->x + PADDING + 1), gridSize);
+    top = std::max(std::min(start->y - PADDING, goal->y - PADDING), 0);
+    bottom = std::min(std::max(start->y + PADDING + 1, goal->y + PADDING + 1), gridSize);
+
+    GhostGrid.clear();
 
     for (int i = top; i < bottom; ++i) {
         std::vector<BattlefieldCell*> line;
         for (int j = left; j < right; ++j)
         {
-            line.push_back(state->quadTree->getCell(state->quadTree, j * cellWidth, i * cellHeight, level));
+            BattlefieldCell* cell = state->quadTree->getCell(state->quadTree, j * cellWidth, i * cellHeight, level);
+            if (cell) {
+                line.push_back(cell);
+            } else {
+                line.push_back(nullptr);
+            }
         }
         GhostGrid.push_back(line);
     }
 
-    // Calculate width and height of the GhostGrid
-    int width = right - left;
-    int height = bottom - top;
-
-    // Print width and height
-    std::cout << "GhostGrid width: " << width << std::endl;
-    std::cout << "GhostGrid height: " << height << std::endl;
 }
+
 
 BattlefieldCell* AgentManager::getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY)
 {
