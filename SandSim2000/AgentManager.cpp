@@ -17,21 +17,22 @@ void AgentManager::onUpdate(
     Camera& camera,
     Scene& scene)
 {
-    
+
+    if (pathfinderAgent != nullptr)
+    {
+        pathfinderAgent->update();
+    }
+
     if (state.isLeftMouseButtonPressed && leftClick == false)
     {
-        startCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
+        targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
 
-        UpdatePathfindingGoals(&gameStateManager, state, scene, gameScene);
+        UpdatePathfindingGoals(&gameStateManager, state, scene);
 
         leftClick = true;
     }
     else if (state.isRightMouseButtonPressed && rightClick == false)
     {
-        targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
-
-        UpdatePathfindingGoals(&gameStateManager, state, scene, gameScene);
-
         rightClick = true;
     }
     else if (state.isLeftMouseButtonPressed == false)
@@ -42,44 +43,35 @@ void AgentManager::onUpdate(
     {
         rightClick = false;
     }
-
-    if (state.isSpaceBarPressed)
-    {
-        targetCell = nullptr;
-        startCell = nullptr;
-    }
-    
-    if (state.isTPressed) {
-
-        Tree tree(10, 10);
-
-        placeScenery(state.selectedCell, gameScene, tree, gameStateManager);
-    }
 }
 
-void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene, std::set<std::vector<BattlefieldCell>::iterator>* gameScene)
+void AgentManager::UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene)
 {
-    if (startCell != nullptr && targetCell != nullptr)
+    if (targetCell != nullptr)
     {
-        generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4, gameScene);
+        BattlefieldCell* startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, pathfinderAgent->getPosX() * 100, pathfinderAgent->getPosY() * 100, 4);
+
+        generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4);
         propagateWaveFrontHeuristics(targetCell, &gameStateManager->state);
+
 
         if (AStar(startCell, targetCell) == 1)
         {
-            //printPathGrid(&gameStateManager->getState());
-            //printGhostGrid();
+            printPathGrid(&gameStateManager->getState());
+            printGhostGrid();
 
             std::vector<BattlefieldCell*>* path = getPath();
 
+            /*
             for (int i = 0; i < path->size(); i++)
             {
                 sf::Vector2i cellPosition = sf::Vector2i(path->at(i)->x, path->at(i)->y);
+                Tree tree(10, 10);
 
-                Agent baron(10, 10, -1, -1, -1, -1, "RedBaron");
-
-                placeAgent(cellPosition, &scene.gameScene, baron, *gameStateManager);
+                placeScenery(cellPosition, &scene.gameScene, tree, *gameStateManager);
             }
-
+            */
+            pathfinderAgent->setPath(path);
         }
         cleanHeuristics();
     }
@@ -90,39 +82,48 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
 {
     if (sceneObject.getUnitType() == "Tree")
     {
-        Tree tree = Tree(isometricCell.x, isometricCell.y);
+        Tree* tree = new Tree(isometricCell.x, isometricCell.y);
+
         gameStateManager.getState().Units.push_back(tree);
-
-        gameStateManager.getState().quadTree->insert(&tree, 100);
-
-        BattlefieldCell* cell = gameStateManager.getCell(isometricCell.x, isometricCell.y);
-
-        if (cell != nullptr)
-        {
-            cell->impassableTerrain = true;
-        }
+        gameStateManager.getState().quadTree->insert(tree, 100);
     }
 }
 
-void AgentManager::placeAgent(sf::Vector2i mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
+void AgentManager::placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
 {
-    if (agent.getUnitType() == "RedBaron")
-    {
-        Agent baron = Agent(mouseWorldPosition.x, mouseWorldPosition.y, -1, -1, -1, -1, "RedBaron");
+    GridGenerator gridgen = GridGenerator();
+    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(cell);
 
-        gameStateManager.getState().Units.push_back(baron);
+    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
 
-        gameStateManager.getState().quadTree->insert(&baron, 100);
-    }
+
+    Agent* newAgent = new Agent(agent);
+
+    gameStateManager.getState().Units.push_back(newAgent);
+    gameStateManager.getState().quadTree->insert(newAgent, 100);
+}
+
+void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gamesScene, PathfinderAgent agent, GameStateManager& gameStateManager)
+{
+    GridGenerator gridgen = GridGenerator();
+    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(cell);
+
+    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
+
+    PathfinderAgent* newAgent = new PathfinderAgent(agent);
+    newAgent->setStartingCell(gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, intEuclidianPos.x * 100, intEuclidianPos.y * 100, 4));
+
+    gameStateManager.getState().Units.push_back(newAgent);
+    gameStateManager.getState().quadTree->insert(newAgent, 100);
+    pathfinderAgent = newAgent;
 }
 
 void AgentManager::cleanHeuristics()
 {
+    targetCell = nullptr;
+
     pathList.clear();
     closedList.clear();
-
-    targetCell = nullptr;
-    startCell = nullptr;
 
     while (!openList.empty())
         openList.pop();
@@ -301,43 +302,31 @@ int max(int value_1, int value_2)
 }
 
 #define PADDING 2
-void AgentManager::generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level, std::set<std::vector<BattlefieldCell>::iterator>* gameScene)
+void AgentManager::generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level)
 {
-    // Print the number of BattlefieldCell objects in gameScene
-    if (gameScene) {
-        std::cout << "Number of BattlefieldCell objects in gameScene: " << gameScene->size() << std::endl;
-    } else {
-        std::cout << "gameScene is a null pointer." << std::endl;
-        return;
-    }
-
     int gridSize = std::sqrt(std::pow(4, level));
     int cellWidth = (state->quadTree->quadRect.getSize().x / std::pow(2, level));
     int cellHeight = (state->quadTree->quadRect.getSize().y / std::pow(2, level));
 
-    left = std::max(std::min(start->x - PADDING, goal->x - PADDING), 0);
-    right = std::min(std::max(start->x + PADDING + 1, goal->x + PADDING + 1), gridSize);
-    top = std::max(std::min(start->y - PADDING, goal->y - PADDING), 0);
-    bottom = std::min(std::max(start->y + PADDING + 1, goal->y + PADDING + 1), gridSize);
-
-    GhostGrid.clear();
+    left = max(min(start->x - PADDING, goal->x - PADDING), 0);
+    right = min(max(start->x + PADDING + 1, goal->x + PADDING + 1), gridSize);
+    top = max(min(start->y - PADDING, goal->y - PADDING), 0);
+    bottom = min(max(start->y + PADDING + 1, goal->y + PADDING + 1), gridSize);
 
     for (int i = top; i < bottom; ++i) {
         std::vector<BattlefieldCell*> line;
         for (int j = left; j < right; ++j)
         {
-            BattlefieldCell* cell = state->quadTree->getCell(state->quadTree, j * cellWidth, i * cellHeight, level);
-            if (cell) {
-                line.push_back(cell);
-            } else {
-                line.push_back(nullptr);
-            }
+            line.push_back(state->quadTree->getCell(state->quadTree, j * cellWidth, i * cellHeight, level));
         }
         GhostGrid.push_back(line);
     }
+    std::cout << "X:" << GhostGrid[0].size() << std::endl;
+    std::cout << "Y:" << GhostGrid.size() << std::endl;
 
+    std::cout << GhostGrid[0][0]->x << ":" << GhostGrid[0][0]->y << std::endl;
+    std::cout << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->x << ":" << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->y << std::endl;
 }
-
 
 BattlefieldCell* AgentManager::getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY)
 {

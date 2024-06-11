@@ -12,6 +12,7 @@
 #include "Tree.h"
 #include "Camera.h"
 #include "Scene.h"
+#include "PathfinderAgent.h"
 
 struct LowestScoreSorter {
 	bool operator()(BattlefieldCell* a, BattlefieldCell* b) {
@@ -25,29 +26,28 @@ struct LowestScoreSorter {
 class AgentManager
 {
 public:
+
 	void onUpdate(
 		InputState& state,
 		std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
 		GameStateManager& gameStateManager,
 		Camera& camera,
 		Scene& scene);
-
-	void UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene, std::set<std::vector<BattlefieldCell>::iterator>* gameScene);
-
 	void placeScenery(sf::Vector2i isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery scenObject, GameStateManager& gameStateManager);
-
 	void placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager);
+	void placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gamesScene, PathfinderAgent agent, GameStateManager& gameStateManager);
 
-
+	void updateAgentPosition();
 	void setX(int xPosition);
 	void setY(int yPosition);
 
+	void UpdatePathfindingGoals(GameStateManager* gameStateManager, InputState& state, Scene& scene);
 
+	PathfinderAgent* pathfinderAgent = nullptr;
 
 	// DEBUG method only
 	void printGhostGrid();
 	void printPathGrid(GameState* state);
-
 
 	std::vector<BattlefieldCell*>* getPath() { return &pathList; }
 private:
@@ -63,7 +63,7 @@ private:
 
 	// -----Pathfinding---- //
 	// call these function in this order
-	void generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level, std::set<std::vector<BattlefieldCell>::iterator>* gameScene);
+	void generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level);
 	void cleanHeuristics();
 	void propagateWaveFrontHeuristics(BattlefieldCell* target, GameState* state);
 	int AStar(BattlefieldCell* start, BattlefieldCell* goal);
@@ -73,8 +73,8 @@ private:
 
 	BattlefieldCell* getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY);
 
-	BattlefieldCell* startCell = nullptr;
 	BattlefieldCell* targetCell = nullptr;
+
 
 	// Ghost Grid Rect
 	int left; int right; int top; int bottom;

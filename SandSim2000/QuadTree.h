@@ -76,7 +76,7 @@ struct QuadTreeLeaf : public QuadTree {
 
     void insert(Agent* agent, int multiplier) override
     {
-        iter->Objects.push_back(*agent);
+        iter->Objects.push_back(agent);
     }
 
     BattlefieldCell* getCell(QuadTree* node, int targetX, int targetY, int targetLevel) override

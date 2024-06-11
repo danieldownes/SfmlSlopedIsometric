@@ -9,11 +9,24 @@
 class BattlefieldCell {
 public:
 
+    void removeObject(Agent* agent)
+    {
+        auto it = std::find(Objects.begin(), Objects.end(), agent);
+        if (it != Objects.end())
+        {
+            Objects.erase(it);
+        }
+    }
+    void addObject(Agent* agent)
+    {
+        Objects.push_back(agent);
+    }
+
     int x, y;
     int windowX, windowY;
     std::vector<sf::Vector2i> vertices;
 
-    std::vector<Agent> Objects = std::vector<Agent>();
+    std::vector<Agent*> Objects = std::vector<Agent*>();
     sf::Sprite* terrainSprite;
     int YOffset;
 
