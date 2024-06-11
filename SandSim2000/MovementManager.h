@@ -1,43 +1,47 @@
 #pragma once
-#include <SFML/System.hpp>
-#include <vector>
-#include <iostream>
 
-struct Node
-{
-	Node* pred;
-	sf::Vector2i pos;
+#include <cmath>
+#include <set>
+#include <typeinfo>
+#include <unordered_set>
+#include <queue>
+#include <functional>
 
-	double g, h;
+#include "PathfinderUtilities.h"
+#include "PathfinderAgent.h"
+#include "GameStateManager.h"
+#include "Scene.h"
 
-	Node(sf::Vector2i& newPos, double newH)
-		: pos(newPos), pred(nullptr), g(DBL_MAX), h(newH) {}
-
-	bool operator==(const Node& rhs) const
-	{
-		return pos == rhs.pos;
-	}
-
-	bool operator==(const sf::Vector2i& rhs) const
-	{
-		return pos == rhs;
-	}
-};
 
 class MovementManager
 {
 public:
-	MovementManager(const int&);
-	~MovementManager();
+	// pass a PathfinderAgent by reference and the goal battlefieldCell
+	// This function then runs the pathfinding and sets the agents path
+	void SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal, GameStateManager* gameStateManager, InputState& state, Scene& scene);
 
-	std::vector<sf::Vector2i> AStarPathFind(sf::Vector2i, sf::Vector2i);
+	std::vector<BattlefieldCell*>* getPath() { return &pathList; }
+
 private:
-	void clearAndInitialiseMapNodes();
+	std::priority_queue<BattlefieldCell*, std::vector<BattlefieldCell*>, LowestScoreSorter> openList;
+	std::vector<BattlefieldCell*> closedList;
+	std::vector<BattlefieldCell*> pathListChildrenGrid;
+	std::vector<BattlefieldCell*> pathList;
 
-	std::vector<sf::Vector2i> retracePath(Node&);
-	std::vector<sf::Vector2i> getNeighboursOf(Node&) const;
-	double euclideanDistance(sf::Vector2i&, sf::Vector2i&) const;
+	std::vector<std::vector<BattlefieldCell*>> GhostGrid;
 
-	Node*** mapNodes;
-	const int mapSize;
+	void generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level);
+	void cleanHeuristics();
+	void propagateWaveFrontHeuristics(BattlefieldCell* goal, GameState* state);
+	int AStar(BattlefieldCell* start, BattlefieldCell* goal);
+
+	void ExploreNeighbours(BattlefieldCell* current, BattlefieldCell* goal);
+	void ReconstructPath(BattlefieldCell* goal);
+
+	BattlefieldCell* getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY);
+
+	// The current target cell for pathfinding
+	BattlefieldCell* targetCell = nullptr;
+	//Ghost Grid Rect
+	int left; int right; int top; int bottom;
 };

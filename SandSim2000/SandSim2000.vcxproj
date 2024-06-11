@@ -175,6 +175,7 @@
     <ClInclude Include="InputStateManager.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="PathfinderAgent.h" />
+    <ClInclude Include="PathfinderUtilities.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scenery.h" />

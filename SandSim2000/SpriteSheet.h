@@ -11,7 +11,7 @@ public:
     sf::Sprite* getSprite(sf::Vector2u position);
     sf::Texture texture;
 private:
-    int cell_height; int cell_width;
+    int cell_height = 0; int cell_width = 0;
     sf::Vector2u sprite_dimensions;
 
     std::vector<sf::Sprite> sprites;
