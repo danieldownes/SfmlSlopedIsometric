@@ -54,16 +54,16 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 		{
 			for (int i = 0; i < currentCell.Objects.size(); i++)
 			{
-				Agent currentAgent = *currentCell.Objects[i];
+				Agent* currentAgent = currentCell.Objects[i];
 
-				std::string spriteString = currentCell.Objects[i]->getSpriteString();
-				int spriteIndex = currentCell.Objects[i]->getSpriteIndex();
+				std::string spriteString = currentAgent->getSpriteString();
+				int spriteIndex = currentAgent->getSpriteIndex();
 
 
 				sf::Sprite objectSprite = *SpriteManager::GetInstance()->GetSprite(spriteString, spriteIndex);
 				objectSprite.setTexture(SpriteManager::GetInstance()->GetSpriteSheet(spriteString).texture);
 
-				sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentCell.Objects[i]->getPosX(), currentCell.Objects[i]->getPosY()));
+				sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentAgent->getPosX(), currentAgent->getPosY()));
 
 				objectSprite.setPosition(isometricPosition.x, isometricPosition.y - currentCell.YOffset);
 

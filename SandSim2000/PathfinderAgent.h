@@ -15,7 +15,4 @@ public:
 	std::vector<BattlefieldCell*> path = std::vector<BattlefieldCell*>();
 	BattlefieldCell* current = nullptr;
 	bool atDestination = true;
-
-	float movementCooldown = 0.4f;
-	sf::Clock timer;
 };

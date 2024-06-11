@@ -15,7 +15,7 @@ void PathfinderAgent::setPath(std::vector<BattlefieldCell*>* TargetPath)
 
 void PathfinderAgent::update()
 {
-	if (atDestination == false && timer.getElapsedTime().asSeconds() > movementCooldown)
+	if (atDestination == false)
 	{
 		BattlefieldCell* nextCell = path[0];
 		posX = nextCell->x; posY = nextCell->y;
@@ -30,8 +30,5 @@ void PathfinderAgent::update()
 
 		if (path.size() == 0)
 			atDestination = true;
-		std::cout << "Agent Position: " << getUnitType() << "\n";
-
-		timer.restart();
 	}
 }
