@@ -19,9 +19,9 @@ int main() {
     Camera camera;
     Scene scene;
 
+    agentManager.placePathfinderAgent(sf::Vector2i(8, 8), &scene.gameScene, PathfinderAgent(8, 8, "PathfinderAgent"), gameStateManager);
 
     while (camera.window.isOpen()) {
-
         inputState = InputStateManager::getInstance().updateInputState(camera.window, inputState);
         /*
         sf::Event event;

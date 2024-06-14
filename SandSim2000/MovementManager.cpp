@@ -1,106 +1,222 @@
 #include "MovementManager.h"
 
-MovementManager::MovementManager(const int& newMapSize)
-	: mapSize(newMapSize) {
-	clearAndInitialiseMapNodes();
-}
-
-MovementManager::~MovementManager() {
-
-}
-
-void MovementManager::clearAndInitialiseMapNodes()
+void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal, GameStateManager* gameStateManager, InputState& state, Scene& scene)
 {
-	mapNodes = new Node**[mapSize];
-	for (int i = 0; i < mapSize; i++) {
-		mapNodes[i] = new Node*[mapSize];
-		for (int j = 0; j < mapSize; j++)
-			mapNodes[i][j] = nullptr;
-	}
+    if (goal != nullptr)
+    {
+        targetCell = goal;
+
+        BattlefieldCell* startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, agent->getPosX() * 100, agent->getPosY() * 100, 4);
+
+        generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4);
+        propagateWaveFrontHeuristics(targetCell, &gameStateManager->state);
+
+        if (AStar(startCell, targetCell) == 1)
+        {
+            std::vector<BattlefieldCell*>* path = getPath();
+
+            agent->setPath(path);
+        }
+        cleanHeuristics();
+    }
 }
 
-std::vector<sf::Vector2i> MovementManager::AStarPathFind(sf::Vector2i source, sf::Vector2i target)
+#define GHOST_PADDING 2
+void MovementManager::generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level)
 {
-	Node sourceNode(source, euclideanDistance(source, target));
-	sourceNode.g = 0;
+    int gridSize = std::sqrt(std::pow(4, level));
+    int cellWidth = (state->quadTree->quadRect.getSize().x / std::pow(2, level));
+    int cellHeight = (state->quadTree->quadRect.getSize().y / std::pow(2, level));
 
-	mapNodes[source.x][source.y] = &sourceNode;
+    left = max(min(start->x - GHOST_PADDING, goal->x - GHOST_PADDING), 0);
+    right = min(max(start->x + GHOST_PADDING + 1, goal->x + GHOST_PADDING + 1), gridSize);
+    top = max(min(start->y - GHOST_PADDING, goal->y - GHOST_PADDING), 0);
+    bottom = min(max(start->y + GHOST_PADDING + 1, goal->y + GHOST_PADDING + 1), gridSize);
 
-	std::vector<Node*> openSet = { &sourceNode };
+    for (int i = top; i < bottom; ++i) {
+        std::vector<BattlefieldCell*> line;
+        for (int j = left; j < right; ++j)
+        {
+            line.push_back(state->quadTree->getCell(state->quadTree, j * cellWidth, i * cellHeight, level));
+        }
+        GhostGrid.push_back(line);
+    }
+    std::cout << "X:" << GhostGrid[0].size() << std::endl;
+    std::cout << "Y:" << GhostGrid.size() << std::endl;
 
-	while (!openSet.empty())
-	{
-		int current = 0;
-		for (int i = 1; i < openSet.size(); i++)
-			if (openSet[current]->g + openSet[current]->h > openSet[i]->g + openSet[i]->h)
-				current = i;
-
-		Node* currentNode = openSet[current];
-
-		if (*currentNode == target) {
-			clearAndInitialiseMapNodes();
-			return retracePath(*currentNode);
-		}
-
-		openSet.erase(std::next(openSet.begin(), current));
-
-		std::vector<sf::Vector2i> neighbours = getNeighboursOf(*currentNode);
-
-		for (sf::Vector2i v : neighbours)
-		{
-			if (mapNodes[v.x][v.y] == nullptr)
-				mapNodes[v.x][v.y] = new Node(v, euclideanDistance(target, v));
-
-			Node* neighbour = mapNodes[v.x][v.y];
-			double temp_g = currentNode->g + 1;
-
-			if (temp_g < neighbour->g)
-			{
-				neighbour->pred = currentNode;
-				neighbour->g = temp_g;
-
-				if (std::find_if(openSet.begin(), openSet.end(), [neigh = neighbour] (Node* c) { return c == neigh; }) == openSet.end())
-					openSet.push_back(neighbour);
-			}
-		}
-	}
-
-	clearAndInitialiseMapNodes();
-	return std::vector<sf::Vector2i>();
+    std::cout << GhostGrid[0][0]->x << ":" << GhostGrid[0][0]->y << std::endl;
+    std::cout << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->x << ":" << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->y << std::endl;
 }
 
-std::vector<sf::Vector2i> MovementManager::getNeighboursOf(Node& node) const
+
+void MovementManager::propagateWaveFrontHeuristics(BattlefieldCell* goal, GameState* state)
 {
-	sf::Vector2i pos = node.pos;
+    std::vector<BattlefieldCell*> waveFrontNodes;
+    std::unordered_set<BattlefieldCell*, NeibourListHash> neighbourNodes;
 
-	std::vector<sf::Vector2i> neighbours = std::vector<sf::Vector2i>();
+    goal->hScore = 10;
+    waveFrontNodes.push_back(goal);
 
-	if (pos.x != 0)
-		neighbours.push_back(sf::Vector2i(pos.x - 1, pos.y));
-	if (pos.x != mapSize - 1)
-		neighbours.push_back(sf::Vector2i(pos.x + 1, pos.y));
-	if (pos.y != 0)
-		neighbours.push_back(sf::Vector2i(pos.x, pos.y - 1));
-	if (pos.y != mapSize - 1)
-		neighbours.push_back(sf::Vector2i(pos.x, pos.y + 1));
+    while (!waveFrontNodes.empty())
+    {
+        for (BattlefieldCell* node : waveFrontNodes)
+        {
+            int x = node->x; int y = node->y;
+            // Z is the depth of the node in the quadtree, 
+            // however we only have the one layer and dont store its depth
+            int z = 4;
 
-	return neighbours;
+
+            BattlefieldCell* northNeighbour = getCellFromGhost(x, y - 1);
+            BattlefieldCell* eastNeighbour = getCellFromGhost(x + 1, y);
+            BattlefieldCell* southNeighbour = getCellFromGhost(x, y + 1);
+            BattlefieldCell* westNeighbour = getCellFromGhost(x - 1, y);
+
+            if (northNeighbour != nullptr && northNeighbour->hScore == 0 && !northNeighbour->impassableTerrain) {
+                northNeighbour->hScore = node->hScore + 10;
+                neighbourNodes.insert(northNeighbour);
+            }
+
+            if (eastNeighbour != nullptr && eastNeighbour->hScore == 0 && !eastNeighbour->impassableTerrain) {
+                eastNeighbour->hScore = node->hScore + 10;
+                neighbourNodes.insert(eastNeighbour);
+            }
+
+            if (southNeighbour != nullptr && southNeighbour->hScore == 0 && !southNeighbour->impassableTerrain) {
+                southNeighbour->hScore = node->hScore + 10;
+                neighbourNodes.insert(southNeighbour);
+            }
+
+            if (westNeighbour != nullptr && westNeighbour->hScore == 0 && !westNeighbour->impassableTerrain) {
+                westNeighbour->hScore = node->hScore + 10;
+                neighbourNodes.insert(westNeighbour);
+            }
+        }
+
+        waveFrontNodes.clear();
+
+        for (BattlefieldCell* neighbourNode : neighbourNodes) {
+            waveFrontNodes.push_back(neighbourNode);
+        }
+
+        neighbourNodes.clear();
+    }
 }
 
-std::vector<sf::Vector2i> MovementManager::retracePath(Node& start)
+
+int MovementManager::AStar(BattlefieldCell* start, BattlefieldCell* goal)
 {
-	std::vector<sf::Vector2i> path = { start.pos };
+    if (start == nullptr || goal == nullptr)
+    {
+        std::cerr << "[ERROR][PATHFINDING]--> Start or goal is nullptr" << std::endl;
+        return 0;
+    }
 
-	Node current = start;
-	while (current.pred != nullptr) {
-		path.insert(path.begin(), current.pred->pos);
-		current = *current.pred;
-	}
+    openList.push(start);
 
-	return path;
+    while (!openList.empty())
+    {
+        BattlefieldCell* current = openList.top();
+        openList.pop();
+
+        current->inClosedList = true;
+        closedList.push_back(current);
+
+        if (current == goal)
+        {
+            std::cout << "path found" << std::endl;
+            ReconstructPath(goal);
+            return 1;
+        }
+        ExploreNeighbours(current, goal);
+    }
+    std::cout << "no path found" << std::endl;
+    return -1;
 }
 
-double MovementManager::euclideanDistance(sf::Vector2i& v, sf::Vector2i& u) const
+void MovementManager::ExploreNeighbours(BattlefieldCell* current, BattlefieldCell* goal)
 {
-	return (v.x - u.x) * (v.x - u.x) + (v.y - u.y) * (v.y - u.y);
+    int dx[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+    int dy[8] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+
+    BattlefieldCell* bestNeighbour = nullptr;
+    int bestFScore = std::numeric_limits<int>::max();
+
+    for (int i = 0; i < 8; ++i)
+    {
+        int nx = current->x + dx[i];
+        int ny = current->y + dy[i];
+        int levelInt = 4;
+
+        BattlefieldCell* neighbour = getCellFromGhost(nx, ny);
+        if (neighbour != nullptr && !neighbour->impassableTerrain && !neighbour->inClosedList)
+        {
+            int gScore = current->gScore + ((i % 2 == 0) ? 10 : 14);
+            int fScore = neighbour->hScore + gScore;
+            neighbour->gScore = gScore;
+            neighbour->fScore = fScore;
+
+            if (neighbour->pathParent == nullptr || current->fScore < neighbour->pathParent->fScore)
+            {
+                neighbour->pathParent = current;
+            }
+
+            if (fScore < bestFScore) {
+                bestNeighbour = neighbour;
+                bestFScore = fScore;
+            }
+        }
+    }
+    if (bestNeighbour != nullptr) {
+        openList.push(bestNeighbour);
+    }
+}
+
+BattlefieldCell* MovementManager::getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY)
+{
+    if (BattlefieldCellX >= left && BattlefieldCellX < right && BattlefieldCellY >= top && BattlefieldCellY < bottom)
+        return GhostGrid[BattlefieldCellY - top][BattlefieldCellX - left];
+    return nullptr;
+}
+
+void MovementManager::ReconstructPath(BattlefieldCell* goal)
+{
+    BattlefieldCell* current = goal;
+    while (current != nullptr)
+    {
+        pathList.push_back(current);
+        current = current->pathParent;
+    }
+
+    std::reverse(pathList.begin(), pathList.end());
+}
+
+
+void MovementManager::cleanHeuristics()
+{
+    targetCell = nullptr;
+
+    pathList.clear();
+    closedList.clear();
+
+    while (!openList.empty())
+        openList.pop();
+
+    for (int i = top; i < bottom; i++)
+    {
+        for (int j = left; j < right; j++)
+        {
+            BattlefieldCell* current = getCellFromGhost(j, i);
+
+            current->hScore = 0;
+            current->gScore = 0;
+            current->fScore = 0;
+            current->pathParent = nullptr;
+            current->inClosedList = false;
+        }
+    }
+
+    for (int i = 0; i < GhostGrid.size(); i++)
+        GhostGrid[i].clear();
+    GhostGrid.clear();
 }

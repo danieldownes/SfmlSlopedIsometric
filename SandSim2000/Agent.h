@@ -1,6 +1,9 @@
 #pragma once
+#include "SFML/Graphics/Sprite.hpp"
+
+#include <string>
+
 #include "SpriteManager.h"
-#include <SFML/Graphics/Sprite.hpp>
 
 class Agent {
 protected:
@@ -10,9 +13,9 @@ protected:
     int speed;
     int ballisticSkill;
 
-    sf::String unitType;
+    std::string unitType;
     int spriteIndex = 0;
-    
+
 
 public:
     Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType);
@@ -26,13 +29,13 @@ public:
     int getArmour() const;
     int getSpeed() const;
     int getBallisticSkill() const;
-    sf::String getUnitType() const;
+    std::string getUnitType() const;
 
     void setHealth(int newHealth);
     void setArmour(int newArmour);
     void setSpeed(int newSpeed);
     void setBallisticSkill(int newBallisticSkill);
-    void setUnitType(sf::String unit);
+    void setUnitType(std::string unit);
 
     std::string getSpriteString() { return unitType; }
     int getSpriteIndex() { return spriteIndex; }

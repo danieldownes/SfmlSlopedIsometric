@@ -6,7 +6,7 @@ class GridGenerator
 public:
     GridGenerator();
     sf::Vector2f cartesianToIsometricTransform(const sf::Vector2f& cartesianPosition);
-    sf::Vector2f isometricToCartesianTransform(const sf::Vector2f& isometricPosition);
+    sf::Vector2f isometricToCartesianTransform(const sf::Vector2i& isometricPosition);
     sf::Vector2f mouseToIsometric(const sf::Vector2i& mouseCoords);
     sf::Vector2f transformToIsometric(const float worldX, const float worldY);
     sf::Vector2f isometricFromMouse(const sf::Vector2i& mouseCoords);

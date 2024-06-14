@@ -1,8 +1,11 @@
 #pragma once
-#include <vector>
+
 #include "SFML/Graphics.hpp"
-#include "SpriteSheet.h"
+
+#include <vector>
 #include <list>
+
+#include "SpriteSheet.h"
 
 class SpriteManager
 {

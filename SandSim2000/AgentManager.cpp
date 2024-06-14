@@ -1,67 +1,89 @@
 #include "AgentManager.h"
 
-
-#define CELLSIZE 100
+/*                        +++++++++++++ Agent Manager +++++++++++++                             */
+/* Method: UpdateImpassableTerrainNodes - Sets selected nodes as impassable terrain             */
+/* Method: PropagateWaveFrontHeuristics - Sets heuristics for nodes in a wave out from target   */
+/* Method: AStar - Performs main loop of AStar on a grid with heuristics preset from WFP        */
+/* Method: ExploreNeighbours - Neighbours of current cell passed to it                          */
+/* Method: ReconstructPath - Builds list of path nodes based on parent nodes in path            */
+/*                        +++++++++++++ Debug Methods +++++++++++++                             */
+/* Method: PrintGhostGrid - Prints the ghost grid, has commented out code to print the hScore   */
+/*             +++++++++++++     +++++++++++++        +++++++++++++                             */
 
 void AgentManager::onUpdate(
-    InputState& inputState, 
-    std::set<std::vector<BattlefieldCell>::iterator>* gameScene, 
-    GameStateManager& gameStateManager, 
-    Camera& camera, 
+    InputState& state,
+    std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+    GameStateManager& gameStateManager,
+    Camera& camera,
     Scene& scene)
 {
-    if (inputState.isLeftMouseButtonPressed && leftClick == false)
+
+    if (pathfinderAgent != nullptr)
     {
+        pathfinderAgent->update();
+    }
 
-        Tree tree(0,0);
+    if (state.isLeftMouseButtonPressed && leftClick == false)
+    {
+        
+        BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
+        
+        movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene);
 
-        placeScenery(inputState.selectedCell, &scene.gameScene, tree, gameStateManager);
 
         leftClick = true;
     }
-    else if (inputState.isRightMouseButtonPressed && rightClick == false)
+    else if (state.isRightMouseButtonPressed && rightClick == false)
     {
-        Agent baron(10, 10, -1, -1, -1, -1, "RedBaron");
-
-        placeAgent(camera.selectedCell, &scene.gameScene, baron, gameStateManager);
-
-        leftClick = true;
+        rightClick = true;
     }
-    else if (inputState.isLeftMouseButtonPressed == false)
+    else if (state.isLeftMouseButtonPressed == false)
     {
         leftClick = false;
     }
-    else if (inputState.isRightMouseButtonPressed == false)
+    else if (state.isRightMouseButtonPressed == false)
     {
         rightClick = false;
     }
 }
 
 
-void AgentManager::placeScenery(sf::Vector2i selectedCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
+void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
 {
     if (sceneObject.getUnitType() == "Tree")
     {
-        Tree tree = Tree(selectedCell.x, selectedCell.y);
-        gameStateManager.getState().Units.push_back(tree);
+        Tree* tree = new Tree(isometricCell.x, isometricCell.y);
 
-        gameStateManager.getState().quadTree->insert(&tree, 100); 
+        gameStateManager.getState().Units.push_back(tree);
+        gameStateManager.getState().quadTree->insert(tree, 100);
     }
 }
 
-void AgentManager::placeAgent(sf::Vector2f mouseWorldPosition, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
+void AgentManager::placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
 {
     GridGenerator gridgen = GridGenerator();
-    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(mouseWorldPosition);
+    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(cell);
 
     sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
 
-    if (agent.getUnitType() == "RedBaron")
-    {
-        Agent baron = Agent(intEuclidianPos.x, intEuclidianPos.y, -1, -1, -1, -1, "RedBaron");
 
-        gameStateManager.getState().Units.push_back(baron);
+    Agent* newAgent = new Agent(agent);
 
-        gameStateManager.getState().quadTree->insert(&baron, 100);
-    }
+    gameStateManager.getState().Units.push_back(newAgent);
+    gameStateManager.getState().quadTree->insert(newAgent, 100);
+}
+
+void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gamesScene, PathfinderAgent agent, GameStateManager& gameStateManager)
+{
+    GridGenerator gridgen = GridGenerator();
+    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(cell);
+
+    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
+
+    PathfinderAgent* newAgent = new PathfinderAgent(agent);
+    newAgent->setStartingCell(gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, intEuclidianPos.x * 100, intEuclidianPos.y * 100, 4));
+
+    gameStateManager.getState().Units.push_back(newAgent);
+    gameStateManager.getState().quadTree->insert(newAgent, 100);
+    pathfinderAgent = newAgent;
 }

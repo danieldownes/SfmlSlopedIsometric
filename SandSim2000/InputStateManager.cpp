@@ -1,7 +1,6 @@
 #include "InputStateManager.h"
 
 InputStateManager::InputStateManager() {}
-
 InputStateManager::~InputStateManager() {}
 
 InputStateManager& InputStateManager::getInstance() {
@@ -12,6 +11,7 @@ InputStateManager& InputStateManager::getInstance() {
 InputState& InputStateManager::updateInputState(sf::Window& window, InputState& inputState) {
     inputState.isEscapePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
     inputState.isSpaceBarPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+    inputState.isTPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::T);
 
 
     inputState.mousePosition = sf::Mouse::getPosition(window);
