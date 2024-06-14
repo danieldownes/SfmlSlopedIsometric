@@ -17,7 +17,7 @@ sf::Sprite AnimationManager::getAgentSpriteFromDirection(Agent* agent)
 
 int AnimationManager::getIndexFromDirection(sf::Vector2i direction)
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		if (direction == directions[i])
 			return i;

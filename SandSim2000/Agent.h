@@ -17,7 +17,7 @@ protected:
     int spriteIndex = 0;
 
     bool directionalSprite = false;
-    sf::Vector2i currentDirection = sf::Vector2i(0,0);
+    sf::Vector2i currentDirection = sf::Vector2i(-1,0);
 
 public:
     Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, sf::String basicUnitType);

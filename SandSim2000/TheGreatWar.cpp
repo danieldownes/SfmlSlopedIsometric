@@ -45,6 +45,9 @@ int main() {
             }
         }
         */
+        if(inputState.isTPressed)
+            agentManager.placeScenery(inputState.selectedCell, &scene.gameScene, Tree(inputState.selectedCell.x, inputState.selectedCell.y), gameStateManager);
+
         agentManager.onUpdate(inputState, &scene.gameScene, gameStateManager, camera, scene);
 
         if (!camera.Update(inputState)) { break; }
