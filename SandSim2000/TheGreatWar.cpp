@@ -25,6 +25,8 @@ int main() {
     // depending on which direction the sprite is facing. This will require adding a "direction" property 
     // to the Agent class, 0-7 for directions. Then make sure the Pathfinder Agent Red Baron sprite
     // is facing in the right direction as it follows the path. 
+    // Add trees with T -- Liam
+
 
     agentManager.placePathfinderAgent(sf::Vector2i(8, 8), &scene.gameScene, PathfinderAgent(8, 8, "PathfinderAgent"), gameStateManager);
 
