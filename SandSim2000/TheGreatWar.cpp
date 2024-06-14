@@ -19,6 +19,12 @@ int main() {
     Camera camera;
     Scene scene;
 
+    // Liam: Instead of setting the sprite to the Pathfinder Agent, please set the Red Baron sprite. 
+    // I'm not fully tracking how you're updating the position of the Pathfinder Agent but 
+    // in the Animation Manager please create functionality to pick the right part of the sprite sheet
+    // depending on which direction the sprite is facing. This will require adding a "direction" property 
+    // to the Agent class, 0-7 for directions. Then make sure the Pathfinder Agent Red Baron sprite
+    // is facing in the right direction as it follows the path. 
     agentManager.placePathfinderAgent(sf::Vector2i(8, 8), &scene.gameScene, PathfinderAgent(8, 8, "PathfinderAgent"), gameStateManager);
 
     while (camera.window.isOpen()) {
