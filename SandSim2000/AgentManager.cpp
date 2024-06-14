@@ -56,6 +56,12 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
 
         gameStateManager.getState().Units.push_back(tree);
         gameStateManager.getState().quadTree->insert(tree, 100);
+
+        BattlefieldCell* cell = gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, isometricCell.x, isometricCell.y, constants.quadTreeDepth);
+        if (cell != nullptr)
+            cell->impassableTerrain = true;
+        else
+            std::cout << "TREE: " << isometricCell.x << ":" << isometricCell.y << std::endl;
     }
 }
 
