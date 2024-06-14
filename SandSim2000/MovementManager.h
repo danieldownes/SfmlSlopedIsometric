@@ -7,6 +7,7 @@
 #include <queue>
 #include <functional>
 
+#include "GlobalConstants.h"
 #include "PathfinderUtilities.h"
 #include "PathfinderAgent.h"
 #include "GameStateManager.h"
@@ -44,4 +45,6 @@ private:
 	BattlefieldCell* targetCell = nullptr;
 	//Ghost Grid Rect
 	int left; int right; int top; int bottom;
+
+	GlobalConstants constants;
 };
