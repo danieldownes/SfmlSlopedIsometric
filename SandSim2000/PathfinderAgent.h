@@ -6,7 +6,7 @@
 class PathfinderAgent : public Agent
 {
 public:
-	PathfinderAgent(int initialPosX, int initialPosY, sf::String unit) :Agent(initialPosX, initialPosY, -1, -1, -1, -1, unit) { };
+	PathfinderAgent(int initialPosX, int initialPosY, sf::String unit) :Agent(initialPosX, initialPosY, -1, -1, -1, -1, true, unit) { };
 
 	void setStartingCell(BattlefieldCell* startingCell) { current = startingCell; }
 	void setPath(std::vector<BattlefieldCell*>* TargetPath);
@@ -15,4 +15,7 @@ public:
 	std::vector<BattlefieldCell*> path = std::vector<BattlefieldCell*>();
 	BattlefieldCell* current = nullptr;
 	bool atDestination = true;
+
+	sf::Clock clock;
+	float movesPerSecond = 6;
 };

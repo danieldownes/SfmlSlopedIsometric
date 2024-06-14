@@ -5,24 +5,29 @@
 
 #include "SFML/Graphics.hpp"
 
-#include "GridGenerator.h"
-#include "GameState.h"
+#include "SpriteManager.h"
+#include "Agent.h"
 
 class AnimationManager
 {
 public:
-	AnimationManager();
-	~AnimationManager();
+	AnimationManager() {}
+	~AnimationManager() {}
 
-	void renderSpriteMap(sf::RenderWindow* window);
-	void renderTerrainMap(sf::RenderWindow* window, GameState* gameState);
+	sf::Sprite getAgentSpriteFromDirection(Agent* agent);
 private:
-	void initializeDefaultTerrainTexure();
-	void initializeGrassTerrainTextures();
+	sf::Vector2i directions[9] = {
+		sf::Vector2i(-1, 0),
+		sf::Vector2i(-1, -1),
+		sf::Vector2i(0, -1),
+		sf::Vector2i(-1, 1),
+		sf::Vector2i(-1, 1),
+		sf::Vector2i(1, -1),
+		sf::Vector2i(0, 1),
+		sf::Vector2i(1, 1),
+		sf::Vector2i(1, 0)
+	};
 
-	std::vector<sf::Sprite> spriteMap;
-	sf::Texture defaultTerrainTexture;
-
-	sf::Texture GrassTexture[3];
+	int getIndexFromDirection(sf::Vector2i direction);
 };
 

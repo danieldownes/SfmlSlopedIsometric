@@ -1,6 +1,7 @@
 #pragma once
 #include <set>
 #include "BattlefieldCell.h"
+#include "AnimationManager.h"
 #include "Camera.h"
 #include "GameState.h"
 #include "GridGenerator.h"
@@ -11,7 +12,7 @@ public:
 	Scene();
 
 	void UpdateGameScene(Camera& cam, GameState& gameState, InputState& inputState);
-	std::vector<sf::Sprite> buildGameScene();
+	std::vector<sf::Sprite> buildGameScene(AnimationManager* animationManager);
 	sf::Vector2i getScreenPositionOfCell(const BattlefieldCell& cell, Camera& cam, GridGenerator& gridGenerator);
 	void getBattlefieldCellFromMouseClick(Camera& cam, GridGenerator& gridGenerator, InputState& inputState);
 

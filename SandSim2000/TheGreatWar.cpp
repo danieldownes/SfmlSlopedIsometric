@@ -5,10 +5,12 @@
 #include "SpriteManager.h"
 #include "Tree.h"
 #include "AgentManager.h"
+#include "AnimationManager.h"
 
 
 int main() {
     SpriteManager sprites = SpriteManager();
+    AnimationManager animationManager;
 
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
@@ -47,7 +49,7 @@ int main() {
 
         if (!camera.Update(inputState)) { break; }
         scene.UpdateGameScene(camera, gameStateManager.getState(), inputState);
-        camera.Draw(scene.buildGameScene(), inputState);
+        camera.Draw(scene.buildGameScene(&animationManager), inputState);
     }
     return 0;
 }
