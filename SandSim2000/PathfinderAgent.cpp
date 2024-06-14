@@ -24,7 +24,6 @@ void PathfinderAgent::update()
 		if (current != nullptr) 
 		{
 			current->removeObject(this);
-			std::cout << current->Objects.size() << " - removed from this" << std::endl;
 		}
 
 

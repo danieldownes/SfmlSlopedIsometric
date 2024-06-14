@@ -41,11 +41,6 @@ void MovementManager::generateGhostGrid(GameState* state, BattlefieldCell* start
         }
         GhostGrid.push_back(line);
     }
-    std::cout << "X:" << GhostGrid[0].size() << std::endl;
-    std::cout << "Y:" << GhostGrid.size() << std::endl;
-
-    std::cout << GhostGrid[0][0]->x << ":" << GhostGrid[0][0]->y << std::endl;
-    std::cout << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->x << ":" << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->y << std::endl;
 }
 
 
@@ -124,7 +119,6 @@ int MovementManager::AStar(BattlefieldCell* start, BattlefieldCell* goal)
 
         if (current == goal)
         {
-            std::cout << "path found" << std::endl;
             ReconstructPath(goal);
             return 1;
         }

@@ -61,8 +61,6 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
 
         if (cell != nullptr)
             cell->impassableTerrain = true;
-        else
-            std::cout << "TREE: " << isometricCell.x << ":" << isometricCell.y << std::endl;
     }
 }
 
@@ -93,6 +91,4 @@ void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<
 
     pathfinderAgent = newAgent;
     pathfinderAgent->current = currentCell;
-
-    std::cout << currentCell->Objects.size() << "\n";
 }

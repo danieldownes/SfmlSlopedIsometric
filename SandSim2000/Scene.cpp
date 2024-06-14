@@ -52,13 +52,6 @@ std::vector<sf::Sprite> Scene::buildGameScene(AnimationManager* animationManager
 
 		if (currentCell.Objects.size() != 0)
 		{
-			if (currentCell.Objects.size() != 1)
-			{
-				std::cout << currentCell.Objects.size() << "\n";
-				std::cout << currentCell.Objects[0]->getUnitType() << "\n";
-				std::cout << currentCell.Objects[1]->getUnitType() << "\n";
-				std::cout << currentCell.x << "::" << currentCell.y << "\n";
-			}
 			for (int i = 0; i < currentCell.Objects.size(); i++)
 			{
 				Agent* currentAgent = currentCell.Objects[i];
