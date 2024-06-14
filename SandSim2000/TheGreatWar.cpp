@@ -23,17 +23,7 @@ int main() {
 
     while (camera.window.isOpen()) {
         inputState = InputStateManager::getInstance().updateInputState(camera.window, inputState);
-        /*
-        sf::Event event;
-        while (camera.window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                camera.window.close();
-            }
-            else if (event.type == sf::Event::MouseWheelScrolled) {
-                camera.Zoom(event);
-            }
-        }
-        */
+
         agentManager.onUpdate(inputState, &scene.gameScene, gameStateManager, camera, scene);
 
         if (!camera.Update(inputState)) { break; }

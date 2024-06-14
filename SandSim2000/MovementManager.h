@@ -21,7 +21,6 @@ public:
 	void SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal, GameStateManager* gameStateManager, InputState& state, Scene& scene);
 
 	std::vector<BattlefieldCell*>* getPath() { return &pathList; }
-
 private:
 	std::priority_queue<BattlefieldCell*, std::vector<BattlefieldCell*>, LowestScoreSorter> openList;
 	std::vector<BattlefieldCell*> closedList;

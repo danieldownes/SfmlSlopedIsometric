@@ -14,6 +14,46 @@ void Scene::UpdateGameScene(Camera& cam, GameState& gameState, InputState& input
 
 }
 
+void Scene::generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds)
+{
+	std::function<void(QuadTree*)> populateGhostGrid = [&](QuadTree* node) {
+		int screenX, screenY;
+		sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(node->quadRect.getPosition().x / tileSize, node->quadRect.getPosition().y / tileSize));
+		cam.WorldToScreen(isometricPosition.x + static_cast<float>(cam.window.getSize().x) / 2, isometricPosition.y, screenX, screenY);
+
+		int sizeX = node->quadRect.getSize().x * cam.scaleX;
+		int sizeY = static_cast<float>(node->quadRect.getSize().y) / 2 * cam.scaleY
+			+ static_cast<float>(tileSize) / 2 * quadTreeDepth * cam.scaleY;
+
+		sf::IntRect isometricNodeRect(screenX - sizeX / 2, screenY, sizeX, sizeY);
+
+		if (!viewbounds.intersects(isometricNodeRect)) return;
+
+		if (typeid(*node) == typeid(QuadTreeLeaf)) {
+			auto leaf = static_cast<QuadTreeLeaf*>(node);
+			BattlefieldCell* cell = &(*leaf->iter);
+			int x = cell->x;
+			int y = cell->y;
+
+			if (x >= GhostGrid.size()) {
+				GhostGrid.resize(x + 1);
+			}
+			if (y >= GhostGrid[x].size()) {
+				GhostGrid[x].resize(y + 1, nullptr);
+			}
+
+			GhostGrid[x][y] = cell;
+		}
+		else {
+			for (QuadTree* child : node->children) {
+				populateGhostGrid(child);
+			}
+		}
+		};
+
+	populateGhostGrid(root);
+}
+
 void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds) {
 	int screenX, screenY;
 	sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(root->quadRect.getPosition().x / TILE_SIZE, root->quadRect.getPosition().y / TILE_SIZE));

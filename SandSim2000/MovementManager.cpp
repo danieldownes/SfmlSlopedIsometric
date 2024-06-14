@@ -4,6 +4,10 @@ void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal,
 {
     if (goal != nullptr)
     {
+        
+        //GhostGrid = scene.generateGhostGridFromScene(gameStateManager->getState().quadTree, *gameStateManager->getCamera(), *gameStateManager->getGridGenerator(), gameStateManager->getState().viewbounds);
+
+
         targetCell = goal;
 
         BattlefieldCell* startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, agent->getPosX() * 100, agent->getPosY() * 100, 4);
