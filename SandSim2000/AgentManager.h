@@ -6,6 +6,7 @@
 #include <queue>
 #include <functional>
 
+#include "GlobalConstants.h"
 #include "GameStateManager.h"
 #include "InputState.h"
 #include "Scenery.h"
@@ -36,4 +37,5 @@ private:
 	bool rightClick = false;
 
 	MovementManager movementManager;
+	GlobalConstants constants;
 };

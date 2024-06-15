@@ -5,23 +5,30 @@
 void PathfinderAgent::setPath(std::vector<BattlefieldCell*>* TargetPath)
 {
 	path = std::vector<BattlefieldCell*>();
-	for (int i = 0; i < TargetPath->size(); i++)
+	if(TargetPath->size() > 1)
 	{
-		BattlefieldCell* next = TargetPath->at(i);
-		path.push_back(TargetPath->at(i));
+		for (int i = 1; i < TargetPath->size(); i++)
+		{
+			path.push_back(TargetPath->at(i));
+		}
+		atDestination = false;
 	}
-	atDestination = false;
 }
 
 void PathfinderAgent::update()
 {
-	if (atDestination == false)
+	if (atDestination == false && clock.getElapsedTime().asSeconds() >= 1 / movesPerSecond)
 	{
 		BattlefieldCell* nextCell = path[0];
+
+		currentDirection = sf::Vector2i(nextCell->x - posX, nextCell->y - posY);
 		posX = nextCell->x; posY = nextCell->y;
 
-		if (current != nullptr)
+		if (current != nullptr) 
+		{
 			current->removeObject(this);
+		}
+
 
 		path.erase(path.begin());
 
@@ -30,5 +37,7 @@ void PathfinderAgent::update()
 
 		if (path.size() == 0)
 			atDestination = true;
+
+		clock.restart();
 	}
 }

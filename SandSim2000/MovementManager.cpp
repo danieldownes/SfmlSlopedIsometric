@@ -41,11 +41,6 @@ void MovementManager::generateGhostGrid(GameState* state, BattlefieldCell* start
         }
         GhostGrid.push_back(line);
     }
-    std::cout << "X:" << GhostGrid[0].size() << std::endl;
-    std::cout << "Y:" << GhostGrid.size() << std::endl;
-
-    std::cout << GhostGrid[0][0]->x << ":" << GhostGrid[0][0]->y << std::endl;
-    std::cout << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->x << ":" << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->y << std::endl;
 }
 
 
@@ -64,7 +59,7 @@ void MovementManager::propagateWaveFrontHeuristics(BattlefieldCell* goal, GameSt
             int x = node->x; int y = node->y;
             // Z is the depth of the node in the quadtree, 
             // however we only have the one layer and dont store its depth
-            int z = 4;
+            int z = constants.quadTreeDepth;
 
 
             BattlefieldCell* northNeighbour = getCellFromGhost(x, y - 1);
@@ -124,7 +119,6 @@ int MovementManager::AStar(BattlefieldCell* start, BattlefieldCell* goal)
 
         if (current == goal)
         {
-            std::cout << "path found" << std::endl;
             ReconstructPath(goal);
             return 1;
         }
@@ -146,7 +140,7 @@ void MovementManager::ExploreNeighbours(BattlefieldCell* current, BattlefieldCel
     {
         int nx = current->x + dx[i];
         int ny = current->y + dy[i];
-        int levelInt = 4;
+        int levelInt = constants.quadTreeDepth;
 
         BattlefieldCell* neighbour = getCellFromGhost(nx, ny);
         if (neighbour != nullptr && !neighbour->impassableTerrain && !neighbour->inClosedList)
