@@ -36,7 +36,7 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 camera.window.close();
             }
-
+        }
         if(inputState.isTPressed)
             agentManager.placeScenery(inputState.selectedCell, &scene.gameScene, Tree(inputState.selectedCell.x, inputState.selectedCell.y), gameStateManager);
 
