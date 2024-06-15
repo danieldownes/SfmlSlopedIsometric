@@ -5,11 +5,14 @@
 void PathfinderAgent::setPath(std::vector<BattlefieldCell*>* TargetPath)
 {
 	path = std::vector<BattlefieldCell*>();
-	for (int i = 0; i < TargetPath->size(); i++)
+	if(TargetPath->size() > 1)
 	{
-		path.push_back(TargetPath->at(i));
+		for (int i = 1; i < TargetPath->size(); i++)
+		{
+			path.push_back(TargetPath->at(i));
+		}
+		atDestination = false;
 	}
-	atDestination = false;
 }
 
 void PathfinderAgent::update()
