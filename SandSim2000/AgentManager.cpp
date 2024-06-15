@@ -24,12 +24,7 @@ void AgentManager::onUpdate(
 
 
         std::vector<Agent*> agents = std::vector<Agent*>();
-        sf::Clock timer;
-        gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree, pathfinderAgent->getPosX() * 100, pathfinderAgent->getPosY() * 100, 300, 5, &agents);
-        std::cout << timer.getElapsedTime().asMicroseconds() << std::endl;
-
-        for (int i = 0; i < agents.size(); i++)
-            std::cout << agents[i]->getUnitType() << "\n";
+        gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree, pathfinderAgent->getPosX() * 100, pathfinderAgent->getPosY() * 100, 200, 4, &agents);
     }
 
     if (state.isLeftMouseButtonPressed && leftClick == false)
