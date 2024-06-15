@@ -62,6 +62,36 @@ struct QuadTree {
         return nullptr;
     }
 
+    bool CircleInRect(float circleX, float circleY, float radius, QuadTree* node)
+    {
+        float testX = circleX; float testY = circleY;
+
+        if (circleX < node->quadRect.getPosition().x)           testX = node->quadRect.getPosition().x;
+        else if (circleX < node->quadRect.getPosition().x)      testX = node->quadRect.getPosition().x + node->quadRect.getSize().x;
+        if (circleY < node->quadRect.getPosition().y)           testY = node->quadRect.getPosition().y;
+        else if (circleY < node->quadRect.getPosition().y)      testY = node->quadRect.getPosition().y + node->quadRect.getSize().y;
+
+        float distanceX = circleX - testX;
+        float distanceY = circleY - testY;
+
+        float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY));
+        if (distance <= radius)
+            return true;
+        return false;
+    }
+
+    virtual void getAgentsInRadius(QuadTree* node, float targetX, float targetY, float radius, int targetLevel, std::vector<Agent*>* agents)
+    {
+        if (node == nullptr) return;
+
+        for (int i = 0; i < 4; ++i)
+        {
+            bool ishit = CircleInRect(targetX, targetY, radius, node->children[i]);
+            if (ishit)
+                node->children[i]->getAgentsInRadius(node->children[i], targetX, targetY, radius, targetLevel, agents);
+        }
+    }
+
     QuadTree(const sf::IntRect& rect, const unsigned int& depth)
         : depth(depth), quadRect(rect), children{ nullptr, nullptr, nullptr, nullptr } {}
 
@@ -84,6 +114,16 @@ struct QuadTreeLeaf : public QuadTree {
         if (node->quadRect.getPosition().x == targetX && node->quadRect.getPosition().y == targetY && node->depth == targetLevel) return iter._Unwrapped();
 
         return nullptr;
+    }
+
+    void getAgentsInRadius(QuadTree* node, float targetX, float targetY, float radius, int targetLevel, std::vector<Agent*>* agents)
+    {
+        if (node == nullptr) return;
+
+        for (int i = 0; i < iter->Objects.size(); i++)
+        {
+            agents->push_back(iter->Objects[i]);
+        }
     }
 
     QuadTreeLeaf(const sf::IntRect& rect, const unsigned int& depth, std::vector<BattlefieldCell>::iterator& _iter)
