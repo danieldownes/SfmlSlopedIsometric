@@ -21,6 +21,15 @@ void AgentManager::onUpdate(
     if (pathfinderAgent != nullptr)
     {
         pathfinderAgent->update();
+
+
+        std::vector<Agent*> agents = std::vector<Agent*>();
+        sf::Clock timer;
+        gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree, pathfinderAgent->getPosX() * 100, pathfinderAgent->getPosY() * 100, 300, 5, &agents);
+        std::cout << timer.getElapsedTime().asMicroseconds() << std::endl;
+
+        for (int i = 0; i < agents.size(); i++)
+            std::cout << agents[i]->getUnitType() << "\n";
     }
 
     if (state.isLeftMouseButtonPressed && leftClick == false)
