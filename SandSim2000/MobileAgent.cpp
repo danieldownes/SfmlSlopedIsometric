@@ -38,8 +38,6 @@ void MobileAgent::updateCurrentSpriteDirection()
 {
 	float spriteBarrier = 0.01f;
 
-	//currentDirection.x = 0; currentDirection.y = 0;
-
 	if (velocity.x > spriteBarrier) currentDirection.x = 1;
 	if (velocity.x < -spriteBarrier) currentDirection.x = -1;
 
