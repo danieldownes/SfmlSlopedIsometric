@@ -22,7 +22,7 @@ int main() {
     Scene scene;
 
     agentManager.placePathfinderAgent(sf::Vector2i(8, 8), &scene.gameScene, PathfinderAgent(8, 8, "PathfinderAgent"), gameStateManager);
-    agentManager.placeMobileAgent(sf::Vector2i(8, 8), &scene.gameScene, MobileAgent(8, 8, 1, 1, 1, 1, true, "RedBaron"), gameStateManager);
+    agentManager.placeMobileAgent(sf::Vector2i(8, 8), &scene.gameScene, MobileAgent(8, 8, 1, 1, 1, 1, "RedBaron"), gameStateManager);
 
     agentManager.placeScenery(sf::Vector2i(7, 8), &scene.gameScene, Tree(7, 8), gameStateManager);
     agentManager.placeScenery(sf::Vector2i(9, 8), &scene.gameScene, Tree(9, 8), gameStateManager);
