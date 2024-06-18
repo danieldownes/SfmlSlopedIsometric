@@ -2,6 +2,8 @@
 
 #include "SFML/Graphics/Rect.hpp"
 
+#include "GlobalConstants.h"
+
 #include <array>
 #include <vector>
 #include <iostream>
@@ -10,6 +12,8 @@ struct QuadTree {
     virtual void f() {};
 
     unsigned int depth;
+    GlobalConstants constants;
+
     sf::IntRect quadRect;
     std::array<QuadTree*, 4> children;
 
@@ -122,7 +126,12 @@ struct QuadTreeLeaf : public QuadTree {
 
         for (int i = 0; i < iter->Objects.size(); i++)
         {
-            agents->push_back(iter->Objects[i]);
+            float differenceX = abs(targetX - iter->Objects[i]->getPosX() * constants.cellSize);
+            float differenceY = abs(targetY - iter->Objects[i]->getPosY() * constants.cellSize);
+            float distance = std::sqrt((differenceX * differenceX) + (differenceY * differenceY));
+
+            if(distance <= radius)
+                agents->push_back(iter->Objects[i]);
         }
     }
 

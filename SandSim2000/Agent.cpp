@@ -1,6 +1,6 @@
 #include "Agent.h"
 
-Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, sf::String basicUnitType)
+Agent::Agent(float initialPosX, float initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, std::string basicUnitType)
     : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), directionalSprite(directional), unitType(basicUnitType) {
 }
 
@@ -17,12 +17,20 @@ void Agent::takeDamage(int damage) {
     }
 }
 
-int Agent::getPosX() const {
+float Agent::getPosX() const {
     return posX;
 }
 
-int Agent::getPosY() const {
+float Agent::getPosY() const {
     return posY;
+}
+
+int Agent::getPosXIndex() const {
+    return std::floor(posX);
+}
+
+int Agent::getPosYIndex() const {
+    return std::floor(posY);
 }
 
 int Agent::getHealth() const {

@@ -2,12 +2,13 @@
 #include "SFML/Graphics/Sprite.hpp"
 
 #include <string>
+#include <math.h>
 
 #include "SpriteManager.h"
 
 class Agent {
 protected:
-    int posX, posY;
+    float posX, posY;
     int health;
     int armour;
     int speed;
@@ -20,13 +21,15 @@ protected:
     sf::Vector2i currentDirection = sf::Vector2i(-1,0);
 
 public:
-    Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, sf::String basicUnitType);
+    Agent(float initialPosX, float initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, std::string basicUnitType);
     virtual ~Agent();
 
     void takeDamage(int damage);
 
-    int getPosX() const;
-    int getPosY() const;
+    float getPosX() const;
+    float getPosY() const;
+    int getPosXIndex() const;
+    int getPosYIndex() const;
     int getHealth() const;
     int getArmour() const;
     int getSpeed() const;
@@ -35,6 +38,7 @@ public:
 
     bool isDirectionalSprite() const;
     sf::Vector2i getCurrentDirection() const;
+    bool isPathfinderAgent = false;
 
     void setHealth(int newHealth);
     void setArmour(int newArmour);
