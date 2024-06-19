@@ -1,6 +1,6 @@
 #include "MovementManager.h"
 
-void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal, GameStateManager* gameStateManager, InputState& state, Scene& scene)
+void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal, GameStateManager* gameStateManager, InputState& state, Scene& scene, Camera* camera)
 {
     if (goal != nullptr)
     {
@@ -12,7 +12,12 @@ void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal,
 
         BattlefieldCell* startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, agent->getPosX() * 100, agent->getPosY() * 100, 4);
 
-        generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4);
+        //generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4);
+
+        GridGenerator generator;
+        sf::IntRect viewbounds(0, 0, camera->window.getSize().x, camera->window.getSize().y);
+        ghostGrid = scene.generateGhostGridFromScene(gameStateManager->getState().quadTree, *camera, generator, viewbounds);
+
         propagateWaveFrontHeuristics(targetCell, &gameStateManager->state);
 
         if (AStar(startCell, targetCell) == 1)
@@ -43,13 +48,8 @@ void MovementManager::generateGhostGrid(GameState* state, BattlefieldCell* start
         {
             line.push_back(state->quadTree->getCell(state->quadTree, j * cellWidth, i * cellHeight, level));
         }
-        GhostGrid.push_back(line);
+        ghostGrid->ghostGridBuffer.push_back(line);
     }
-    std::cout << "X:" << GhostGrid[0].size() << std::endl;
-    std::cout << "Y:" << GhostGrid.size() << std::endl;
-
-    std::cout << GhostGrid[0][0]->x << ":" << GhostGrid[0][0]->y << std::endl;
-    std::cout << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->x << ":" << GhostGrid[GhostGrid.size() - 1][GhostGrid[0].size() - 1]->y << std::endl;
 }
 
 
@@ -71,10 +71,10 @@ void MovementManager::propagateWaveFrontHeuristics(BattlefieldCell* goal, GameSt
             int z = 4;
 
 
-            BattlefieldCell* northNeighbour = getCellFromGhost(x, y - 1);
-            BattlefieldCell* eastNeighbour = getCellFromGhost(x + 1, y);
-            BattlefieldCell* southNeighbour = getCellFromGhost(x, y + 1);
-            BattlefieldCell* westNeighbour = getCellFromGhost(x - 1, y);
+            BattlefieldCell* northNeighbour = ghostGrid->getCell(x, y - 1);
+            BattlefieldCell* eastNeighbour = ghostGrid->getCell(x + 1, y);
+            BattlefieldCell* southNeighbour = ghostGrid->getCell(x, y + 1);
+            BattlefieldCell* westNeighbour = ghostGrid->getCell(x - 1, y);
 
             if (northNeighbour != nullptr && northNeighbour->hScore == 0 && !northNeighbour->impassableTerrain) {
                 northNeighbour->hScore = node->hScore + 10;
@@ -152,7 +152,7 @@ void MovementManager::ExploreNeighbours(BattlefieldCell* current, BattlefieldCel
         int ny = current->y + dy[i];
         int levelInt = 4;
 
-        BattlefieldCell* neighbour = getCellFromGhost(nx, ny);
+        BattlefieldCell* neighbour = ghostGrid->getCell(nx, ny);
         if (neighbour != nullptr && !neighbour->impassableTerrain && !neighbour->inClosedList)
         {
             int gScore = current->gScore + ((i % 2 == 0) ? 10 : 14);
@@ -174,13 +174,6 @@ void MovementManager::ExploreNeighbours(BattlefieldCell* current, BattlefieldCel
     if (bestNeighbour != nullptr) {
         openList.push(bestNeighbour);
     }
-}
-
-BattlefieldCell* MovementManager::getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY)
-{
-    if (BattlefieldCellX >= left && BattlefieldCellX < right && BattlefieldCellY >= top && BattlefieldCellY < bottom)
-        return GhostGrid[BattlefieldCellY - top][BattlefieldCellX - left];
-    return nullptr;
 }
 
 void MovementManager::ReconstructPath(BattlefieldCell* goal)
@@ -206,21 +199,5 @@ void MovementManager::cleanHeuristics()
     while (!openList.empty())
         openList.pop();
 
-    for (int i = top; i < bottom; i++)
-    {
-        for (int j = left; j < right; j++)
-        {
-            BattlefieldCell* current = getCellFromGhost(j, i);
-
-            current->hScore = 0;
-            current->gScore = 0;
-            current->fScore = 0;
-            current->pathParent = nullptr;
-            current->inClosedList = false;
-        }
-    }
-
-    for (int i = 0; i < GhostGrid.size(); i++)
-        GhostGrid[i].clear();
-    GhostGrid.clear();
+    ghostGrid->cleanHeuristics();
 }

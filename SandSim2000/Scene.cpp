@@ -14,7 +14,7 @@ void Scene::UpdateGameScene(Camera& cam, GameState& gameState, InputState& input
 
 }
 
-void Scene::generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds)
+GhostGrid* Scene::generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds)
 {
 	std::function<void(QuadTree*)> populateGhostGrid = [&](QuadTree* node) {
 		int screenX, screenY;
@@ -35,23 +35,25 @@ void Scene::generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerato
 			int x = cell->x;
 			int y = cell->y;
 
-			if (x >= GhostGrid.size()) {
-				GhostGrid.resize(x + 1);
+			if (x >= ghostGrid.ghostGridBuffer.size()) {
+				ghostGrid.ghostGridBuffer.resize(x + 1);
 			}
-			if (y >= GhostGrid[x].size()) {
-				GhostGrid[x].resize(y + 1, nullptr);
+			if (y >= ghostGrid.ghostGridBuffer[x].size()) {
+				ghostGrid.ghostGridBuffer[x].resize(y + 1, nullptr);
 			}
 
-			GhostGrid[x][y] = cell;
+			ghostGrid.ghostGridBuffer[x][y] = cell;
 		}
 		else {
 			for (QuadTree* child : node->children) {
 				populateGhostGrid(child);
 			}
 		}
-		};
+	};
 
 	populateGhostGrid(root);
+	ghostGrid.calculateRect();
+	return &ghostGrid;
 }
 
 void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds) {

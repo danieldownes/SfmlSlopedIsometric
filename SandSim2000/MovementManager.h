@@ -18,7 +18,7 @@ class MovementManager
 public:
 	// pass a PathfinderAgent by reference and the goal battlefieldCell
 	// This function then runs the pathfinding and sets the agents path
-	void SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal, GameStateManager* gameStateManager, InputState& state, Scene& scene);
+	void SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal, GameStateManager* gameStateManager, InputState& state, Scene& scene, Camera* camera);
 
 	std::vector<BattlefieldCell*>* getPath() { return &pathList; }
 private:
@@ -27,7 +27,7 @@ private:
 	std::vector<BattlefieldCell*> pathListChildrenGrid;
 	std::vector<BattlefieldCell*> pathList;
 
-	std::vector<std::vector<BattlefieldCell*>> GhostGrid;
+	GhostGrid* ghostGrid;
 
 	void generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level);
 	void cleanHeuristics();
@@ -36,8 +36,6 @@ private:
 
 	void ExploreNeighbours(BattlefieldCell* current, BattlefieldCell* goal);
 	void ReconstructPath(BattlefieldCell* goal);
-
-	BattlefieldCell* getCellFromGhost(int BattlefieldCellX, int BattlefieldCellY);
 
 	// The current target cell for pathfinding
 	BattlefieldCell* targetCell = nullptr;

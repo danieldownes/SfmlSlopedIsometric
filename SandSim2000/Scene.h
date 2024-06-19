@@ -2,6 +2,7 @@
 #include <set>
 #include <functional>
 
+#include "GhostGrid.h"
 #include "BattlefieldCell.h"
 #include "Camera.h"
 #include "GameState.h"
@@ -22,11 +23,10 @@ public:
 
 	//Create setter method and props for args
 
-	void generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds);
+	GhostGrid* generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds);
+	GhostGrid ghostGrid;
 
 	std::set<std::vector<BattlefieldCell>::iterator> gameScene;
-	std::vector<std::vector<BattlefieldCell*>> GhostGrid;
-
 
 
 	int tileSize = GlobalConstants::cellSize;

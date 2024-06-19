@@ -28,7 +28,7 @@ void AgentManager::onUpdate(
         
         BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
         
-        movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene);
+        movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
 
 
         leftClick = true;
