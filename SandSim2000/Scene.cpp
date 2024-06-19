@@ -52,7 +52,6 @@ GhostGrid* Scene::generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGe
 	};
 
 	populateGhostGrid(root);
-	ghostGrid.calculateRect();
 	return &ghostGrid;
 }
 

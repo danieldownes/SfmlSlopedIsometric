@@ -11,32 +11,34 @@ struct GhostGrid
 
 	BattlefieldCell* getCell(int BattlefieldCellX, int BattlefieldCellY)
 	{
-		if (BattlefieldCellX >= left && BattlefieldCellX < right && BattlefieldCellY >= top && BattlefieldCellY < bottom)
-			return ghostGridBuffer[BattlefieldCellX - left][BattlefieldCellY - top];
+		for(std::vector<BattlefieldCell*> line : ghostGridBuffer)
+		{
+			for (BattlefieldCell* current : line)
+			{
+				if (current != nullptr)
+				{
+					if (current->x == BattlefieldCellX && current->y == BattlefieldCellY)
+						return current;
+				}
+			}
+		}
 		return nullptr;
-	}
-
-	void calculateRect()
-	{
-		left = ghostGridBuffer[0][0]->x;	
-		right = ghostGridBuffer[ghostGridBuffer.size() - 1][0]->x;
-		top = ghostGridBuffer[0][0]->y;		
-		bottom = ghostGridBuffer[0][ghostGridBuffer[0].size() - 1]->y;
 	}
 
 	void cleanHeuristics()
 	{
-		for (int i = top; i < bottom; i++)
+		for (std::vector<BattlefieldCell*> line : ghostGridBuffer)
 		{
-			for (int j = left; j < right; j++)
+			for (BattlefieldCell* current : line)
 			{
-				BattlefieldCell* current = getCell(j, i);
-
-				current->hScore = 0;
-				current->gScore = 0;
-				current->fScore = 0;
-				current->pathParent = nullptr;
-				current->inClosedList = false;
+				if(current != nullptr)
+				{
+					current->hScore = 0;
+					current->gScore = 0;
+					current->fScore = 0;
+					current->pathParent = nullptr;
+					current->inClosedList = false;
+				}
 			}
 		}
 
