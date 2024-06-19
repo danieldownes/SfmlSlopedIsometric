@@ -153,6 +153,7 @@ void MovementManager::ExploreNeighbours(BattlefieldCell* current, BattlefieldCel
         int levelInt = 4;
 
         BattlefieldCell* neighbour = ghostGrid->getCell(nx, ny);
+
         if (neighbour != nullptr && !neighbour->impassableTerrain && !neighbour->inClosedList)
         {
             int gScore = current->gScore + ((i % 2 == 0) ? 10 : 14);
