@@ -10,4 +10,3 @@
 #include "AgentManager.h"
 #include "MainMenu.h"
 #include "AnimationManager.h"
-

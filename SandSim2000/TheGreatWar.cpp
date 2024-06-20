@@ -9,11 +9,11 @@ int main()
         return 0;
 
     // Initialize Components
+    SpriteManager sprites = SpriteManager();
     AnimationManager animationManager;
     unsigned int mapSize = 16;
-    SpriteManager sprites = SpriteManager();
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
-    AgentManager agentManager = AgentManager();
+    AgentManager agentManager;
     InputState inputState = InputState();
     Camera camera;
     Scene scene;
@@ -29,8 +29,7 @@ int main()
     {
         inputState = InputStateManager::getInstance().updateInputState(camera.window, inputState);
 
-        agentManager.placePathfinderAgent(sf::Vector2i(8, 8),
-            &scene.gameScene, PathfinderAgent(8, 8, "PathfinderAgent"), gameStateManager);
+        agentManager.placePathfinderAgent(sf::Vector2i(8, 8), &scene.gameScene, PathfinderAgent(8, 8, "PathfinderAgent"), gameStateManager);
 
         if(inputState.isTPressed)
             agentManager.placeScenery(inputState.selectedCell, &scene.gameScene, Tree(inputState.selectedCell.x, inputState.selectedCell.y), gameStateManager);
