@@ -29,7 +29,6 @@ private:
 
 	GhostGrid* ghostGrid;
 
-	void generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level);
 	void cleanHeuristics();
 	void propagateWaveFrontHeuristics(BattlefieldCell* goal, GameState* state);
 	int AStar(BattlefieldCell* start, BattlefieldCell* goal);
@@ -39,6 +38,4 @@ private:
 
 	// The current target cell for pathfinding
 	BattlefieldCell* targetCell = nullptr;
-	//Ghost Grid Rect
-	int left; int right; int top; int bottom;
 };

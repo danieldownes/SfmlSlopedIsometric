@@ -4,15 +4,9 @@ void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal,
 {
     if (goal != nullptr)
     {
-        
-        //GhostGrid = scene.generateGhostGridFromScene(gameStateManager->getState().quadTree, *gameStateManager->getCamera(), *gameStateManager->getGridGenerator(), gameStateManager->getState().viewbounds);
-
-
         targetCell = goal;
 
         BattlefieldCell* startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, agent->getPosX() * 100, agent->getPosY() * 100, 4);
-
-        //generateGhostGrid(&gameStateManager->getState(), startCell, targetCell, 4);
 
         GridGenerator generator;
         sf::IntRect viewbounds(0, 0, camera->window.getSize().x, camera->window.getSize().y);
@@ -29,29 +23,6 @@ void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal,
         cleanHeuristics();
     }
 }
-
-#define GHOST_PADDING 2
-void MovementManager::generateGhostGrid(GameState* state, BattlefieldCell* start, BattlefieldCell* goal, int level)
-{
-    int gridSize = std::sqrt(std::pow(4, level));
-    int cellWidth = (state->quadTree->quadRect.getSize().x / std::pow(2, level));
-    int cellHeight = (state->quadTree->quadRect.getSize().y / std::pow(2, level));
-
-    left = max(min(start->x - GHOST_PADDING, goal->x - GHOST_PADDING), 0);
-    right = min(max(start->x + GHOST_PADDING + 1, goal->x + GHOST_PADDING + 1), gridSize);
-    top = max(min(start->y - GHOST_PADDING, goal->y - GHOST_PADDING), 0);
-    bottom = min(max(start->y + GHOST_PADDING + 1, goal->y + GHOST_PADDING + 1), gridSize);
-
-    for (int i = top; i < bottom; ++i) {
-        std::vector<BattlefieldCell*> line;
-        for (int j = left; j < right; ++j)
-        {
-            line.push_back(state->quadTree->getCell(state->quadTree, j * cellWidth, i * cellHeight, level));
-        }
-        ghostGrid->ghostGridBuffer.push_back(line);
-    }
-}
-
 
 void MovementManager::propagateWaveFrontHeuristics(BattlefieldCell* goal, GameState* state)
 {

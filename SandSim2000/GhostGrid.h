@@ -7,7 +7,6 @@
 struct GhostGrid
 {
 	std::vector<std::vector<BattlefieldCell*>> ghostGridBuffer;
-	int left = 0; int right = 0; int top = 0; int bottom = 0;
 
 	BattlefieldCell* getCell(int BattlefieldCellX, int BattlefieldCellY)
 	{
