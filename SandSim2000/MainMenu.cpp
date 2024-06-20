@@ -18,7 +18,7 @@ MenuOption displayMenu(sf::RenderWindow& window) {
         menuOptions[i].setString(optionsText[i]);
         menuOptions[i].setCharacterSize(30);
         menuOptions[i].setFillColor(sf::Color::White);
-        menuOptions[i].setPosition(100.0f, 100.0f + i * 50.0f);
+        menuOptions[i].setPosition(200.0f, 150.0f + i * 80.0f);
 
         borders[i].setSize(sf::Vector2f(menuOptions[i].getGlobalBounds().width + 20, menuOptions[i].getGlobalBounds().height + 20));
         borders[i].setFillColor(sf::Color::Transparent);
