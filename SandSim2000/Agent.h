@@ -16,9 +16,11 @@ protected:
     std::string unitType;
     int spriteIndex = 0;
 
+    bool directionalSprite = false;
+    sf::Vector2i currentDirection = sf::Vector2i(-1,0);
 
 public:
-    Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType);
+    Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, sf::String basicUnitType);
     virtual ~Agent();
 
     void takeDamage(int damage);
@@ -31,11 +33,15 @@ public:
     int getBallisticSkill() const;
     std::string getUnitType() const;
 
+    bool isDirectionalSprite() const;
+    sf::Vector2i getCurrentDirection() const;
+
     void setHealth(int newHealth);
     void setArmour(int newArmour);
     void setSpeed(int newSpeed);
     void setBallisticSkill(int newBallisticSkill);
     void setUnitType(std::string unit);
+
 
     std::string getSpriteString() { return unitType; }
     int getSpriteIndex() { return spriteIndex; }

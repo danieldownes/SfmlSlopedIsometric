@@ -9,12 +9,5 @@
 #include "Tree.h"
 #include "AgentManager.h"
 #include "MainMenu.h"
+#include "AnimationManager.h"
 
-void initializeGameComponents(unsigned int mapSize,
-	SpriteManager& sprites,
-	GameStateManager& gameStateManager,
-	AgentManager& agentManager,
-	InputState& inputState,
-	Camera& camera,
-	Scene& scene,
-	MenuOption selectedOption);
