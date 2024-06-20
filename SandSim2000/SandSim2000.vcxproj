@@ -149,6 +149,7 @@
     <ClCompile Include="GridGenerator.cpp" />
     <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="InputStateManager.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="PathfinderAgent.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="InputStateManager.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="PathfinderAgent.h" />
     <ClInclude Include="PathfinderUtilities.h" />
@@ -182,6 +184,7 @@
     <ClInclude Include="AgentManager.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="TheGreatWar.h" />
     <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
