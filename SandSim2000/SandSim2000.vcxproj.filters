@@ -152,6 +152,9 @@
     <ClInclude Include="MobileAgent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GhostGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico">

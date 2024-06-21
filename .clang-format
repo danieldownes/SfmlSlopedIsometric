@@ -1,0 +1,7 @@
+BasedOnStyle: Google
+IndentWidth: 4
+AllowShortFunctionsOnASingleLine: Empty
+BreakBeforeBraces: Allman
+SpaceAfterControlStatementKeyword: true
+ColumnLimit: 120
+AllowShortIfStatementsOnASingleLine: false

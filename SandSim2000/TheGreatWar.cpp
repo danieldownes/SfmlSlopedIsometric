@@ -1,22 +1,18 @@
-#include "Camera.h"
-#include "Scene.h"
-#include "InputStateManager.h"
-#include "InputState.h"
-#include "SpriteManager.h"
-#include "Tree.h"
-#include "AgentManager.h"
-#include "AnimationManager.h"
+#include "TheGreatWar.h"
 
+int main()
+{
+    MenuOption selectedOption = displayMenu();
+    if (selectedOption == MenuOption::Exit)
+        return 0;
+    else if (selectedOption == MenuOption::MapEditor)
+        std::cout << "Map Editor selected\n";
 
-int main() {
     SpriteManager sprites = SpriteManager();
     AnimationManager animationManager;
-
     unsigned int mapSize = 16;
     GameStateManager gameStateManager = GameStateManager(mapSize * mapSize);
-
     AgentManager agentManager;
-
     InputState inputState;
     Camera camera;
     Scene scene;
@@ -29,7 +25,8 @@ int main() {
     agentManager.placeScenery(sf::Vector2i(8, 7), &scene.gameScene, Tree(8, 7), gameStateManager);    
     agentManager.placeScenery(sf::Vector2i(8, 9), &scene.gameScene, Tree(8, 9), gameStateManager);    
 
-    while (camera.window.isOpen()) {
+    while (camera.window.isOpen())
+    {
         inputState = InputStateManager::getInstance().updateInputState(camera.window, inputState);
 
         sf::Event event;
@@ -43,9 +40,11 @@ int main() {
 
         agentManager.onUpdate(inputState, &scene.gameScene, gameStateManager, camera, scene);
 
-        if (!camera.Update(inputState)) { break; }
+        if (!camera.Update(inputState))
+            break;
         scene.UpdateGameScene(camera, gameStateManager.getState(), inputState);
         camera.Draw(scene.buildGameScene(&animationManager), inputState);
     }
-    return 0;
+
+	return 0;
 }
