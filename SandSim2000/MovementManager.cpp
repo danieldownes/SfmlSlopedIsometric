@@ -39,7 +39,7 @@ void MovementManager::propagateWaveFrontHeuristics(BattlefieldCell* goal, GameSt
             int x = node->x; int y = node->y;
             // Z is the depth of the node in the quadtree, 
             // however we only have the one layer and dont store its depth
-            int z = constants.quadTreeDepth;
+            int z = GlobalConstants::quadTreeDepth;
 
 
             BattlefieldCell* northNeighbour = ghostGrid->getCell(x, y - 1);
@@ -120,7 +120,7 @@ void MovementManager::ExploreNeighbours(BattlefieldCell* current, BattlefieldCel
     {
         int nx = current->x + dx[i];
         int ny = current->y + dy[i];
-        int levelInt = constants.quadTreeDepth;
+        int levelInt = GlobalConstants::quadTreeDepth;
 
         BattlefieldCell* neighbour = ghostGrid->getCell(nx, ny);
 
