@@ -21,6 +21,14 @@ void AgentManager::onUpdate(
     if (pathfinderAgent != nullptr)
     {
         pathfinderAgent->update();
+
+
+        std::vector<Agent*> agents = std::vector<Agent*>();
+        gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree, pathfinderAgent->getPosXIndex() * 100, pathfinderAgent->getPosYIndex() * 100, 200, 4, &agents);
+    }
+    if (mobileAgent != nullptr)
+    {
+        mobileAgent->update(&gameStateManager);
     }
 
     if (state.isLeftMouseButtonPressed && leftClick == false)
@@ -69,16 +77,20 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
 
 void AgentManager::placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
 {
-    GridGenerator gridgen = GridGenerator();
-    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(cell);
-
-    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
-
-
     Agent* newAgent = new Agent(agent);
 
     gameStateManager.getState().Units.push_back(newAgent);
     gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
+}
+
+void AgentManager::placeMobileAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, MobileAgent agent, GameStateManager& gameStateManager)
+{
+    MobileAgent* newAgent = new MobileAgent(agent);
+
+    gameStateManager.getState().Units.push_back(newAgent);
+    gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
+
+    mobileAgent = newAgent;
 }
 
 void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gamesScene, PathfinderAgent agent, GameStateManager& gameStateManager)

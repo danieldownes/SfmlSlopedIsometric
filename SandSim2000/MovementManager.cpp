@@ -6,7 +6,7 @@ void MovementManager::SetUnitPath(PathfinderAgent* agent, BattlefieldCell* goal,
     {
         targetCell = goal;
 
-        BattlefieldCell* startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, agent->getPosX() * 100, agent->getPosY() * 100, 4);
+        BattlefieldCell* startCell = gameStateManager->getState().quadTree->getCell(gameStateManager->state.quadTree, agent->getPosXIndex() * 100, agent->getPosYIndex() * 100, 4);
 
         GridGenerator generator;
         sf::IntRect viewbounds(0, 0, camera->window.getSize().x, camera->window.getSize().y);

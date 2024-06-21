@@ -149,6 +149,7 @@
     <ClCompile Include="GridGenerator.cpp" />
     <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="InputStateManager.cpp" />
+    <ClCompile Include="MobileAgent.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="PathfinderAgent.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="InputStateManager.h" />
+    <ClInclude Include="MobileAgent.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="PathfinderAgent.h" />
