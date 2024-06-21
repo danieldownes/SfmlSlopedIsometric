@@ -56,7 +56,9 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
         Tree* tree = new Tree(isometricCell.x, isometricCell.y);
 
         gameStateManager.getState().Units.push_back(tree);
+
         gameStateManager.getState().quadTree->insert(tree, 100);
+        gameStateManager.getState().quadTree->insert(tree, constants.cellSize);
 
         BattlefieldCell* cell = gameStateManager.getCell(isometricCell.x, isometricCell.y);
 
@@ -76,20 +78,20 @@ void AgentManager::placeAgent(sf::Vector2i cell, std::set<std::vector<Battlefiel
     Agent* newAgent = new Agent(agent);
 
     gameStateManager.getState().Units.push_back(newAgent);
-    gameStateManager.getState().quadTree->insert(newAgent, 100);
+    gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
 }
 
 void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gamesScene, PathfinderAgent agent, GameStateManager& gameStateManager)
 {
-    GridGenerator gridgen = GridGenerator();
-    sf::Vector2f EuclideanPos = gridgen.isometricToCartesianTransform(cell);
-
-    sf::Vector2i intEuclidianPos = sf::Vector2i(static_cast<int>(EuclideanPos.x) - 11, static_cast<int>(EuclideanPos.y) + 9);
+    BattlefieldCell* currentCell = gameStateManager.getCell(cell.x, cell.y);
 
     PathfinderAgent* newAgent = new PathfinderAgent(agent);
-    newAgent->setStartingCell(gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, intEuclidianPos.x * 100, intEuclidianPos.y * 100, 4));
+    newAgent->setStartingCell(gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, cell.x * constants.cellSize, cell.y * constants.cellSize, constants.quadTreeDepth));
+
 
     gameStateManager.getState().Units.push_back(newAgent);
-    gameStateManager.getState().quadTree->insert(newAgent, 100);
+    gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
+
     pathfinderAgent = newAgent;
+    pathfinderAgent->current = currentCell;
 }

@@ -7,6 +7,7 @@
 #include <queue>
 #include <functional>
 
+#include "GlobalConstants.h"
 #include "PathfinderUtilities.h"
 #include "PathfinderAgent.h"
 #include "GameStateManager.h"

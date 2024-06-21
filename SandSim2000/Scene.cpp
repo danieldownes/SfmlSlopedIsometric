@@ -76,7 +76,7 @@ void Scene::findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gr
 	}
 }
 
-std::vector<sf::Sprite> Scene::buildGameScene()
+std::vector<sf::Sprite> Scene::buildGameScene(AnimationManager* animationManager)
 {
 	std::vector<sf::Sprite> sprites = std::vector<sf::Sprite>();
 	GridGenerator gridGenerator;
@@ -101,7 +101,8 @@ std::vector<sf::Sprite> Scene::buildGameScene()
 				int spriteIndex = currentAgent->getSpriteIndex();
 
 
-				sf::Sprite objectSprite = *SpriteManager::GetInstance()->GetSprite(spriteString, spriteIndex);
+				//sf::Sprite objectSprite = *SpriteManager::GetInstance()->GetSprite(spriteString, spriteIndex);
+				sf::Sprite objectSprite = animationManager->getAgentSpriteFromDirection(currentAgent);
 				objectSprite.setTexture(SpriteManager::GetInstance()->GetSpriteSheet(spriteString).texture);
 
 				sf::Vector2f isometricPosition = gridGenerator.cartesianToIsometricTransform(sf::Vector2f(currentAgent->getPosX(), currentAgent->getPosY()));

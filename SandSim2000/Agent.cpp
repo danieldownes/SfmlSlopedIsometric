@@ -1,7 +1,7 @@
 #include "Agent.h"
 
-Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, sf::String basicUnitType)
-    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), unitType(basicUnitType) {
+Agent::Agent(int initialPosX, int initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, sf::String basicUnitType)
+    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), directionalSprite(directional), unitType(basicUnitType) {
 }
 
 
@@ -39,6 +39,14 @@ int Agent::getSpeed() const {
 
 int Agent::getBallisticSkill() const {
     return ballisticSkill;
+}
+
+bool Agent::isDirectionalSprite() const {
+    return directionalSprite;
+}
+
+sf::Vector2i Agent::getCurrentDirection() const {
+    return currentDirection;
 }
 
 std::string Agent::getUnitType() const
