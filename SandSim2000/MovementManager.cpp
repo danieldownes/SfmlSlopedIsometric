@@ -99,7 +99,6 @@ int MovementManager::AStar(BattlefieldCell* start, BattlefieldCell* goal)
 
         if (current == goal)
         {
-            std::cout << "path found" << std::endl;
             ReconstructPath(goal);
             return 1;
         }

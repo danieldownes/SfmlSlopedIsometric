@@ -28,9 +28,8 @@ void AgentManager::onUpdate(
         
         BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
         
-        //sf::Clock timer;
         movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
-        //std::cout << timer.getElapsedTime().asSeconds() << std::endl;
+
 
 
         leftClick = true;
