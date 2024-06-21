@@ -28,7 +28,8 @@ void AgentManager::onUpdate(
         
         BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
         
-        movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene);
+        movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
+
 
 
         leftClick = true;
@@ -55,6 +56,8 @@ void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector
         Tree* tree = new Tree(isometricCell.x, isometricCell.y);
 
         gameStateManager.getState().Units.push_back(tree);
+
+        gameStateManager.getState().quadTree->insert(tree, 100);
         gameStateManager.getState().quadTree->insert(tree, constants.cellSize);
 
         BattlefieldCell* cell = gameStateManager.getCell(isometricCell.x, isometricCell.y);
