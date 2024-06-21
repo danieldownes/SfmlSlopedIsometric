@@ -24,9 +24,12 @@ private:
 	void seperation();
 	void Alignment();
 
+	void ClampVelocity();
+
 	void updateCurrentSpriteDirection();
 	void updateCell(GameStateManager* gameStateManager);
 
+	sf::Vector2f normalize(sf::Vector2f value);
 	PathfinderAgent* getPathfinderFromList();
 	GlobalConstants constants;
 

@@ -12,6 +12,8 @@ void MobileAgent::update(GameStateManager* gameStateManager)
 
 	Coherence();
 
+	ClampVelocity();
+
 	posX += velocity.x; posY += velocity.y;
 
 	updateCurrentSpriteDirection();
@@ -32,6 +34,12 @@ void MobileAgent::Coherence()
 {
 	velocity.x = (pathfinderAgent->getPosX() - getPosX()) * 0.1f;
 	velocity.y = (pathfinderAgent->getPosY() - getPosY()) * 0.1f;
+}
+
+void MobileAgent::ClampVelocity()
+{
+	velocity = normalize(velocity);
+	velocity.x *= speed; velocity.y *= speed;
 }
 
 void MobileAgent::updateCurrentSpriteDirection()
@@ -55,8 +63,24 @@ void MobileAgent::updateCell(GameStateManager* gameStateManager)
 {
 	if (lastCellPosition != sf::Vector2i(getPosXIndex(), getPosYIndex()))
 	{
-		gameStateManager->getCell(lastCellPosition.x, lastCellPosition.y)->removeObject(this);
-		gameStateManager->getCell(getPosXIndex(), getPosYIndex())->addObject(this);
+		BattlefieldCell* previousCell = gameStateManager->getCell(lastCellPosition.x, lastCellPosition.y);
+		BattlefieldCell* nextCell = gameStateManager->getCell(getPosXIndex(), getPosYIndex());
+
+		std::cout << getPosX() << ":" << getPosY() << "\n";
+		if(previousCell != nullptr && nextCell != nullptr)
+		{
+			previousCell->removeObject(this);
+			nextCell->addObject(this);
+		}
 	}
 	lastCellPosition = sf::Vector2i(getPosXIndex(), getPosYIndex());
+}
+
+sf::Vector2f MobileAgent::normalize(sf::Vector2f value)
+{
+	float length = sqrt((value.x * value.x) + (value.y * value.y));
+	if (length != 0)
+		return sf::Vector2f(value.x / length, value.y / length);
+	else
+		return value;
 }
