@@ -9,9 +9,10 @@ void MobileAgent::update(GameStateManager* gameStateManager)
 	
 	if(pathfinderAgent == nullptr)
 		pathfinderAgent = getPathfinderFromList();
-
-	float length = sqrt((pathfinderAgent->getPosX() * pathfinderAgent->getPosX()) + (pathfinderAgent->getPosY() * pathfinderAgent->getPosY()));
-	if (abs(length) > 0.2f)
+	float dX = pathfinderAgent->getPosX() - getPosX();
+	float dY = pathfinderAgent->getPosY() - getPosY();
+	float length = sqrt((dX * dX) + (dY * dY));
+	if (abs(length) > 0.1f)
 	{
 		Coherence();
 
