@@ -10,14 +10,18 @@ void MobileAgent::update(GameStateManager* gameStateManager)
 	if(pathfinderAgent == nullptr)
 		pathfinderAgent = getPathfinderFromList();
 
-	Coherence();
+	float length = sqrt((pathfinderAgent->getPosX() * pathfinderAgent->getPosX()) + (pathfinderAgent->getPosY() * pathfinderAgent->getPosY()));
+	if (abs(length) > 0.2f)
+	{
+		Coherence();
 
-	ClampVelocity();
+		ClampVelocity();
 
-	posX += velocity.x; posY += velocity.y;
+		posX += velocity.x; posY += velocity.y;
+		updateCurrentSpriteDirection();
+		updateCell(gameStateManager);
+	}
 
-	updateCurrentSpriteDirection();
-	updateCell(gameStateManager);
 }
 
 PathfinderAgent* MobileAgent::getPathfinderFromList()
@@ -44,7 +48,7 @@ void MobileAgent::ClampVelocity()
 
 void MobileAgent::updateCurrentSpriteDirection()
 {
-	float spriteBarrier = 0.01f;
+	float spriteBarrier = speed * 0.5f;
 
 	if (velocity.x > spriteBarrier) currentDirection.x = 1;
 	if (velocity.x < -spriteBarrier) currentDirection.x = -1;
@@ -66,7 +70,7 @@ void MobileAgent::updateCell(GameStateManager* gameStateManager)
 		BattlefieldCell* previousCell = gameStateManager->getCell(lastCellPosition.x, lastCellPosition.y);
 		BattlefieldCell* nextCell = gameStateManager->getCell(getPosXIndex(), getPosYIndex());
 
-		std::cout << getPosX() << ":" << getPosY() << "\n";
+		std::cout << velocity.x << ":" << velocity.y << "\n";
 		if(previousCell != nullptr && nextCell != nullptr)
 		{
 			previousCell->removeObject(this);

@@ -11,7 +11,7 @@ protected:
     float posX, posY;
     int health;
     int armour;
-    int speed;
+    float speed;
     int ballisticSkill;
 
     std::string unitType;
@@ -21,7 +21,7 @@ protected:
     sf::Vector2i currentDirection = sf::Vector2i(-1,0);
 
 public:
-    Agent(float initialPosX, float initialPosY, int initialHealth, int initialArmour, int initialSpeed, int initialBallisticSkill, bool directional, std::string basicUnitType);
+    Agent(float initialPosX, float initialPosY, int initialHealth, int initialArmour, float initialSpeed, int initialBallisticSkill, bool directional, std::string basicUnitType);
     virtual ~Agent();
 
     void takeDamage(int damage);
@@ -32,7 +32,7 @@ public:
     int getPosYIndex() const;
     int getHealth() const;
     int getArmour() const;
-    int getSpeed() const;
+    float getSpeed() const;
     int getBallisticSkill() const;
     std::string getUnitType() const;
 
@@ -42,7 +42,7 @@ public:
 
     void setHealth(int newHealth);
     void setArmour(int newArmour);
-    void setSpeed(int newSpeed);
+    void setSpeed(float newSpeed);
     void setBallisticSkill(int newBallisticSkill);
     void setUnitType(std::string unit);
 
