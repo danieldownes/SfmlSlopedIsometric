@@ -4,4 +4,4 @@
 
 enum class MenuOption { MapEditor, Skirmish, Option3, Option4, Exit };
 
-MenuOption displayMenu(sf::RenderWindow& window);
+MenuOption displayMenu();

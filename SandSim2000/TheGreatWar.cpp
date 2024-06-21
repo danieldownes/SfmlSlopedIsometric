@@ -2,9 +2,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Game Menu");
-
-    MenuOption selectedOption = displayMenu(window);
+    MenuOption selectedOption = displayMenu();
     if (selectedOption == MenuOption::Exit)
         return 0;
     else if (selectedOption == MenuOption::MapEditor)
