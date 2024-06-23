@@ -20,11 +20,6 @@
 .vs/
 .vscode/
 
-# Dependency Folders
-# SFML Library
-SFML/
-lib/
-
 # Temporary Files
 # Backup files
 *~
