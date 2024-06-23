@@ -1,21 +1,13 @@
-# Compiled Output
-*.o
-*.so
-*.exe
-*.dll
-*.obj
-
-# Build Directories
-build/
-bin/
-
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
+# Binaries
+**/bin/
 
 # IDE/Editor Specific Files
 # Visual Studio
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
 *.suo
 *.user
 *.pdb
