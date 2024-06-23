@@ -23,7 +23,7 @@ project "TheGreatWar"
    }
 
    defines { 
-      "SFML_STATIC" 
+      "SFML_DYNAMIC" 
    }
 
    linkoptions { 
@@ -37,7 +37,7 @@ project "TheGreatWar"
       defines { "DEBUG" }
       symbols "On"
       libdirs { 
-         "../libs/SFML/lib",
+         "../libs/SFML/lib/Debug",
          "../libs/SFML/extlibs",
       }
 
@@ -54,18 +54,18 @@ project "TheGreatWar"
          "ogg.lib",
          "ws2_32.lib",
          "legacy_stdio_definitions.lib",
-         "sfml-graphics-s-d.lib",
-         "sfml-window-s-d.lib",
-         "sfml-system-s-d.lib",
-         "sfml-audio-s-d.lib",
-         "sfml-network-s-d.lib"
+         "sfml-graphics-d.lib",
+         "sfml-window-d.lib",
+         "sfml-system-d.lib",
+         "sfml-audio-d.lib",
+         "sfml-network-d.lib"
       }
 
    filter "configurations:Release"
       defines { "NDEBUG" }
       optimize "On"
       libdirs { 
-         "../libs/SFML/lib",
+         "../libs/SFML/lib/Release",
          "../libs/SFML/extlibs"
       }
 
