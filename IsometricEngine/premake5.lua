@@ -83,9 +83,9 @@ project "TheGreatWar"
          "ogg.lib",
          "ws2_32.lib",
          "legacy_stdio_definitions.lib",
-         "sfml-graphics-s.lib",
-         "sfml-window-s.lib",
-         "sfml-system-s.lib",
-         "sfml-audio-s.lib",
-         "sfml-network-s.lib"
+         "sfml-graphics.lib",
+         "sfml-window.lib",
+         "sfml-system.lib",
+         "sfml-audio.lib",
+         "sfml-network.lib"
       }
