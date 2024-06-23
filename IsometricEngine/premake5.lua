@@ -37,7 +37,7 @@ project "TheGreatWar"
       defines { "DEBUG" }
       symbols "On"
       libdirs { 
-         "../libs/SFML/lib/Debug",
+         "../libs/SFML/lib",
          "../libs/SFML/extlibs",
       }
 
@@ -65,7 +65,7 @@ project "TheGreatWar"
       defines { "NDEBUG" }
       optimize "On"
       libdirs { 
-         "../libs/SFML/lib/Release",
+         "../libs/SFML/lib",
          "../libs/SFML/extlibs"
       }
 
