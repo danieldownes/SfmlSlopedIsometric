@@ -2,7 +2,7 @@ project "TheGreatWar"
    kind "ConsoleApp"
    language "C++"
    cppdialect "C++17"
-   staticruntime "on"
+   staticruntime "off"
   
    targetdir "bin/%{cfg.buildcfg}"
    objdir("bin/Obj/%{cfg.buildcfg}")
@@ -13,9 +13,10 @@ project "TheGreatWar"
       "src/**.h",
       "src/**.cpp",
       "*.lua",
-
+      "resource/resource.h",
+      "resource/resource.rc",
       "extlibs/**.cpp",
-      "extlibs/**.h",
+      "extlibs/**.h"
    }
 
    includedirs {
