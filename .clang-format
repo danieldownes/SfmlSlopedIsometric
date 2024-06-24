@@ -1,5 +1,7 @@
 BasedOnStyle: Google
+UseTab: Always
 IndentWidth: 4
+TabWidth: 4
 AllowShortFunctionsOnASingleLine: Empty
 BreakBeforeBraces: Allman
 SpaceAfterControlStatementKeyword: true
