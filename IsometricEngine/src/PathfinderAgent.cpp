@@ -15,7 +15,7 @@ void PathfinderAgent::setPath(std::vector<BattlefieldCell*>* TargetPath)
 	}
 }
 
-void PathfinderAgent::update()
+void PathfinderAgent::Update()
 {
 	if (atDestination == false && clock.getElapsedTime().asSeconds())
 	{
@@ -25,10 +25,7 @@ void PathfinderAgent::update()
 		posX = nextCell->x; posY = nextCell->y;
 
 		if (current != nullptr) 
-		{
 			current->removeObject(this);
-		}
-
 
 		path.erase(path.begin());
 

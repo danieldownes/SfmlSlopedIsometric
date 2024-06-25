@@ -1,16 +1,7 @@
 #include "AgentManager.h"
 
-/*                        +++++++++++++ Agent Manager +++++++++++++                             */
-/* Method: UpdateImpassableTerrainNodes - Sets selected nodes as impassable terrain             */
-/* Method: PropagateWaveFrontHeuristics - Sets heuristics for nodes in a wave out from target   */
-/* Method: AStar - Performs main loop of AStar on a grid with heuristics preset from WFP        */
-/* Method: ExploreNeighbours - Neighbours of current cell passed to it                          */
-/* Method: ReconstructPath - Builds list of path nodes based on parent nodes in path            */
-/*                        +++++++++++++ Debug Methods +++++++++++++                             */
-/* Method: PrintGhostGrid - Prints the ghost grid, has commented out code to print the hScore   */
-/*             +++++++++++++     +++++++++++++        +++++++++++++                             */
-
-void AgentManager::onUpdate(
+void AgentManager::Update(
+    float deltaTime,
     InputState& state,
     std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
     GameStateManager& gameStateManager,
@@ -20,25 +11,21 @@ void AgentManager::onUpdate(
 
     if (pathfinderAgent != nullptr)
     {
-        pathfinderAgent->update();
-
+        pathfinderAgent->Update();
 
         std::vector<Agent*> agents = std::vector<Agent*>();
         gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree, pathfinderAgent->getPosXIndex() * 100, pathfinderAgent->getPosYIndex() * 100, 200, 4, &agents);
     }
     if (mobileAgent != nullptr)
     {
-        mobileAgent->update(&gameStateManager);
+        mobileAgent->Update(deltaTime, & gameStateManager);
     }
 
     if (state.isLeftMouseButtonPressed && leftClick == false)
     {
-        
         BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
         
         movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
-
-
 
         leftClick = true;
     }
@@ -99,7 +86,6 @@ void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<
 
     PathfinderAgent* newAgent = new PathfinderAgent(agent);
     newAgent->setStartingCell(gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, cell.x * constants.cellSize, cell.y * constants.cellSize, constants.quadTreeDepth));
-
 
     gameStateManager.getState().Units.push_back(newAgent);
     gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);

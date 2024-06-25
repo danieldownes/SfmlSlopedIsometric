@@ -25,8 +25,6 @@ public:
 	int size = 0;
 
 private:
-
-
 	int** depthMap = nullptr;
 	Direction** directionMap = nullptr;
 	sf::Sprite*** spriteMap = nullptr;

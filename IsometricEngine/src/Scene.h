@@ -15,7 +15,7 @@ class Scene {
 public:
 	Scene();
 
-	void UpdateGameScene(Camera& cam, GameState& gameState, InputState& inputState);
+	void Update(Camera& cam, GameState& gameState, InputState& inputState);
 	std::vector<sf::Sprite> buildGameScene(AnimationManager* animationManager);
 	sf::Vector2i getScreenPositionOfCell(const BattlefieldCell& cell, Camera& cam, GridGenerator& gridGenerator);
 	void getBattlefieldCellFromMouseClick(Camera& cam, GridGenerator& gridGenerator, InputState& inputState);

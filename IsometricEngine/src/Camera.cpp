@@ -1,127 +1,140 @@
 #include "Camera.h"
 
-Camera::Camera()
-    : window(sf::VideoMode::getDesktopMode(), "The Great War", sf::Style::Fullscreen) {
+Camera::Camera() : window(sf::VideoMode::getDesktopMode(), "The Great War", sf::Style::Fullscreen)
+{
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
     window.setMouseCursorGrabbed(true);
 
     screenSize = window.getSize();
-    offsetX = - (screenSize.x / 2.0f);
-    offsetY = -(screenSize.y / 2.0f);
+    SetOffset(sf::Vector2f(screenSize.x / 2.0, screenSize.y / 2.0f));
 }
 
-bool Camera::Update(InputState& state) {
+void Camera::Update(float deltaTime, InputState& state)
+{
     sf::Event event;
-    while (window.pollEvent(event)) {}
+    while (window.pollEvent(event))
+    { }
     const InputState& inputState = state;
 
-    if(inputState.isEscapePressed) return false; 
-
     clickPan(inputState);
-    scrollPan(inputState);
-    snapPan(inputState);
-
-    return true;
+    scrollPan(deltaTime, inputState);
 }
 
-void Camera::Zoom(sf::Event& event) {
-    if (event.type == sf::Event::MouseWheelScrolled) {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        float worldXBeforeZoom, worldYBeforeZoom;
-        ScreenToWorld(mousePos.x, mousePos.y, worldXBeforeZoom, worldYBeforeZoom);
+void Camera::Zoom(sf::Event& event)
+{
+    if (event.type != sf::Event::MouseWheelScrolled)
+        return;
 
-        if (event.mouseWheelScroll.delta > 0) {
-            scaleX *= 1.05f;
-            scaleY *= 1.05f;
-        }
-        else if (event.mouseWheelScroll.delta < 0) {
-            scaleX *= 0.95f;
-            scaleY *= 0.95f;
-        }
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    float worldXBeforeZoom, worldYBeforeZoom;
+    ScreenToWorld(mousePos.x, mousePos.y, worldXBeforeZoom, worldYBeforeZoom);
 
-        bool scaleChanged = false;
+    if (event.mouseWheelScroll.delta > 0)
+        Scale *= 1.05f;
 
-        if (scaleX > 2.0f) scaleX = 2.0f;
-        else if (scaleX < 0.5f) scaleX = 0.5f;
-        else scaleChanged = true;
+    else if (event.mouseWheelScroll.delta < 0)
+        Scale *= 0.95f;
 
-        if (scaleY > 2.0f) scaleY = 2.0f;
-        else if (scaleY < 0.5f) scaleY = 0.5f;
-        else scaleChanged = true;
+    bool scaleChanged = false;
 
-        if (scaleChanged) {
-            float worldXAfterZoom, worldYAfterZoom;
-            ScreenToWorld(mousePos.x, mousePos.y, worldXAfterZoom, worldYAfterZoom);
+    if (Scale.x > 2.0f)
+        Scale.x = 2.0f;
+    else if (Scale.x < 0.5f)
+        Scale.x = 0.5f;
+    else
+        scaleChanged = true;
 
-            offsetX += worldXBeforeZoom - worldXAfterZoom;
-            offsetY += worldYBeforeZoom - worldYAfterZoom;
-        }
+    if (Scale.y > 2.0f)
+        Scale.y = 2.0f;
+    else if (Scale.y < 0.5f)
+        Scale.y = 0.5f;
+    else
+        scaleChanged = true;
+
+    if (scaleChanged)
+    {
+        float worldXAfterZoom, worldYAfterZoom;
+        ScreenToWorld(mousePos.x, mousePos.y, worldXAfterZoom, worldYAfterZoom);
+
+        Offset.x += worldXBeforeZoom - worldXAfterZoom;
+        Offset.y += worldXBeforeZoom - worldXAfterZoom;
     }
 }
 
-void Camera::WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY) 
+void Camera::SetOffset(sf::Vector2f offset)
 {
-    outScreenX = (int)((worldX - offsetX) * scaleX);
-    outScreenY = (int)((worldY - offsetY) * scaleY);
+    this->Offset = offset;
+}
+
+void Camera::WorldToScreen(float worldX, float worldY, int& outScreenX, int& outScreenY)
+{
+    outScreenX = (int)((worldX - Offset.x) * Scale.x);
+    outScreenY = (int)((worldY - Offset.y) * Scale.y);
 }
 
 void Camera::ScreenToWorld(int screenX, int screenY, float& outWorldX, float& outWorldY)
 {
-    outWorldX = (((float)screenX / scaleX) + offsetX) + ((1920.f-screenSize.x)/2.f);
-    outWorldY = (((float)screenY / scaleY) + offsetY) - ((1080.f - screenSize.y)/32.f);
+    // TODO: Remove hard coded resolution
+    outWorldX = (((float)screenX / Scale.x) + Offset.x) + ((1920.f - screenSize.x) / 2.f);
+    outWorldY = (((float)screenY / Scale.y) + Offset.y) - ((1080.f - screenSize.y) / 32.f);
 }
 
-void Camera::clickPan(const InputState& inputState) {
+void Camera::clickPan(const InputState& inputState)
+{
     sf::Vector2i mousePos = inputState.mousePosition;
     sf::Vector2u windowSize = window.getSize();
 
-    if (inputState.isMiddleMouseButtonPressed) {
-        if (!mouseButtonPanning) {
+    if (inputState.isMiddleMouseButtonPressed)
+    {
+        if (!mouseButtonPanning)
+        {
             mouseButtonPanning = true;
-            startPanX = mousePos.x;
-            startPanY = mousePos.y;
+            panStartDrag.x = mousePos.x;
+            panStartDrag.y = mousePos.y;
         }
-        else {
-            offsetX -= (mousePos.x - startPanX) / scaleX;
-            offsetY -= (mousePos.y - startPanY) / scaleY;
+        else
+        {
+            Offset.x -= (mousePos.x - panStartDrag.x) / Scale.x;
+            Offset.y -= (mousePos.y - panStartDrag.y) / Scale.y;
 
-            startPanX = mousePos.x;
-            startPanY = mousePos.y;
+            panStartDrag.x = mousePos.x;
+            panStartDrag.y = mousePos.y;
         }
     }
-    else {
+    else
+    {
         mouseButtonPanning = false;
     }
 }
 
-void Camera::scrollPan(const InputState& inputState) {
+void Camera::scrollPan(float deltaTime, const InputState& inputState)
+{
     const int edgeThreshold = 150;
     sf::Vector2i mousePos = inputState.mousePosition;
     sf::Vector2u windowSize = window.getSize();
 
     float panSpeedX = 0.0f;
     float panSpeedY = 0.0f;
+    int edgeX = static_cast<int>(windowSize.x) - edgeThreshold;
+    int edgeY = static_cast<int>(windowSize.y) - edgeThreshold;
+    float fEdgeThreshold = static_cast<float>(edgeThreshold);
 
     if (mousePos.x <= edgeThreshold)
-        panSpeedX = (edgeThreshold - mousePos.x) / (static_cast<float>(edgeThreshold) * scaleX);
-    else if (mousePos.x >= static_cast<int>(windowSize.x) - edgeThreshold)
-        panSpeedX = -(mousePos.x - (static_cast<int>(windowSize.x) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleX);
+        panSpeedX = (edgeThreshold - mousePos.x) / (fEdgeThreshold * Scale.x);
+    else if (mousePos.x >= edgeX)
+        panSpeedX = -(mousePos.x - (edgeX)) / (fEdgeThreshold * Scale.x);
 
     if (mousePos.y <= edgeThreshold)
-        panSpeedY = (edgeThreshold - mousePos.y) / (static_cast<float>(edgeThreshold) * scaleY);
-    else if (mousePos.y >= static_cast<int>(windowSize.y) - edgeThreshold)
-        panSpeedY = -(mousePos.y - (static_cast<int>(windowSize.y) - edgeThreshold)) / (static_cast<float>(edgeThreshold) * scaleY);
+        panSpeedY = (edgeThreshold - mousePos.y) / (fEdgeThreshold * Scale.y);
+    else if (mousePos.y >= edgeY)
+        panSpeedY = -(mousePos.y - (edgeY)) / (fEdgeThreshold * Scale.y);
 
-    if (panSpeedX != 0.0f || panSpeedY != 0.0f) {
-        offsetX -= panSpeedX * 10;
-        offsetY -= panSpeedY * 10;
+    if (panSpeedX != 0.0f || panSpeedY != 0.0f)
+    {
+        Offset.x -= panSpeedX * 500 * deltaTime;
+        Offset.y -= panSpeedY * 500 * deltaTime;
     }
-}
-
-void Camera::snapPan(const InputState& inputState)
-{
-    //Once there are scenery and units on the battlefield, snap panning should be done via hotkeys, snapping the camera to the position of a unit.
 }
 
 void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
@@ -131,27 +144,28 @@ void Camera::Draw(std::vector<sf::Sprite> sprites, const InputState& inputState)
 
     for (sf::Sprite s : sprites)
     {
-
         WorldToScreen(s.getPosition().x + centerOffsetX, s.getPosition().y, screenX, screenY);
         s.setPosition(static_cast<float>(screenX), static_cast<float>(screenY));
-        s.setScale(static_cast<float>(scaleX), static_cast<float>(scaleY));
+        s.setScale(static_cast<float>(Scale.x), static_cast<float>(Scale.y));
 
         window.draw(s);
     }
 
-    ScreenToWorld(inputState.mousePosition.x - (window.getSize().x/2) - 50, inputState.mousePosition.y - 100, worldX, worldY);
+    ScreenToWorld(inputState.mousePosition.x - (window.getSize().x / 2) - 50, inputState.mousePosition.y - 100, worldX,
+                  worldY);
 
     sf::Font font;
-    if (!font.loadFromFile("../resources/fonts/Diamond Gothic.ttf")) {
+    if (!font.loadFromFile("../resources/fonts/Diamond Gothic.ttf"))
         std::cerr << "Failed to load font!" << std::endl;
-    }
-    sf::Text text1;
-    text1.setFont(font); 
 
-    text1.setString("Mouse Grid (X: " + std::to_string(inputState.selectedCell.x) + ", Y: " + std::to_string(inputState.selectedCell.y) + ")");
+    sf::Text text1;
+    text1.setFont(font);
+
+    text1.setString("Mouse Grid (X: " + std::to_string(inputState.selectedCell.x) +
+                    ", Y: " + std::to_string(inputState.selectedCell.y) + ")");
     text1.setCharacterSize(24);
-    text1.setFillColor(sf::Color::White); 
-    text1.setPosition(10, 10); 
+    text1.setFillColor(sf::Color::White);
+    text1.setPosition(10, 10);
 
     window.draw(text1);
 

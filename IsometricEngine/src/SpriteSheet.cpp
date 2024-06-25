@@ -25,7 +25,8 @@ sf::Sprite* SpriteSheet::getSprite(unsigned int index)
 {
     if (index < sprites.size())
         return &sprites[index];
-    std::cerr << "[INVALID SPRITE POSITION]" << std::endl;
+
+    std::cerr << "[INVALID SPRITE POSITION: " << index << "]" << std::endl;
 }
 sf::Sprite* SpriteSheet::getSprite(sf::Vector2u position)
 {

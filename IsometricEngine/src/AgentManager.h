@@ -20,7 +20,8 @@
 class AgentManager
 {
 public:
-	void onUpdate(
+	void Update(
+		float deltaTime,
 		InputState& state,
 		std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
 		GameStateManager& gameStateManager,
