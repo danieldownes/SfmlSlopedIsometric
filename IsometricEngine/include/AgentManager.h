@@ -19,9 +19,14 @@
 
 class AgentManager
 {
-   public:
-	void onUpdate(InputState& state, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
-				  GameStateManager& gameStateManager, Camera& camera, Scene& scene);
+public:
+	void Update(
+		float deltaTime,
+		InputState& state,
+		std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+		GameStateManager& gameStateManager,
+		Camera& camera,
+		Scene& scene);
 
 	void placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent,
 					GameStateManager& gameStateManager);

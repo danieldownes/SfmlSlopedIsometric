@@ -10,7 +10,7 @@ public:
 
 	void setStartingCell(BattlefieldCell* startingCell) { current = startingCell; }
 	void setPath(std::vector<BattlefieldCell*>* TargetPath);
-	void update();
+	void Update();
 
 	std::vector<BattlefieldCell*> path = std::vector<BattlefieldCell*>();
 	BattlefieldCell* current = nullptr;

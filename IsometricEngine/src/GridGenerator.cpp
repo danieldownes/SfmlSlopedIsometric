@@ -16,30 +16,6 @@ sf::Vector2f GridGenerator::cartesianToIsometricTransform(const sf::Vector2f& ca
     isometricPosition.y = C + D;
     return isometricPosition;
 }
-/*
-sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2f& isometricPosition)
-{
-    sf::Vector2f cartesianPosition;
-    const float spriteDimension = 50.0f;
-    float det = 1.0f / (1 * 0.5 - 0 * -1);
-    cartesianPosition.x = round((((isometricPosition.x + isometricPosition.y * 2) / 2) - 25) / 50 * 10) / 10;
-    cartesianPosition.y = round(((((det * (-isometricPosition.x * 0.5 + isometricPosition.y * 1)) - 50) / 100) - 1) * 10) / 10;
-    return cartesianPosition;
-}
-
-sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2f& isometricPosition)
-{
-    sf::Vector2f cartesianPosition;
-    const float spriteDimension = 50.0f;
-    const float invSpriteDimension = 1.0f / spriteDimension;
-
-    // Apply the inverted transformation
-    cartesianPosition.x = (isometricPosition.x / invSpriteDimension + isometricPosition.y / (2.0f * invSpriteDimension)) / 2.0f;
-    cartesianPosition.y = (isometricPosition.y / (2.0f * invSpriteDimension) - (isometricPosition.x / invSpriteDimension)) / 2.0f;
-
-    return cartesianPosition;
-}
-*/
 
 sf::Vector2f GridGenerator::isometricToCartesianTransform(const sf::Vector2i& isometricPosition)
 {

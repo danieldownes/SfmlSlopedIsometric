@@ -1,53 +1,45 @@
 #include "AgentManager.h"
 
-/*                        +++++++++++++ Agent Manager +++++++++++++                             */
-/* Method: UpdateImpassableTerrainNodes - Sets selected nodes as impassable terrain             */
-/* Method: PropagateWaveFrontHeuristics - Sets heuristics for nodes in a wave out from target   */
-/* Method: AStar - Performs main loop of AStar on a grid with heuristics preset from WFP        */
-/* Method: ExploreNeighbours - Neighbours of current cell passed to it                          */
-/* Method: ReconstructPath - Builds list of path nodes based on parent nodes in path            */
-/*                        +++++++++++++ Debug Methods +++++++++++++                             */
-/* Method: PrintGhostGrid - Prints the ghost grid, has commented out code to print the hScore   */
-/*             +++++++++++++     +++++++++++++        +++++++++++++                             */
-
-void AgentManager::onUpdate(InputState& state, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
-							GameStateManager& gameStateManager, Camera& camera, Scene& scene)
+void AgentManager::Update(
+    float deltaTime,
+    InputState& state,
+    std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+    GameStateManager& gameStateManager,
+    Camera& camera,
+    Scene& scene)
 {
-	if (pathfinderAgent != nullptr)
-	{
-		pathfinderAgent->update();
+    if (pathfinderAgent != nullptr)
+    {
+        pathfinderAgent->Update();
 
-		std::vector<Agent*> agents = std::vector<Agent*>();
-		gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree,
-																pathfinderAgent->getPosXIndex() * 100,
-																pathfinderAgent->getPosYIndex() * 100, 200, 4, &agents);
-	}
-	if (mobileAgent != nullptr)
-	{
-		mobileAgent->update(&gameStateManager);
-	}
+        std::vector<Agent*> agents = std::vector<Agent*>();
+        gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree, pathfinderAgent->getPosXIndex() * 100, pathfinderAgent->getPosYIndex() * 100, 200, 4, &agents);
+    }
+    if (mobileAgent != nullptr)
+    {
+        mobileAgent->Update(deltaTime, & gameStateManager);
+    }
 
-	if (state.isLeftMouseButtonPressed && leftClick == false)
-	{
-		BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(
-			gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
+    if (state.isLeftMouseButtonPressed && leftClick == false)
+    {
+        BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
+        
+        movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
 
-		movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
-
-		leftClick = true;
-	}
-	else if (state.isRightMouseButtonPressed && rightClick == false)
-	{
-		rightClick = true;
-	}
-	else if (state.isLeftMouseButtonPressed == false)
-	{
-		leftClick = false;
-	}
-	else if (state.isRightMouseButtonPressed == false)
-	{
-		rightClick = false;
-	}
+        leftClick = true;
+    }
+    else if (state.isRightMouseButtonPressed && rightClick == false)
+    {
+        rightClick = true;
+    }
+    else if (state.isLeftMouseButtonPressed == false)
+    {
+        leftClick = false;
+    }
+    else if (state.isRightMouseButtonPressed == false)
+    {
+        rightClick = false;
+    }
 }
 
 void AgentManager::placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
@@ -96,9 +88,9 @@ void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<
 		gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, cell.x * constants.cellSize,
 													  cell.y * constants.cellSize, constants.quadTreeDepth));
 
-	gameStateManager.getState().Units.push_back(newAgent);
-	gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
+    gameStateManager.getState().Units.push_back(newAgent);
+    gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
 
-	pathfinderAgent = newAgent;
-	pathfinderAgent->current = currentCell;
+    pathfinderAgent = newAgent;
+    pathfinderAgent->current = currentCell;
 }

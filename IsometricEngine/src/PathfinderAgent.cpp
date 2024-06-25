@@ -15,7 +15,7 @@ void PathfinderAgent::setPath(std::vector<BattlefieldCell*>* TargetPath)
 	}
 }
 
-void PathfinderAgent::update()
+void PathfinderAgent::Update()
 {
 	if (atDestination == false && clock.getElapsedTime().asSeconds())
 	{
