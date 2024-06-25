@@ -1,12 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
+#include "AgentManager.h"
+#include "AnimationManager.h"
 #include "Camera.h"
-#include "Scene.h"
-#include "InputStateManager.h"
 #include "InputState.h"
+#include "InputStateManager.h"
+#include "MainMenu.h"
+#include "Scene.h"
 #include "SpriteManager.h"
 #include "Tree.h"
-#include "AgentManager.h"
-#include "MainMenu.h"
-#include "AnimationManager.h"

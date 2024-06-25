@@ -1,18 +1,16 @@
 #pragma once
-#include <vector>
 #include <List>
+#include <vector>
 
+#include "Agent.h"
 #include "BattlefieldCell.h"
 #include "QuadTree.h"
-#include "Agent.h"
 
-class GameState {
-public:
-    std::vector<BattlefieldCell> BattlefieldVector;
-    QuadTree* quadTree = nullptr;
+class GameState
+{
+   public:
+	std::vector<BattlefieldCell> BattlefieldVector;
+	QuadTree* quadTree = nullptr;
 
-    std::list<Agent*> Units;
+	std::list<Agent*> Units;
 };
-
-
-

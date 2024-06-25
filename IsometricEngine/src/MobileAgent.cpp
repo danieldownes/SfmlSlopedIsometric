@@ -2,12 +2,13 @@
 
 void MobileAgent::update(GameStateManager* gameStateManager)
 {
-
 	nearbyAgents = std::vector<Agent*>();
 
-	gameStateManager->state.quadTree->getAgentsInRadius(gameStateManager->state.quadTree, getPosX() * constants.cellSize, getPosY() * constants.cellSize, constants.cellSize * 2, constants.quadTreeDepth, &nearbyAgents);
-	
-	if(pathfinderAgent == nullptr)
+	gameStateManager->state.quadTree->getAgentsInRadius(gameStateManager->state.quadTree,
+														getPosX() * constants.cellSize, getPosY() * constants.cellSize,
+														constants.cellSize * 2, constants.quadTreeDepth, &nearbyAgents);
+
+	if (pathfinderAgent == nullptr)
 		pathfinderAgent = getPathfinderFromList();
 	float dX = pathfinderAgent->getPosX() - getPosX();
 	float dY = pathfinderAgent->getPosY() - getPosY();
@@ -18,11 +19,11 @@ void MobileAgent::update(GameStateManager* gameStateManager)
 
 		ClampVelocity();
 
-		posX += velocity.x; posY += velocity.y;
+		posX += velocity.x;
+		posY += velocity.y;
 		updateCurrentSpriteDirection();
 		updateCell(gameStateManager);
 	}
-
 }
 
 PathfinderAgent* MobileAgent::getPathfinderFromList()
@@ -44,24 +45,37 @@ void MobileAgent::Coherence()
 void MobileAgent::ClampVelocity()
 {
 	velocity = normalize(velocity);
-	velocity.x *= speed; velocity.y *= speed;
+	velocity.x *= speed;
+	velocity.y *= speed;
 }
 
 void MobileAgent::updateCurrentSpriteDirection()
 {
 	float spriteBarrier = speed * 0.5f;
 
-	if (velocity.x > spriteBarrier) currentDirection.x = 1;
-	if (velocity.x < -spriteBarrier) currentDirection.x = -1;
+	if (velocity.x > spriteBarrier)
+		currentDirection.x = 1;
+	if (velocity.x < -spriteBarrier)
+		currentDirection.x = -1;
 
-	if (velocity.y > spriteBarrier) currentDirection.y = 1;
-	if (velocity.y < -spriteBarrier) currentDirection.y = -1;
+	if (velocity.y > spriteBarrier)
+		currentDirection.y = 1;
+	if (velocity.y < -spriteBarrier)
+		currentDirection.y = -1;
 
-	if (velocity.x > -spriteBarrier && velocity.x < spriteBarrier) { velocity.x = 0; }
-	if (velocity.y > -spriteBarrier && velocity.y < spriteBarrier) { velocity.y = 0; }
+	if (velocity.x > -spriteBarrier && velocity.x < spriteBarrier)
+	{
+		velocity.x = 0;
+	}
+	if (velocity.y > -spriteBarrier && velocity.y < spriteBarrier)
+	{
+		velocity.y = 0;
+	}
 
-	if (velocity.x == 0 && velocity.y != 0) currentDirection.x = 0;
-	if (velocity.x != 0 && velocity.y == 0) currentDirection.y = 0;
+	if (velocity.x == 0 && velocity.y != 0)
+		currentDirection.x = 0;
+	if (velocity.x != 0 && velocity.y == 0)
+		currentDirection.y = 0;
 }
 
 void MobileAgent::updateCell(GameStateManager* gameStateManager)
@@ -72,7 +86,7 @@ void MobileAgent::updateCell(GameStateManager* gameStateManager)
 		BattlefieldCell* nextCell = gameStateManager->getCell(getPosXIndex(), getPosYIndex());
 
 		std::cout << velocity.x << ":" << velocity.y << "\n";
-		if(previousCell != nullptr && nextCell != nullptr)
+		if (previousCell != nullptr && nextCell != nullptr)
 		{
 			previousCell->removeObject(this);
 			nextCell->addObject(this);

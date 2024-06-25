@@ -1,8 +1,6 @@
 #include "Scenery.h"
 
-//void override interact(Agent* agent) 
+// void override interact(Agent* agent)
 //{
 
 //}
-
-

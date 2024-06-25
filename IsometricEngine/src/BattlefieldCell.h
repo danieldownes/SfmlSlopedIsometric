@@ -1,43 +1,41 @@
 #pragma once
-#include "SFML/Graphics.hpp"
-
 #include <vector>
 
 #include "Agent.h"
+#include "SFML/Graphics.hpp"
 
+class BattlefieldCell
+{
+   public:
+	void removeObject(Agent* agent)
+	{
+		auto it = std::find(Objects.begin(), Objects.end(), agent);
+		if (it != Objects.end())
+		{
+			Objects.erase(it);
+		}
+	}
+	void addObject(Agent* agent)
+	{
+		Objects.push_back(agent);
+	}
 
-class BattlefieldCell {
-public:
+	int x, y;
+	int windowX, windowY;
+	std::vector<sf::Vector2i> vertices;
 
-    void removeObject(Agent* agent)
-    {
-        auto it = std::find(Objects.begin(), Objects.end(), agent);
-        if (it != Objects.end())
-        {
-            Objects.erase(it);
-        }
-    }
-    void addObject(Agent* agent)
-    {
-        Objects.push_back(agent);
-    }
+	std::vector<Agent*> Objects = std::vector<Agent*>();
+	sf::Sprite* terrainSprite;
+	int YOffset;
 
-    int x, y;
-    int windowX, windowY;
-    std::vector<sf::Vector2i> vertices;
+	bool impassableTerrain = false;
+	bool inClosedList = false;
 
-    std::vector<Agent*> Objects = std::vector<Agent*>();
-    sf::Sprite* terrainSprite;
-    int YOffset;
+	int gScore = 0;
+	int hScore = 0;
+	int fScore = 0;
 
-    bool impassableTerrain = false;
-    bool inClosedList = false;
+	BattlefieldCell* pathParent = nullptr;
 
-    int gScore = 0;
-    int hScore = 0;
-    int fScore = 0;
-
-    BattlefieldCell* pathParent = nullptr;
-
-    int id;
+	int id;
 };

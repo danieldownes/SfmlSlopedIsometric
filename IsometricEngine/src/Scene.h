@@ -1,18 +1,19 @@
 #pragma once
-#include <set>
 #include <functional>
+#include <set>
 
-#include "GhostGrid.h"
-#include "BattlefieldCell.h"
 #include "AnimationManager.h"
+#include "BattlefieldCell.h"
 #include "Camera.h"
 #include "GameState.h"
+#include "GhostGrid.h"
+#include "GlobalConstants.h"
 #include "GridGenerator.h"
 #include "InputState.h"
-#include "GlobalConstants.h"
 
-class Scene {
-public:
+class Scene
+{
+   public:
 	Scene();
 
 	void UpdateGameScene(Camera& cam, GameState& gameState, InputState& inputState);
@@ -22,16 +23,17 @@ public:
 
 	bool pointInPolygon(const sf::Vector2i& point, const std::vector<sf::Vector2i>& vertices);
 
-	//Create setter method and props for args
+	// Create setter method and props for args
 
-	GhostGrid* generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds);
+	GhostGrid* generateGhostGridFromScene(QuadTree* root, Camera& cam, GridGenerator& gridGenerator,
+										  sf::IntRect& viewbounds);
 	GhostGrid ghostGrid;
 
 	std::set<std::vector<BattlefieldCell>::iterator> gameScene;
 
-
 	int tileSize = GlobalConstants::cellSize;
 	int quadTreeDepth = GlobalConstants::quadTreeDepth;
-private:
+
+   private:
 	void findViewportIterators(QuadTree* root, Camera& cam, GridGenerator& gridGenerator, sf::IntRect& viewbounds);
 };

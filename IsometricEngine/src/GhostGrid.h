@@ -10,7 +10,7 @@ struct GhostGrid
 
 	BattlefieldCell* getCell(int BattlefieldCellX, int BattlefieldCellY)
 	{
-		for(std::vector<BattlefieldCell*> line : ghostGridBuffer)
+		for (std::vector<BattlefieldCell*> line : ghostGridBuffer)
 		{
 			for (BattlefieldCell* current : line)
 			{
@@ -30,7 +30,7 @@ struct GhostGrid
 		{
 			for (BattlefieldCell* current : line)
 			{
-				if(current != nullptr)
+				if (current != nullptr)
 				{
 					current->hScore = 0;
 					current->gScore = 0;
@@ -41,8 +41,7 @@ struct GhostGrid
 			}
 		}
 
-		for (int i = 0; i < ghostGridBuffer.size(); i++)
-			ghostGridBuffer[i].clear();
+		for (int i = 0; i < ghostGridBuffer.size(); i++) ghostGridBuffer[i].clear();
 		ghostGridBuffer.clear();
 	}
 };
