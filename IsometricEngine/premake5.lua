@@ -1,5 +1,5 @@
-project "TheGreatWar"
-   kind "ConsoleApp"
+project "IsometricEngine"
+   kind "StaticLib"
    language "C++"
    cppdialect "C++17"
    staticruntime "off"
@@ -10,16 +10,14 @@ project "TheGreatWar"
    files {
       "include/**.h", 
       "include/**.hpp",
-      "src/**.h",
       "src/**.cpp",
       "*.lua",
-      "resource/resource.h",
-      "resource/resource.rc",
       "extlibs/**.cpp",
       "extlibs/**.h"
    }
 
    includedirs {
+      "include",
       "../include",
    }
 

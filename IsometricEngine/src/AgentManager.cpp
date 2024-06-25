@@ -38,8 +38,6 @@ void AgentManager::onUpdate(
         
         movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
 
-
-
         leftClick = true;
     }
     else if (state.isRightMouseButtonPressed && rightClick == false)
@@ -53,25 +51,6 @@ void AgentManager::onUpdate(
     else if (state.isRightMouseButtonPressed == false)
     {
         rightClick = false;
-    }
-}
-
-
-void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
-{
-    if (sceneObject.getUnitType() == "Tree")
-    {
-        Tree* tree = new Tree(isometricCell.x, isometricCell.y);
-
-        gameStateManager.getState().Units.push_back(tree);
-
-        gameStateManager.getState().quadTree->insert(tree, 100);
-        gameStateManager.getState().quadTree->insert(tree, constants.cellSize);
-
-        BattlefieldCell* cell = gameStateManager.getCell(isometricCell.x, isometricCell.y);
-
-        if (cell != nullptr)
-            cell->impassableTerrain = true;
     }
 }
 

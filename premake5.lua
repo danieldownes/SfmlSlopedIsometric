@@ -1,6 +1,6 @@
 -- premake5.lua
 workspace "TheGreatWar"
-   startproject "IsometricEngine"
+   startproject "TheGreatWar"
    architecture "x64"
    configurations {
       "Debug", 
@@ -9,5 +9,6 @@ workspace "TheGreatWar"
 
    filter { "platforms:Win64" }
       system "Windows"
-      
+
+include "TheGreatWar"
 include "IsometricEngine"

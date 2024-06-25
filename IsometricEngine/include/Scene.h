@@ -29,7 +29,6 @@ public:
 
 	std::set<std::vector<BattlefieldCell>::iterator> gameScene;
 
-
 	int tileSize = GlobalConstants::cellSize;
 	int quadTreeDepth = GlobalConstants::quadTreeDepth;
 private:
