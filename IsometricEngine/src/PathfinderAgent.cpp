@@ -25,10 +25,7 @@ void PathfinderAgent::update()
 		posX = nextCell->x; posY = nextCell->y;
 
 		if (current != nullptr) 
-		{
 			current->removeObject(this);
-		}
-
 
 		path.erase(path.begin());
 

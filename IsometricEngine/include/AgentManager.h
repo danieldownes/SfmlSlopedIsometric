@@ -26,6 +26,9 @@ class AgentManager
 	void placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent,
 					GameStateManager& gameStateManager);
 
+	void placeScenery(sf::Vector2i isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+					  Scenery sceneObject, GameStateManager& gameStateManager);
+
 	void placeMobileAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
 						  MobileAgent agent, GameStateManager& gameStateManager);
 
