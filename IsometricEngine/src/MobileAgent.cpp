@@ -78,7 +78,7 @@ void MobileAgent::updateCell(GameStateManager* gameStateManager)
 			nextCell->addObject(this);
 		}
 	}
-	lastCellPosition = sf::Vector2i(getPosXIndex(), getPosYIndex());
+	lastCellPosition = sf::Vector2i(static_cast<int>(getPosXIndex()), static_cast<int>(getPosYIndex()));
 }
 
 sf::Vector2f MobileAgent::normalize(sf::Vector2f value)

@@ -38,14 +38,14 @@ private:
     bool mouseButtonPanning = false;
     bool edgePanning = false;
 
-    float startPanX = 0.f;
-    float startPanY = 0.f;
+    int startPanX = 0;
+    int startPanY = 0;
 
     float worldX = 0.f;
     float worldY = 0.f;
 
-    int screenX = 0.f;
-    int screenY = 0.f;
+    int screenX = 0;
+    int screenY = 0;
 
     void clickPan(const InputState& inputState);
     void scrollPan(const InputState& inputState);

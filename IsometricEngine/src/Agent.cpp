@@ -1,83 +1,125 @@
 #include "Agent.h"
 
-Agent::Agent(float initialPosX, float initialPosY, int initialHealth, int initialArmour, float initialSpeed, int initialBallisticSkill, bool directional, std::string basicUnitType)
-    : posX(initialPosX), posY(initialPosY), health(initialHealth), armour(initialArmour), speed(initialSpeed), ballisticSkill(initialBallisticSkill), directionalSprite(directional), unitType(basicUnitType) {
+Agent::Agent(float initialPosX, float initialPosY, int initialHealth, int initialArmour, float initialSpeed,
+			 int initialBallisticSkill, bool directional, std::string basicUnitType)
+	: posX(initialPosX),
+	  posY(initialPosY),
+	  health(initialHealth),
+	  armour(initialArmour),
+	  speed(initialSpeed),
+	  ballisticSkill(initialBallisticSkill),
+	  directionalSprite(directional),
+	  unitType(basicUnitType)
+{
 }
-
 
 Agent::~Agent() {}
 
-void Agent::takeDamage(int damage) {
-    int damageTaken = damage - armour;
-    if (damageTaken > 0) {
-        health -= damageTaken;
-        if (health < 0) {
-            health = 0;
-        }
-    }
+void Agent::takeDamage(int damage)
+{
+	int damageTaken = damage - armour;
+	if (damageTaken > 0)
+	{
+		health -= damageTaken;
+		if (health < 0)
+		{
+			health = 0;
+		}
+	}
 }
 
-float Agent::getPosX() const {
-    return posX;
+sf::Vector2i Agent::getPosVector2i() const
+{
+	return sf::Vector2i(static_cast<int>(posX), static_cast<int>(posY));
 }
 
-float Agent::getPosY() const {
-    return posY;
+sf::Vector2f Agent::getPosVector2f() const
+{
+	return sf::Vector2f(posX, posY);
 }
 
-int Agent::getPosXIndex() const {
-    return std::floor(posX);
+float Agent::getPosX() const
+{
+	return posX;
 }
 
-int Agent::getPosYIndex() const {
-    return std::floor(posY);
+float Agent::getPosY() const
+{
+	return posY;
 }
 
-int Agent::getHealth() const {
-    return health;
+sf::Vector2i Agent::getPosIndex() const
+{
+	return sf::Vector2i(getPosXIndex(), getPosYIndex());
 }
 
-int Agent::getArmour() const {
-    return armour;
+
+int Agent::getPosXIndex() const
+{
+	return static_cast<int>(std::floor(posX));
 }
 
-float Agent::getSpeed() const {
-    return speed;
+int Agent::getPosYIndex() const
+{
+	return static_cast<int>(std::floor(posY));
 }
 
-int Agent::getBallisticSkill() const {
-    return ballisticSkill;
+int Agent::getHealth() const
+{
+	return health;
 }
 
-bool Agent::isDirectionalSprite() const {
-    return directionalSprite;
+int Agent::getArmour() const
+{
+	return armour;
 }
 
-sf::Vector2i Agent::getCurrentDirection() const {
-    return currentDirection;
+float Agent::getSpeed() const
+{
+	return speed;
+}
+
+int Agent::getBallisticSkill() const
+{
+	return ballisticSkill;
+}
+
+bool Agent::isDirectionalSprite() const
+{
+	return directionalSprite;
+}
+
+sf::Vector2i Agent::getCurrentDirection() const
+{
+	return currentDirection;
 }
 
 std::string Agent::getUnitType() const
 {
-    return std::string(unitType);
+	return std::string(unitType);
 }
 
-void Agent::setHealth(int newHealth) {
-    health = newHealth;
+void Agent::setHealth(int newHealth)
+{
+	health = newHealth;
 }
 
-void Agent::setArmour(int newArmour) {
-    armour = newArmour;
+void Agent::setArmour(int newArmour)
+{
+	armour = newArmour;
 }
 
-void Agent::setSpeed(float newSpeed) {
-    speed = newSpeed;
+void Agent::setSpeed(float newSpeed)
+{
+	speed = newSpeed;
 }
 
-void Agent::setBallisticSkill(int newBallisticSkill) {
-    ballisticSkill = newBallisticSkill;
+void Agent::setBallisticSkill(int newBallisticSkill)
+{
+	ballisticSkill = newBallisticSkill;
 }
 
-void Agent::setUnitType(std::string unit) {
-    unitType = unit;
+void Agent::setUnitType(std::string unit)
+{
+	unitType = unit;
 }

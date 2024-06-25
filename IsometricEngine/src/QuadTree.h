@@ -78,23 +78,16 @@ struct QuadTree
 
 	bool CircleInRect(float circleX, float circleY, float radius, QuadTree* node)
 	{
-		int pX;
-		int pY;
+		int x = static_cast<int>(circleX);
+		int y = static_cast<int>(circleY);
 
 		if (circleX < node->quadRect.getPosition().x)
-			pX = node->quadRect.getPosition().x;
-		else if (circleX < node->quadRect.getPosition().x)
-			pX = node->quadRect.getPosition().x + node->quadRect.getSize().x;
+			x = node->quadRect.getPosition().x;
 		if (circleY < node->quadRect.getPosition().y)
-			pY = node->quadRect.getPosition().y;
-		else if (circleY < node->quadRect.getPosition().y)
-			pY = node->quadRect.getPosition().y + node->quadRect.getSize().y;
+			y = node->quadRect.getPosition().y;
 
-		float testX = static_cast<float>(pX);
-		float testY = static_cast<float>(pY);
-
-		float distanceX = circleX - testX;
-		float distanceY = circleY - testY;
+		float distanceX = circleX - x;
+		float distanceY = circleY - y;
 
 		float distance = std::sqrt((distanceX * distanceX) + (distanceY * distanceY));
 		return (distance <= radius);

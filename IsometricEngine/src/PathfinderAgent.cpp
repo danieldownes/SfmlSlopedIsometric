@@ -20,9 +20,9 @@ void PathfinderAgent::update()
 	if (atDestination == false && clock.getElapsedTime().asSeconds())
 	{
 		BattlefieldCell* nextCell = path[0];
-
-		currentDirection = sf::Vector2i(nextCell->x - posX, nextCell->y - posY);
-		posX = nextCell->x; posY = nextCell->y;
+		auto v = getPosVector2i();
+		currentDirection = sf::Vector2i(nextCell->x - v.x, nextCell->y - v.y);
+		posX = static_cast<float>(nextCell->x); posY = static_cast<float>(nextCell->y);
 
 		if (current != nullptr) 
 		{

@@ -10,100 +10,100 @@
 /* Method: PrintGhostGrid - Prints the ghost grid, has commented out code to print the hScore   */
 /*             +++++++++++++     +++++++++++++        +++++++++++++                             */
 
-void AgentManager::onUpdate(
-    InputState& state,
-    std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
-    GameStateManager& gameStateManager,
-    Camera& camera,
-    Scene& scene)
+void AgentManager::onUpdate(InputState& state, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+							GameStateManager& gameStateManager, Camera& camera, Scene& scene)
 {
+	if (pathfinderAgent != nullptr)
+	{
+		pathfinderAgent->update();
 
-    if (pathfinderAgent != nullptr)
-    {
-        pathfinderAgent->update();
+		std::vector<Agent*> agents = std::vector<Agent*>();
+		gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree,
+																pathfinderAgent->getPosXIndex() * 100,
+																pathfinderAgent->getPosYIndex() * 100, 200, 4, &agents);
+	}
+	if (mobileAgent != nullptr)
+	{
+		mobileAgent->update(&gameStateManager);
+	}
 
+	if (state.isLeftMouseButtonPressed && leftClick == false)
+	{
+		BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(
+			gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
 
-        std::vector<Agent*> agents = std::vector<Agent*>();
-        gameStateManager.getState().quadTree->getAgentsInRadius(gameStateManager.getState().quadTree, pathfinderAgent->getPosXIndex() * 100, pathfinderAgent->getPosYIndex() * 100, 200, 4, &agents);
-    }
-    if (mobileAgent != nullptr)
-    {
-        mobileAgent->update(&gameStateManager);
-    }
+		movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
 
-    if (state.isLeftMouseButtonPressed && leftClick == false)
-    {
-        
-        BattlefieldCell* targetCell = gameStateManager.getState().quadTree->getCell(gameStateManager.state.quadTree, state.selectedCell.x * 100, state.selectedCell.y * 100, 4);
-        
-        movementManager.SetUnitPath(pathfinderAgent, targetCell, &gameStateManager, state, scene, &camera);
-
-
-
-        leftClick = true;
-    }
-    else if (state.isRightMouseButtonPressed && rightClick == false)
-    {
-        rightClick = true;
-    }
-    else if (state.isLeftMouseButtonPressed == false)
-    {
-        leftClick = false;
-    }
-    else if (state.isRightMouseButtonPressed == false)
-    {
-        rightClick = false;
-    }
+		leftClick = true;
+	}
+	else if (state.isRightMouseButtonPressed && rightClick == false)
+	{
+		rightClick = true;
+	}
+	else if (state.isLeftMouseButtonPressed == false)
+	{
+		leftClick = false;
+	}
+	else if (state.isRightMouseButtonPressed == false)
+	{
+		rightClick = false;
+	}
 }
 
-
-void AgentManager::placeScenery(sf::Vector2i isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Scenery sceneObject, GameStateManager& gameStateManager)
+void AgentManager::placeScenery(sf::Vector2f isometricCell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+								Scenery sceneObject, GameStateManager& gameStateManager)
 {
-    if (sceneObject.getUnitType() == "Tree")
-    {
-        Tree* tree = new Tree(isometricCell.x, isometricCell.y);
+	if (sceneObject.getUnitType() == "Tree")
+	{
+		Tree* tree = new Tree(isometricCell.x, isometricCell.y);
 
-        gameStateManager.getState().Units.push_back(tree);
+		gameStateManager.getState().Units.push_back(tree);
 
-        gameStateManager.getState().quadTree->insert(tree, 100);
-        gameStateManager.getState().quadTree->insert(tree, constants.cellSize);
+		gameStateManager.getState().quadTree->insert(tree, 100);
+		gameStateManager.getState().quadTree->insert(tree, constants.cellSize);
 
-        BattlefieldCell* cell = gameStateManager.getCell(isometricCell.x, isometricCell.y);
+		int x = static_cast<int>(std::floor(isometricCell.x));
+		int y = static_cast<int>(std::floor(isometricCell.y));
+		BattlefieldCell* cell = gameStateManager.getCell(x, y);
 
-        if (cell != nullptr)
-            cell->impassableTerrain = true;
-    }
+		if (cell != nullptr)
+			cell->impassableTerrain = true;
+	}
 }
 
-void AgentManager::placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, Agent agent, GameStateManager& gameStateManager)
+void AgentManager::placeAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+							  Agent agent, GameStateManager& gameStateManager)
 {
-    Agent* newAgent = new Agent(agent);
+	Agent* newAgent = new Agent(agent);
 
-    gameStateManager.getState().Units.push_back(newAgent);
-    gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
+	gameStateManager.getState().Units.push_back(newAgent);
+	gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
 }
 
-void AgentManager::placeMobileAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene, MobileAgent agent, GameStateManager& gameStateManager)
+void AgentManager::placeMobileAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gameScene,
+									MobileAgent agent, GameStateManager& gameStateManager)
 {
-    MobileAgent* newAgent = new MobileAgent(agent);
+	MobileAgent* newAgent = new MobileAgent(agent);
 
-    gameStateManager.getState().Units.push_back(newAgent);
-    gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
+	gameStateManager.getState().Units.push_back(newAgent);
+	gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
 
-    mobileAgent = newAgent;
+	mobileAgent = newAgent;
 }
 
-void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gamesScene, PathfinderAgent agent, GameStateManager& gameStateManager)
+void AgentManager::placePathfinderAgent(sf::Vector2i cell, std::set<std::vector<BattlefieldCell>::iterator>* gamesScene,
+										PathfinderAgent agent, GameStateManager& gameStateManager)
 {
-    BattlefieldCell* currentCell = gameStateManager.getCell(cell.x, cell.y);
+	BattlefieldCell* currentCell = gameStateManager.getCell(cell.x, cell.y);
 
-    PathfinderAgent* newAgent = new PathfinderAgent(agent);
-    newAgent->setStartingCell(gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, cell.x * constants.cellSize, cell.y * constants.cellSize, constants.quadTreeDepth));
+	PathfinderAgent* newAgent = new PathfinderAgent(agent);
+	newAgent->setStartingCell(
+		gameStateManager.getState().quadTree->getCell(gameStateManager.getState().quadTree, cell.x * constants.cellSize,
+													  cell.y * constants.cellSize, constants.quadTreeDepth));
 
+	gameStateManager.getState().Units.push_back(newAgent);
+	gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
 
-    gameStateManager.getState().Units.push_back(newAgent);
-    gameStateManager.getState().quadTree->insert(newAgent, constants.cellSize);
-
-    pathfinderAgent = newAgent;
-    pathfinderAgent->current = currentCell;
+	pathfinderAgent = newAgent;
+	pathfinderAgent->current = currentCell;
 }
